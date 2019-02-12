@@ -1,0 +1,54 @@
+[    
+    [
+        {
+            "id":0,
+            "name":"Religionsfreiheit",
+            "attitude": 7
+        },
+        {
+            "id":1,
+            "name":"Innere Sicherheit",
+            "attitude": 8
+        },
+        {
+            "id":2,
+            "name":"Heimatliebe",
+            "attitude": 4
+        },
+        {
+            "id":3,
+            "name":"Wirtschaft",
+            "attitude": 9
+        },
+        {
+            "id":4,
+            "name":"Bildung",
+            "attitude": 1
+        },
+        {
+            "id":5,
+            "name":"Rente",
+            "attitude": 5
+        },
+        {
+            "id":6,
+            "name":"Menschenrecht",
+            "attitude": 6
+        },
+        {
+            "id":7,
+            "name":"Integration",
+            "attitude": 2
+        },
+        {
+            "id":8,
+            "name":"Pressefreiheit",
+            "attitude": 0
+        },
+        {
+            "id":9,
+            "name":"Kunst & Kultur",
+            "attitude": 3
+        }
+    ]
+]

@@ -21,8 +21,7 @@ This section describes the global architecture of the kommunat. It consists of s
 
 ### RBAC
 - Keycloak
-
-
+ 
 ### Deployment
 
 We only stick to containers, as they tremendously make our lives easier. 
