@@ -12,16 +12,16 @@ This section describes the global architecture of the kommunat. It consists of s
 
 - Bootstrap 4 ( https://getbootstrap.com/ )
 - HammerJS ( https://hammerjs.github.io/ )
-- javscript
-
 
 ### Backend
 - Node.js ( api / backend ) with express https://expressjs.com/de/
-- Postgres ( database )
+- Postgres ( https://www.postgresql.org/ )
 
 ### RBAC
-- Keycloak
+- Keycloak ( https://www.keycloak.org/ )
  
 ### Deployment
 
 We only stick to containers, as they tremendously make our lives easier. 
+- Docker ( https://www.docker.com/ )
+- Docker-Compose ( https://docs.docker.com/compose/ )
