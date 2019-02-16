@@ -56,6 +56,7 @@
 
         var bottomScale = 1 - (rangeMax / rangeValue)
         var topScale = ((rangeMax/2) / rangeValue) 
+        console.log(topScale)
        
         // Calc the `newSliderY` value to build the slider `path`
         newSliderY = currentY + lastMouseDy / mouseDyFactor;
