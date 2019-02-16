@@ -1,0 +1,17 @@
+{
+  "name": "kummunat-backend",
+  "version": "1.0.0",
+  "description": "This is the documentation for the backend part of the kommunat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "keycloak-connect": "^4.8.3"
+  }
+}
