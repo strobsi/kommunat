@@ -4,6 +4,7 @@
     var rangeWrapper = document.querySelector('.range__wrapper');
     var rangeInput = document.querySelector('.range__input');
     var rangeValues = document.querySelector('.range__values');
+    var svg = document.querySelector(".range__slider");
     var deciderViewTop = document.querySelector('.deciderViewTop');
     var topLbl = document.querySelector('.topLbl');
     var deciderViewBottom = document.querySelector('.deciderViewBottom');
@@ -52,11 +53,6 @@
         } else {
             lastMouseDy = mouseDy < 0 ? -mouseDyLimit : mouseDyLimit;
         }
-
-
-        var bottomScale = 1 - (rangeMax / rangeValue)
-        var topScale = ((rangeMax/2) / rangeValue) 
-        console.log(topScale)
        
         // Calc the `newSliderY` value to build the slider `path`
         newSliderY = currentY + lastMouseDy / mouseDyFactor;
@@ -66,13 +62,14 @@
 
         // Build `path` string and update `path` elements
         newPath = buildPath(lastMouseDy, rangeHeight - newSliderY);
+        console.log("newPath: "+newPath)
         rangeSliderPaths[0].setAttribute('d', newPath);
         rangeSliderPaths[1].setAttribute('d', newPath);
     }
 
     // Function to simulate the elastic behavior
     function elasticRelease() {
-        
+        /*
         if (( currentY / rangeHeight ) > 0.75 ) {
             anime({
                 targets: rangeSliderPaths,
@@ -83,7 +80,6 @@
         }
         
         else if (( currentY / rangeHeight ) < 0.25 ) {
-            console.log("Bottom quarter")
             anime({
                 targets: rangeSliderPaths,
                 d: buildPath(0, rangeHeight),
@@ -125,12 +121,53 @@
             }
         });
         }
+        */
     }
+
+    function svgPoint(element, x, y) {
+  
+        var pt = svg.createSVGPoint();
+        pt.x = x;
+        pt.y = y;
+        return pt.matrixTransform(element.getScreenCTM().inverse());
+        
+      }
 
     // Handle `mousedown` and `touchstart` events, saving data about mouse position
     function mouseDown(e) {
-        mouseY = mouseInitialY = e.targetTouches ? e.targetTouches[0].pageY : e.pageY;
-        rangeWrapperLeft = rangeWrapper.getBoundingClientRect().left;
+        var
+        x = e.clientX,
+        y = e.clientY,
+        svgP = svgPoint(svg, x, y)
+        console.log(svgP.y)
+
+        if (svgP.y > 200) {
+            console.log("Lower part")
+            anime({
+                targets: rangeSliderPaths,
+                d: buildPath(0, 0),
+                duration: 3000
+            });
+            anime({
+                targets: deciderViewTop,
+                opacity: 0,
+                duration: 1000
+            });
+        }
+
+        else if (svgP.y < 200) {
+            console.log("Upper part")
+            anime({
+                targets: rangeSliderPaths,
+                d: buildPath(0, rangeHeight),
+                duration: 3000
+            });
+            anime({
+                targets: deciderViewBottom,
+                opacity: 0,
+                duration: 1000
+            });
+        }
     }
 
     // Handle `mousemove` and `touchmove` events, calculating values to morph the slider `path` and translate values properly
@@ -154,12 +191,14 @@
 
     // Handle `mouseup`, `mouseleave` and `touchend` events
     function mouseUp() {
+        /*
         // Trigger elastic animation in case `y` value has changed
         if (mouseDy) {
             elasticRelease();
         }
         // Reset values
         mouseY = mouseDy = 0;
+        */
     }
 
     // Events listeners
