@@ -146,11 +146,18 @@
             anime({
                 targets: rangeSliderPaths,
                 d: buildPath(0, 0),
-                duration: 3000
+                duration: 700,
+                easing: 'cubicBezier(.5, .05, .1, .3)'
             });
             anime({
                 targets: deciderViewTop,
                 opacity: 0,
+                scale: 0.5,
+                duration: 1000
+            });
+            anime({
+                targets: deciderViewBottom,
+                scale: 1.5,
                 duration: 1000
             });
         }
@@ -160,11 +167,18 @@
             anime({
                 targets: rangeSliderPaths,
                 d: buildPath(0, rangeHeight),
-                duration: 3000
+                duration: 700,
+                easing: 'cubicBezier(.5, .05, .1, .3)'
             });
             anime({
                 targets: deciderViewBottom,
                 opacity: 0,
+                scale:0.5,
+                duration: 1000
+            });
+            anime({
+                targets: deciderViewTop,
+                scale: 1.5,
                 duration: 1000
             });
         }

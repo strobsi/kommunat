@@ -33,7 +33,10 @@ app.get('/', (req, res) => {
 app.get('/about', (req, res) => {
     res.render("about", { title: "About" });
 })
-/*
+
+app.get('/vote', (req, res) => {
+    res.render("vote", { title: "Vote" });
+})/*
 app.get('/profile', keycloak.protect(),  (req, res) => {
     res.render("profile", { title: "Profil" });
 })

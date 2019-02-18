@@ -30,6 +30,13 @@ function sort(arr) {
         var itm = arr[i];
         // If item is itself an array, we have to sort it
         if (itm.length > 1) {
+
+            if (arr.length == 1) {
+                console.log("This is the very first round")
+            }
+            else {
+                console.log("This is a subround")
+            }
             // Get random object from this array and take it as comparable value, e.g. Pressefreiheit
             var touple = getRandomIndex(itm)
             var r = touple[0]
@@ -41,6 +48,7 @@ function sort(arr) {
             arr.splice(i,1)
 
             // Compare the values and push it to the right array
+            console.log("Item length: " + itm.length)
             for (var x = 0; x < itm.length; x++) {
                 decisionCount++
                 if (r.attitude > itm[x].attitude) {
@@ -70,6 +78,7 @@ function sort(arr) {
                     arr.splice(i, 0, greater[0]); 
                 }
             }
+            console.log(arr)
             // Do this recursively            
             sort(arr)
         }
