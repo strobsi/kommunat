@@ -1,16 +1,28 @@
+ // Get the two buttons we have
  var opt0 = document.getElementById("#opt0");
  var opt1 = document.getElementById("#opt1");
 
+ // Storing the values we currently have in some placeholders
  var btn0Val;
  var btn1Val;
 
+ // The arrays, where we add the values after each decision
  var lesser = []
  var greater = []
 
+ // The comparer array will be the list of values we have to compare to
  var comparer = []
 
+ // Inserting index is the index, we insert the arrays after a decision round
  var insertIndex = 0;
 
+ // decisionCounter tracks the number of decision
+ var decisionCounter = 0;
+
+ // used to track the time the user took to complete
+ var startedTimeStamp = 0;
+
+ // These are the values we judge on currently, can be outsourced in long term 
  var arr = [    
     [
         {
@@ -63,35 +75,40 @@
         }
     ]
 ]
-
+// Calling a new round for kicking off
 newRound()
 
+// newRound is used after each decision round, where we compare one value with the others
 function newRound() {
     var needsToBeSorted = false
+    // We iterate over the whole array and check if we have to sort sth. 
     for (var i = 0; i < arr.length; i++) {
         if(arr[i].length > 1) {
             insertIndex = i;
-            console.log("Inserting index: " + insertIndex)
-            console.log("This needs to be sorted")
             needsToBeSorted = true
             break;
         }
     }
     if (needsToBeSorted) {
+        // Let's get started to sort. 
         sortArray = arr[i]
         var v0 = getRandomIndex(sortArray)
         comparer = sortArray.slice(0)
         arr.splice(insertIndex,1)
         sort(v0[0])
     } else {
-        console.log("Finished sorting")
+        // Finished overall sorting, since nothing has to be sorted anymore.
+        console.log("Finished sorting with " + decisionCounter + " decisions")
+        calculateValue()
+        wrapResult()
         opt0.textContent = ""
         opt1.textContent = ""
+        sendResult(arr)
+        decisionCounter = 0;
     }
 }
-
+// Sort will be called after triggering a new round adn after each decision
 function sort(fixed) {
-    console.log("Cleaning up at " + insertIndex)
     if(comparer.length > 0) {
         var v1 = getRandomIDExcept(fixed.id, comparer)
         opt0.textContent = fixed.name
@@ -100,28 +117,32 @@ function sort(fixed) {
         btn1Val = v1
     }
     else {
-        console.log("Finished round")
         completeRound()
     }
 }
 
+// onClick event of the buttons
 function selected(index) {
+    if (decisionCounter == 0) {
+        startedTimeStamp = parseInt(Date.now() / 1000)
+    }
+    decisionCounter++;
     if (index == 0) {
+        // Push the value to the lesser array
         lesser.push(btn1Val)
     }
     else {
+        // Push the value to the greater array
         greater.push(btn1Val)
     }
+    // Finally, remove the value from the comparer array and sort again
     removeById(btn1Val.id)
-
     sort(btn0Val)
 }
 
+// When finishing comparing one value, we "finish" the round and sort in the related arrays
 function completeRound() {
-    
-    console.log("-------------------Completing round-------------------")
-    // Start with comparing
-    console.log("Adding the lesser array of: " + lesser.length + " elements")
+    // Add the lesser array    
     if (lesser.length > 0) {
         if (lesser.length > 1) {
             arr.splice(insertIndex, 0, lesser);                                    
@@ -130,12 +151,10 @@ function completeRound() {
             arr.splice(insertIndex, 0, lesser[0]); 
         }
     }
-
-    console.log("Adding the comparer") 
     // Add the comparer value between the lesser and greater
-
     arr.splice(insertIndex,0,btn0Val)
-    console.log("adding the greater array of " + greater.length + " elements")
+
+    // Add the greater array after the comparer
     if (greater.length > 0) {
         if (greater.length > 1) {
             arr.splice(insertIndex, 0, greater);
@@ -144,22 +163,14 @@ function completeRound() {
             arr.splice(insertIndex, 0, greater[0]); 
         }
     }
+    // Clean up values again and start a new round
     lesser = []
     greater = []
-    console.log("::::::::::::::::::::::::::::::::::::::::")
-    console.log("::::::::::::::::::::::::::::::::::::::::")
     deepLog(arr,"TopArray")
-    console.log("::::::::::::::::::::::::::::::::::::::::")
-    console.log("::::::::::::::::::::::::::::::::::::::::")
-    console.log("Calling new round")
     newRound()
 }
 
-function getRandomIndex(itm){
-    var rand = Math.floor(Math.random() * Math.floor(itm.length));
-    return [itm[rand],rand]
-}
-
+// Helper function to monitor the array
 function deepLog(arr,name) {
     
     console.log("--------"+name+"-------------")
@@ -169,15 +180,12 @@ function deepLog(arr,name) {
     }
     console.log("-------------------------------")
 }
-
-function generateRandom(except,max,min) {
-    var num = Math.floor(Math.random() * (max - min + 1)) + min;
-    while(except == num) {
-    num = Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    return num;
+// Get random object out of itm as touple with index
+function getRandomIndex(itm){
+    var rand = Math.floor(Math.random() * Math.floor(itm.length));
+    return [itm[rand],rand]
 }
-
+// Used to get a random object except an specified one. ( for getting unused values )
 function getRandomIDExcept(except,arr) {
    
     for (var i = 0; i < arr.length; i++) {
@@ -188,7 +196,7 @@ function getRandomIDExcept(except,arr) {
     var num = Math.floor(Math.random() * (arr.length-1 + 1));
     return arr[num]
 }
-
+// Remove the value from the comparer array, whenever it is already compared
 function removeById(id) {
     for (var i = 0; i < comparer.length; i++) {
         if (comparer[i].id == id) {
@@ -197,10 +205,46 @@ function removeById(id) {
     }
 }
 
-function getObjectById(id) {
-    for (var i = 0; i < comparerArray.length; i++) {
-        if (comparerArray[i].id == id) {
-            return comparerArray[i]
-        }
+// Calculating the final result
+function calculateValue() {
+    var rank = arr.length-1;
+    for (var i = 0; i < arr.length; i++) {
+        arr[i].rating = rank
+        rank--
     }
+    console.log(arr)
+}
+
+// used to set the metadata of the results
+function wrapResult() {
+    
+}
+
+// Send the calculated result of the user to the backend
+function sendResult(a) {
+
+    var res = {}
+    // Setup some metadata format
+    res.metadata = {
+        isCandidate: false,
+        started: startedTimeStamp,
+        finished: parseInt(Date.now() / 1000),
+        decisions: decisionCounter
+    }
+    // Append the values 
+    res.values = a
+
+    var xhr = new XMLHttpRequest();
+    var url = "http://192.168.2.119:3000/result";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Successfully stored values, continue with animation
+            
+        }
+    };
+    var data = JSON.stringify(res);
+    console.log(data)
+    xhr.send(data);
 }
