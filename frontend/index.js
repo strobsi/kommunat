@@ -87,6 +87,15 @@ function sort(arr) {
     return arr
 }
 
+function calculateValue() {
+    var rank = arr.length-1;
+    for (var i = 0; i < arr.length; i++) {
+        arr[i].value = rank
+        rank--
+    }
+    console.log(arr)
+}
+
 // Get the x-dimensional value
 function calculateValue(input) {
     var rankPoints = []

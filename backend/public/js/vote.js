@@ -1,6 +1,6 @@
  // Get the two buttons we have
- var opt0 = document.getElementById("#opt0");
- var opt1 = document.getElementById("#opt1");
+ var opt0 = document.getElementById("upperLbl");
+ var opt1 = document.getElementById("lowerLbl");
 
  // Storing the values we currently have in some placeholders
  var btn0Val;

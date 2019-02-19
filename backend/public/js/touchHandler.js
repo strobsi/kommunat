@@ -1,6 +1,5 @@
 (function() {
 
-
     var rangeWrapper = document.querySelector('.range__wrapper');
     var rangeInput = document.querySelector('.range__input');
     var rangeValues = document.querySelector('.range__values');

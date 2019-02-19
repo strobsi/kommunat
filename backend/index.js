@@ -43,7 +43,7 @@ app.get('/about', (req, res) => {
 })
 
 app.get('/vote', (req, res) => {
-    res.render("vote", { title: "Vote" });
+    res.render('vote', {title: "Komunat", layout: 'vote.handlebars'});
 })
 
 // Post result
