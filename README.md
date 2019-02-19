@@ -1,27 +1,13 @@
-# kommunat
-Kommunat project for changing the future of politics
+# Backend
 
-Kommunat is the new and innovative way to figure out what to vote for in political votings on a regional scope. 
+This is the documentation for the backend part of the kommunat
 
+# Setting up
 
-## Architrecture
+For setting up, you can use docker. We have several images: 
 
-This section describes the global architecture of the kommunat. It consists of several subsection to make reading through the stack easier.
+#### REDIS
+```
+docker run -p 6379:6379 -v /Users/strobsi/Projects/kommunat/data:/data -d redis redis-server --appendonly yes
+```
 
-### Frontend
-
-- Bootstrap 4 ( https://getbootstrap.com/ )
-- HammerJS ( https://hammerjs.github.io/ )
-
-### Backend
-- Node.js ( api / backend ) with express https://expressjs.com/de/
-- Postgres ( https://www.postgresql.org/ )
-
-### RBAC
-- Keycloak ( https://www.keycloak.org/ )
- 
-### Deployment
-
-We only stick to containers, as they tremendously make our lives easier. 
-- Docker ( https://www.docker.com/ )
-- Docker-Compose ( https://docs.docker.com/compose/ )
