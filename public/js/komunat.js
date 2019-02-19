@@ -245,8 +245,6 @@ function sendResult(a) {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Successfully stored values, continue with animation
             console.log("Successfully uploaded result")
-            
-
             fakeLoad()
         }
     };
