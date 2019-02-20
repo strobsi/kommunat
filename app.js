@@ -11,8 +11,8 @@ const dashboardRouter = require("./routes/dashboard");
 const publicRouter = require("./routes/public");
 const usersRouter = require("./routes/users");
 const profileRouter = require("./routes/profile");
-const bodyParser = require('body-parser')
-
+const komunatRouter = require("./routes/komunat");
+const resultRouter = require("./routes/result");
 
 // App initialization
 const app = express();
@@ -31,6 +31,13 @@ app.use(session({
   saveUninitialized: false
 }));
 
+// Cross origin requests
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use(auth.oidc.router);
 app.use(middleware.addUser);
 
@@ -38,7 +45,9 @@ app.use(middleware.addUser);
 app.use("/", publicRouter);
 app.use("/dashboard", middleware.loginRequired, dashboardRouter);
 app.use("/profile",middleware.loginRequired, profileRouter);
-app.use("/users", usersRouter);
+app.use("/komunat",middleware.loginRequired, komunatRouter);
+app.use("/result",resultRouter);
+app.use("/users",usersRouter);
 
 // Error handlers
 app.use(function(req, res, next) {

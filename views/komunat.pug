@@ -1,0 +1,15 @@
+extends layout
+
+block variables
+  - var title = "Komunat"
+
+block content
+  .card
+    .card-body
+      h2.text-center Los geht's, #{user.profile.firstName} #{user.profile.lastName} 
+      p Entscheide, was wichtiger für dich ist: 
+      a.btn.btn-info.btn-block(onclick='selected(0,"'+ userID +'")' role='button' id='#opt0') Option 1
+      a.btn.btn-info.btn-block(onclick='selected(1,"'+ userID +'")' role='button' id='#opt1') Option 2
+
+  script       
+        include ../js/main.js

@@ -11,18 +11,26 @@ router.get("/", (req, res) => {
 
 router.post("/",jsonParser,(req, res) => {
 
-  console.log("Update profile")
+  console.log("Update profile to: " +req.body.lastName)
   var user = req.user;
-  var form = req.body;
-  console.log(form)
   var headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
     };
 
-  var dataString = { profile: { firstName: "Isaac", lastName: "Brock", email: "simon.strobel@web.de"} };
-  
+  var dataString = { profile: 
+    { 
+      firstName: req.body.firstName, 
+      lastName: req.body.lastName, 
+      email: req.body.email,
+      birthdate: req.body.birthdate,
+      list:req.body.list,
+      list_number: req.body.list_number,
+      district: req.body.district,
+    } 
+  };
+
   var options = {
       url: 'https://dev-664243.oktapreview.com/api/v1/users/'+user.id,
       method: 'POST',
