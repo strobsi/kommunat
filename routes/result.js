@@ -3,6 +3,9 @@ const bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 const router = express.Router();
 const redis = require("redis")
+const request = require('request');
+var rp = require('request-promise');
+const Promise = require('bluebird');
 
 // Post result
 router.post('/',jsonParser, (req, res) => {
@@ -41,13 +44,30 @@ router.post('/',jsonParser, (req, res) => {
       // No candidate, get matches
       client.rpush("results",JSON.stringify(req.body))
       client.lrange("candidate_results",0,-1, function (err, cdts) {
-        console.log(cdts.length + " candidates:");
+        var matches = [];
         cdts.forEach(function (reply, i) {
-            console.log("    " + i + ": " + reply);
-            console.log("Political Distance: " + getDistance(req.body.values,JSON.parse(reply).values))
-        });
+            var r = JSON.parse(reply)
+            var d = getDistance(req.body.values,r.values)
+            var res = {
+              distance: d,
+              uuid: r.metadata.uuid
+            }
+            matches.push(res);
+        }); 
+        console.log(matches);
+        
+        const retreiveDetails = async () => {
+          await asyncForEach(matches, async (num) => {
+            // Get details based on match uuid.
+            if (typeof num.uuid !== 'undefined' && num.uuid !== null){
+              getDetail(num.uuid)
+            }
+          });
+          console.log('Done');
+          console.log(matches);
+        }
+        retreiveDetails();
         client.quit()
-
     });
     }
   })
@@ -81,6 +101,31 @@ function sortById(arr) {
       return 0;
     });
   return arr
+}
+
+
+async function getDetail() {
+  var headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
+  };
+
+  const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+uuid;
+  const users = await request(userGet,headers=headers)
+  console.log(users)
+
+}
+
+function handleErrors(error) {
+  console.error('Something went wrong ', error)
+}
+
+
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
 }
 
 module.exports = router;

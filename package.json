@@ -11,6 +11,7 @@
   "dependencies": {
     "@okta/oidc-middleware": "^0.1.2",
     "@okta/okta-sdk-nodejs": "^1.2.0",
+    "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -20,6 +21,7 @@
     "morgan": "^1.9.1",
     "pug": "^2.0.3",
     "redis": "^2.8.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
   }
 }
