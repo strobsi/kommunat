@@ -1,0 +1,13 @@
+extends layout
+
+block variables
+  - var title = "Dashboard"
+
+block content
+  .card
+    .card-body
+      h2.text-center Willkommen, #{user.profile.firstName} #{user.profile.lastName} 
+      p Willkommen zum Komunat. Erstellen Sie jetzt ihr Werteprofil und vervollständigen Sie ihr Profil.
+      a.btn.btn-dark.btn-block(href='/komunat', role='button') Zum Komunat
+      a.btn.btn-dark.btn-block(href='/profile', role='button') Profil bearbeiten
+

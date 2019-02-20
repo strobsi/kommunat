@@ -1,0 +1,9 @@
+extends layout
+
+block variables
+  - var title = "Unerlaubter Zugriff"
+
+block content
+  h2.text-center Du musst dich anmelden um diese Seite sehen zu können.
+  p.text-center.
+    Du must angemeldet sein, um diese Seite sehen zu können. Bitte #[a(href="/users/login", title="Login") anmelden oder registrieren] um diese Seite zu sehen.

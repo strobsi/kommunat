@@ -1,0 +1,36 @@
+block variables
+ - var selected = "Home"
+
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous")
+    script(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous")
+    script(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous")
+    link(rel="stylesheet", href="/stylesheets/style.css")
+    title Komunat: #{title}
+  body
+    nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+      if user == undefined
+          li.nav-item
+            a.navbar-brand(href='/') Komunat - Kandidatenportal
+      else
+          a.navbar-brand(href='/dashboard') Komunat - Kandidatenportal
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          if user == undefined
+            li.nav-item
+              a.nav-link(href='/users/login') Login / Registrieren
+          else
+            li.nav-item.active
+              a.nav-link(href='/dashboard') Dashboard 
+            li.nav-item
+              a.nav-link(href='/profile') Mein Profil
+            li.nav-item
+              a.nav-link(href='/users/logout') Logout
+    
+    block content
