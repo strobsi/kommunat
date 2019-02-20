@@ -4,8 +4,7 @@ var jsonParser = bodyParser.json()
 const router = express.Router();
 const redis = require("redis")
 const request = require('request');
-var rp = require('request-promise');
-const Promise = require('bluebird');
+const fetch = require('node-fetch');
 
 // Post result
 router.post('/',jsonParser, (req, res) => {
@@ -60,7 +59,15 @@ router.post('/',jsonParser, (req, res) => {
           await asyncForEach(matches, async (num) => {
             // Get details based on match uuid.
             if (typeof num.uuid !== 'undefined' && num.uuid !== null){
-              getDetail(num.uuid)
+              var headers = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
+              };
+              const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+num.uuid;
+              const response = await fetch(userGet, { headers: headers });
+              const json = await response.json();
+              console.log(json.profile.email);
             }
           });
           console.log('Done');
@@ -102,25 +109,6 @@ function sortById(arr) {
     });
   return arr
 }
-
-
-async function getDetail() {
-  var headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
-  };
-
-  const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+uuid;
-  const users = await request(userGet,headers=headers)
-  console.log(users)
-
-}
-
-function handleErrors(error) {
-  console.error('Something went wrong ', error)
-}
-
 
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
