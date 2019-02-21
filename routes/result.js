@@ -67,14 +67,25 @@ router.post('/',jsonParser, (req, res) => {
               const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+num.uuid;
               const response = await fetch(userGet, { headers: headers });
               const json = await response.json();
-              console.log(json.profile.email);
+              var cInfo = {
+                name: json.profile.firstName + " " + json.profile.lastName,
+                birthdate: json.profile.birthdate,
+                list: json.profile.list,
+                list_number: json.profile.list_number,
+                district: json.profile.district
+              }
+              num.candidate = cInfo;
+            }
+            else {
+              console.log("No uuid")
             }
           });
-          console.log('Done');
+          console.log("Done with calculating and infos.")
           console.log(matches);
+          client.quit()
+          res.send(JSON.stringify(matches));
         }
         retreiveDetails();
-        client.quit()
     });
     }
   })
