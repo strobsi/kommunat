@@ -30,11 +30,9 @@ router.post('/',jsonParser, (req, res) => {
             client.rpush("candidate_results",JSON.stringify(req.body))
             client.quit()
         } else {
-          
           // Remove the initial and override it
           //lrem mylist -1 "uuid"
           //registeredIndex
-
           console.log("We already have registered this dude")
         }
         res.send();
@@ -53,7 +51,6 @@ router.post('/',jsonParser, (req, res) => {
             }
             matches.push(res);
         }); 
-        console.log(matches);
         
         const retreiveDetails = async () => {
           await asyncForEach(matches, async (num) => {
@@ -67,7 +64,6 @@ router.post('/',jsonParser, (req, res) => {
               const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+num.uuid;
               const response = await fetch(userGet, { headers: headers });
               const json = await response.json();
-              console.log(json);
               var cInfo = {
                 name: json.profile.firstName + " " + json.profile.lastName,
                 birthdate: json.profile.birthdate,
