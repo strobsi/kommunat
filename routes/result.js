@@ -67,6 +67,7 @@ router.post('/',jsonParser, (req, res) => {
               const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+num.uuid;
               const response = await fetch(userGet, { headers: headers });
               const json = await response.json();
+              console.log(json);
               var cInfo = {
                 name: json.profile.firstName + " " + json.profile.lastName,
                 birthdate: json.profile.birthdate,

@@ -4,66 +4,80 @@ block variables
   - var title = "Dashboard"
 
 block content
-    .container
-        h1 Dein Profil
         hr
-        .row
-            // left column
-            .col-md-3
-                .text-center
-                    img.avatar.img-circle(src='//placehold.it/100', alt='avatar')
-                    h6 Ein anderes Bild verwenden...
-                    input.form-control(type='file')
-                // edit form column
-            .col-md-9.personal-info
-                .alert.alert-info.alert-dismissable
-                    a.panel-close.close(data-dismiss='alert') ×
-                    i.fa.fa-coffee
-                    |           This is an 
-                    strong .alert
-                    | . Use this to show important messages to the user.
-                h3 Persönliche Daten
-                form.form-horizontal(role='form' method='POST' action='/profile')
-                    .form-group
-                    label.col-lg-3.control-label(for="firstName") Vorname:
-                    .col-lg-8
-                        input.form-control(name="firstName" type='text', value=user.profile.firstName )
-                    .form-group
-                    label.col-lg-3.control-label(for="lastName") Nachname:
-                    .col-lg-8
-                        input.form-control(name="lastName" type='text', value=user.profile.lastName)
-                    .form-group
-                    label.col-lg-3.control-label(for="email") Email:
-                    .col-lg-8
-                        input.form-control(name="email" type='text', value=user.profile.email)
-                    .form-group
-                    label.col-lg-3.control-label(for="birthdate") Geburtsdatum:
-                    .col-lg-8
-                        input.form-control(name="birthdate" type='text', value=user.profile.birthdate)
-                    .form-group
-                    label.col-md-3.control-label(for="password") Passwort:
-                    .col-md-8
-                        input.form-control(name="password" type='password', value='11111122333')
-                    .form-group
-                    label.col-md-3.control-label(for="password_confirm") Passwort bestätigen:
-                    .col-md-8
-                        input.form-control(name="password" type='password', value='11111122333')
-                    .form-group
-                    label.col-lg-3.control-label(for="list") Liste:
-                    .col-lg-8
-                        input.form-control(name="list" type='text', value=user.profile.list)
-                    .form-group
-                    label.col-lg-3.control-label(for="list_number") Listenplatz:
-                    .col-lg-8
-                        input.form-control(name="list_number" type='text', value=user.profile.list_number)
-                    .form-group
-                    label.col-lg-3.control-label(for="district") Stadtbezirk:
-                    .col-lg-8
-                        input.form-control(name="district" type='text', value=user.profile.district)
-                    .form-group
-                    label.col-md-3.control-label
-                    .col-md-8
-                        input.btn.btn-primary(type='submit', value='Save Changes')
-                        span
-                        input.btn.btn-default(type='reset', value='Cancel')
-        hr
+        .profileContainer
+            .row
+                // left column
+                .col-md-12.text-center
+                    h2 Dein Profil
+                    .alert.alert-info.alert-dismissable
+                        a.panel-close.close(data-dismiss='alert') ×
+                        i.fa.fa-coffee
+                        |           This is an 
+                        strong .alert
+                        | . Use this to show important messages to the user.
+                    hr
+            .row
+                .col-md-3
+                    .row
+                        .col-md-12
+                            img.avatar.img-circle(alt='avatar' id="cImage" src=userImg)
+                    
+                    form(action="/profile/image" enctype="multipart/form-data" method="post")
+                        .row
+                            .col-md-12
+                                div.upload-btn-wrapper
+                                    input(type="file" name="myfile" id="imgSelector" onchange="changeImg(this);")
+                                    input.btn.btn-primary.btn-block(value='Bild ändern')
+                        .row
+                            .col-md-12
+                                    input.btn.btn-primary.btn-block(type="submit" value='Speichern' onclick="save();")
+                    hr
+                    // edit form column
+                .col-md-9.personal-info
+                    h3 Persönliche Daten
+                    form.form-horizontal(role='form' method='POST' action='/profile')
+                        .form-group
+                        label.col-lg-3.control-label(for="firstName") Vorname:
+                        .col-lg-8
+                            input.form-control(name="firstName" type='text', value=user.profile.firstName )
+                        .form-group
+                        label.col-lg-3.control-label(for="lastName") Nachname:
+                        .col-lg-8
+                            input.form-control(name="lastName" type='text', value=user.profile.lastName)
+                        .form-group
+                        label.col-lg-3.control-label(for="email") Email:
+                        .col-lg-8
+                            input.form-control(name="email" type='text', value=user.profile.email)
+                        .form-group
+                        label.col-lg-3.control-label(for="birthdate") Geburtsdatum:
+                        .col-lg-8
+                            input.form-control(name="birthdate" type='text', value=user.profile.birthdate)
+                        .form-group
+                        label.col-md-3.control-label(for="password") Passwort:
+                        .col-md-8
+                            input.form-control(name="password" type='password', value='11111122333')
+                        .form-group
+                        label.col-md-3.control-label(for="password_confirm") Passwort bestätigen:
+                        .col-md-8
+                            input.form-control(name="password" type='password', value='11111122333')
+                        .form-group
+                        label.col-lg-3.control-label(for="list") Liste:
+                        .col-lg-8
+                            input.form-control(name="list" type='text', value=user.profile.list)
+                        .form-group
+                        label.col-lg-3.control-label(for="list_number") Listenplatz:
+                        .col-lg-8
+                            input.form-control(name="list_number" type='text', value=user.profile.list_number)
+                        .form-group
+                        label.col-lg-3.control-label(for="district") Stadtbezirk:
+                        .col-lg-8
+                            input.form-control(name="district" type='text', value=user.profile.district)
+                        .form-group
+                        label.col-md-3.control-label
+                        .col-md-8
+                            input.btn.btn-primary(type='submit', value='Speichern')
+            hr
+
+        script       
+            include ../js/profile.js

@@ -25,6 +25,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "assets")));
+
 app.use(session({
   secret: "blablublub",
   resave: true,
@@ -40,6 +41,7 @@ app.use(function(req, res, next) {
 
 app.use(auth.oidc.router);
 app.use(middleware.addUser);
+
 
 // Routes
 app.use("/", publicRouter);

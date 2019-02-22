@@ -3,10 +3,14 @@ const request = require('request');
 const router = express.Router();
 const bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
+var formidable = require('formidable')
 
 // Display the dashboard page
 router.get("/", (req, res) => {
-  res.render("profile");
+  var userID = String(req.userinfo.sub);
+  var userImg = "http://localhost:3000/uploads/"+userID+".png"
+  console.log(userImg)
+  res.render("profile",{ userImg:userImg });
 });
 
 router.post("/",jsonParser,(req, res) => {
@@ -18,7 +22,7 @@ router.post("/",jsonParser,(req, res) => {
       'Content-Type': 'application/json',
       'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
   };
-  
+
   var dataString = { profile: 
     { 
       firstName: req.body.firstName, 
@@ -49,5 +53,17 @@ router.post("/",jsonParser,(req, res) => {
   }
   request(options, callback);
 })  
+
+router.post("/image",jsonParser,(req, res) => {
+  var form = new formidable.IncomingForm();
+  form.parse(req);
+  form.on('fileBegin', function (name, file){
+      file.path = __dirname + '/../assets/uploads/' + req.userinfo.sub+".png";
+  });
+  form.on('file', function (name, file){
+      console.log('Uploaded ' + req.userinfo.sub+".png");
+      res.render("profile");
+  });
+});
 
 module.exports = router;

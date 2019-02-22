@@ -23,3 +23,21 @@ h1 {
 h2 {
   margin: 20px;
 }
+
+.profileContainer {
+  margin-left:50px;
+  margin-right: 50px;
+}
+
+.upload-btn-wrapper {
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
