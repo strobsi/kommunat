@@ -27,8 +27,31 @@ router.post('/',jsonParser, (req, res) => {
             }
         });
         if (!isAlreadyInserted) {
-            client.rpush("candidate_results",JSON.stringify(req.body))
-            client.quit()
+
+          const retreiveDetails = async () => {
+              // Get details based on match uuid.
+                var headers = {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
+                };
+                const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+req.body.metadata.uuid;
+                const response = await fetch(userGet, { headers: headers });
+                const json = await response.json();
+                var cInfo = {
+                  name: json.profile.firstName + " " + json.profile.lastName,
+                  birthdate: json.profile.birthdate,
+                  list: json.profile.list,
+                  list_number: json.profile.list_number,
+                  district: json.profile.district
+                }
+                req.body.candidate = cInfo;
+                console.log("Candidate: " + JSON.stringify(req.body))
+                client.rpush("candidate_results",JSON.stringify(req.body))
+                client.quit()
+                res.send();
+          }
+          retreiveDetails();
         } else {
           // Remove the initial and override it
           //lrem mylist -1 "uuid"
@@ -40,49 +63,27 @@ router.post('/',jsonParser, (req, res) => {
     } else {
       // No candidate, get matches
       client.rpush("results",JSON.stringify(req.body))
+      console.log("Pushed results")
       client.lrange("candidate_results",0,-1, function (err, cdts) {
         var matches = [];
+        console.log(Date.now())
         cdts.forEach(function (reply, i) {
             var r = JSON.parse(reply)
             var d = getDistance(req.body.values,r.values)
             var res = {
               distance: d,
-              uuid: r.metadata.uuid
+              uuid: r.metadata.uuid,
+              name: r.candidate.name,
+              birthdate: r.candidate.birthdate,
+              list: r.candidate.list,
+              list_number: r.candidate.list_number,
+              district: r.candidate.district
             }
             matches.push(res);
         }); 
-        
-        const retreiveDetails = async () => {
-          await asyncForEach(matches, async (num) => {
-            // Get details based on match uuid.
-            if (typeof num.uuid !== 'undefined' && num.uuid !== null){
-              var headers = {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
-              };
-              const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+num.uuid;
-              const response = await fetch(userGet, { headers: headers });
-              const json = await response.json();
-              var cInfo = {
-                name: json.profile.firstName + " " + json.profile.lastName,
-                birthdate: json.profile.birthdate,
-                list: json.profile.list,
-                list_number: json.profile.list_number,
-                district: json.profile.district
-              }
-              num.candidate = cInfo;
-            }
-            else {
-              console.log("No uuid")
-            }
-          });
-          console.log("Done with calculating and infos.")
-          console.log(matches);
-          client.quit()
-          res.send(JSON.stringify(matches));
-        }
-        retreiveDetails();
+        console.log(Date.now())
+        client.quit()
+        res.send(JSON.stringify(matches));
     });
     }
   })
