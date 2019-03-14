@@ -3,7 +3,6 @@ const express = require("express");
 const logger = require("morgan");
 const path = require("path");
 const session = require("express-session");
-
 const auth = require("./auth");
 const middleware = require("./middleware");
 

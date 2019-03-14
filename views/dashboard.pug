@@ -7,7 +7,26 @@ block content
   .card
     .card-body
       h2.text-center Willkommen, #{user.profile.firstName} #{user.profile.lastName} 
-      p Willkommen zum Komunat. Erstellen Sie jetzt ihr Werteprofil und vervollständigen Sie ihr Profil.
-      a.btn.btn-dark.btn-block(href='/komunat', role='button') Zum Komunat
-      a.btn.btn-dark.btn-block(href='/profile', role='button') Profil bearbeiten
-
+      .row
+        .col-sm-6
+          .card
+            .card-body
+              h5.card-title Meine Werte
+              p.card-text
+                | Für welche Werte stehst du? Finde es heraus und repräsentiere deine Werte
+              a.btn.btn-dark.btn-block(href='/komunat', role='button') Meine Werte
+        .col-sm-6
+          .card
+            .card-body
+              h5.card-title Meine Inhalte
+              p.card-text
+                | Für welche Inhalte stehst du? Finde es heraus und repräsentiere deine Inhalte
+              a.btn.btn-dark.btn-block(href='/komunat', role='button') Meine Inhalte
+      .row
+        .col-sm-12
+          .card
+            .card-body
+              h5.card-title Mein Profil
+              p.card-text
+                | Deine Wähler wollen wissen, wer du bist und wo du antrittst. Bearbeite hier dein Profil
+              a.btn.btn-dark.btn-block(href='/komunat', role='button') Profil bearbeiten

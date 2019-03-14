@@ -6,10 +6,19 @@ block variables
 block content
   .card
     .card-body
-      h2.text-center Los geht's, #{user.profile.firstName} #{user.profile.lastName} 
-      p Entscheide, was wichtiger für dich ist: 
-      a.btn.btn-info.btn-block(onclick='selected(0,"'+ userID +'")' role='button' id='#opt0') Option 1
-      a.btn.btn-info.btn-block(onclick='selected(1,"'+ userID +'")' role='button' id='#opt1') Option 2
+      h2.text-center Deine Werte, #{user.profile.firstName} #{user.profile.lastName} 
+      if valueList.length > 0
+        h6.text-muted Deine Werte (sortiert nach Wichtigkeit)
+        ul.list-group.list-group-flush
+        - valueList.forEach(function(entry){
+          li.list-group-item= entry.name
+        - });
+      else 
+        h2.text-center Los geht's, #{user.profile.firstName} #{user.profile.lastName} 
+        p Entscheide, was wichtiger für dich ist: 
+        a.btn.btn-info.btn-block(onclick='selected(0,"'+ userID +'")' role='button' id='#opt0') Option 1
+        a.btn.btn-info.btn-block(onclick='selected(1,"'+ userID +'")' role='button' id='#opt1') Option 2
+
 
   script       
         include ../js/main.js
