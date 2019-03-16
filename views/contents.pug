@@ -1,16 +1,16 @@
 extends layout
 
 block variables
-  - var title = "Deine Werte"
+  - var title = "Deine Aufgaben"
 
 block content
   .card
     .card-body
-      h2.text-center Deine Werte, #{user.profile.firstName} #{user.profile.lastName} 
-      if valueList.length > 0
-        h6.text-muted Deine Werte (sortiert nach Wichtigkeit)
+      h2.text-center Deine Aufgaben, #{user.profile.firstName} #{user.profile.lastName} 
+      if contentsList.length > 0
+        h6.text-muted Deine Aufgaben (sortiert nach Wichtigkeit)
         ul.list-group.list-group-flush
-        - valueList.forEach(function(entry){
+        - contentsList.forEach(function(entry){
           li.list-group-item= entry.name
         - });
       else 
@@ -20,4 +20,4 @@ block content
 
 
   script       
-        include ../js/values.js
+        include ../js/contents.js

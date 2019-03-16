@@ -30,51 +30,55 @@ var arr = [
     [
         {
             "id": 0,
-            "name": "Menschenrechte",
+            "name": "Bezahlbaren Wohnraum schaffen",
         },
         {
             "id": 1,
-            "name": "Meinungsfreiheit",
+            "name": "Preise für Bus und Bahn senken",
         },
         {
             "id": 2,
-            "name": "Religionsfreiheit",
+            "name": "Alternativen zum Auto fördern",
         },
         {
             "id": 3,
-            "name": "Soidarität",
+            "name": "Die Kinderbetreuung ausbauen",
         },
         {
             "id": 4,
-            "name": "Gerechtigkeit",
+            "name": "Keine neuen Schulden für die Stadt machen",
         },
         {
             "id": 5,
-            "name": "Frieden",
+            "name": "Für mehr Sicherheit im öffentlichen Raum sorgen",
         },
         {
             "id": 6,
-            "name": "Pressefreiheit",
+            "name": "Langfristige Integration und das Zusammenleben in der Stadt fördern",
         },
         {
             "id": 7,
-            "name": "Gleichberechtigung",
+            "name": "Schulen sanieren",
         },
         {
             "id": 8,
-            "name": "Chancengleichheit",
+            "name": "Subkultur fördern",
         },
         {
             "id": 9,
-            "name": "Patriotismus",
+            "name": "Soziale und kulturelle Teilhabe trotz kleinem Geldbeutel ermöglichen",
         },
         {
             "id": 10,
-            "name": "Tradition",
+            "name": "Die regionale Wirtschaft fördern",
         },
         {
             "id": 11,
-            "name": "Toleranz",
+            "name": "Eine klimaneutrale Stadt gestalten",
+        },
+        {
+            "id": 12,
+            "name": "Kommunalpolitik transparenter machen",
         }
     ]
 ]
@@ -239,10 +243,10 @@ function sendResult(a) {
         uuid: uuid
     }
     // Append the values 
-    res.values = a
+    res.contents = a
 
     var xhr = new XMLHttpRequest();
-    var url = "http://localhost:3000/result";
+    var url = "http://localhost:3000/contents/result";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {

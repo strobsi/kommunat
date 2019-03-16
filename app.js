@@ -11,6 +11,7 @@ const publicRouter = require("./routes/public");
 const usersRouter = require("./routes/users");
 const profileRouter = require("./routes/profile");
 const komunatRouter = require("./routes/komunat");
+const contentRouter = require("./routes/contents");
 const resultRouter = require("./routes/result");
 
 // App initialization
@@ -47,6 +48,7 @@ app.use("/", publicRouter);
 app.use("/dashboard", middleware.loginRequired, dashboardRouter);
 app.use("/profile",middleware.loginRequired, profileRouter);
 app.use("/komunat",middleware.loginRequired, komunatRouter);
+app.use("/contents",middleware.loginRequired, contentRouter);
 app.use("/result",resultRouter);
 app.use("/users",usersRouter);
 

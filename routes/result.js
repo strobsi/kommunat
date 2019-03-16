@@ -13,54 +13,6 @@ router.post('/',jsonParser, (req, res) => {
         host:"localhost",
         port:6379
     });
-    // Check if it is a candidate
-    if (req.body.metadata.isCandidate) {
-      // Candidate, insert into database if not already there.
-      console.log("We have a candidate here with the userID: " + req.body.metadata.uuid)
-      client.lrange("candidate_results",0,-1, function (err, cdts) {
-        console.log(cdts.length + " candidates:");
-        var isAlreadyInserted = false;
-        cdts.forEach(function (reply, i) {
-            console.log("    " + i + ": " + JSON.parse(reply).metadata.uuid);
-            if(JSON.parse(reply).metadata.uuid === req.body.metadata.uuid) {
-              isAlreadyInserted = true;
-            }
-        });
-        if (!isAlreadyInserted) {
-
-          const retreiveDetails = async () => {
-              // Get details based on match uuid.
-                var headers = {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-                  'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
-                };
-                const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+req.body.metadata.uuid;
-                const response = await fetch(userGet, { headers: headers });
-                const json = await response.json();
-                var cInfo = {
-                  name: json.profile.firstName + " " + json.profile.lastName,
-                  birthdate: json.profile.birthdate,
-                  list: json.profile.list,
-                  list_number: json.profile.list_number,
-                  district: json.profile.district
-                }
-                req.body.candidate = cInfo;
-                console.log("Candidate: " + JSON.stringify(req.body))
-                client.rpush("candidate_results",JSON.stringify(req.body))
-                client.quit()
-                res.send();
-          }
-          retreiveDetails();
-        } else {
-          // Remove the initial and override it
-          //lrem mylist -1 "uuid"
-          //registeredIndex
-          console.log("We already have registered this dude")
-        }
-        res.send();
-    });
-    } else {
       // No candidate, get matches
       client.rpush("results",JSON.stringify(req.body))
       console.log("Pushed results")
@@ -68,24 +20,26 @@ router.post('/',jsonParser, (req, res) => {
         var matches = [];
         console.log(Date.now())
         cdts.forEach(function (reply, i) {
-            var r = JSON.parse(reply)
-            var d = getDistance(req.body.values,r.values)
-            var res = {
-              distance: d,
-              uuid: r.metadata.uuid,
-              name: r.candidate.name,
-              birthdate: r.candidate.birthdate,
-              list: r.candidate.list,
-              list_number: r.candidate.list_number,
-              district: r.candidate.district
-            }
-            matches.push(res);
+            if (isCValid(reply)) {
+              var r = JSON.parse(reply)
+              var dVal = getDistance(req.body.values,r.values)
+              var iVal = getDistance(req.body.contents,r.contents)
+              var totalDistance = dVal+iVal;
+              var res = {
+                distance: totalDistance/144*100,
+                uuid: r.metadata.uuid,
+                name: r.candidate.name,
+                birthdate: r.candidate.birthdate,
+                list: r.candidate.list,
+                list_number: r.candidate.list_number,
+                district: r.candidate.district
+              }
+              matches.push(res);
+          }
         }); 
-        console.log(Date.now())
         client.quit()
         res.send(JSON.stringify(matches));
     });
-    }
   })
 
 function getDistance(x,y) {
@@ -93,7 +47,7 @@ function getDistance(x,y) {
     x = sortById(x)
     y = sortById(y)
     var arrVal = []
-    // Now just calculate the rating, pure math 
+    // Now just calculate the rating, pure math
     for(var i = 0; i < x.length; i++) {
         arrVal.push( (x[i].rating - y[i].rating) * (x[i].rating-y[i].rating) )
     }
@@ -117,6 +71,24 @@ function sortById(arr) {
       return 0;
     });
   return arr
+}
+
+function isCValid(r) {
+  j = {}
+    try {
+        j = JSON.parse(r);
+    } catch(e) {
+        console.log(e); // error in the above string (in this case, yes)!
+        return;
+  }
+  if(j.values !== undefined && j.contents !== undefined) {
+    console.log("not undefined")
+    if(j.values.length > 0 && j.contents.length > 0) {
+      console.log("more than one item")
+        return true
+    }
+  }
+  return false;
 }
 
 async function asyncForEach(array, callback) {
