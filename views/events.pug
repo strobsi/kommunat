@@ -1,0 +1,55 @@
+extends layout
+
+block variables
+  - var title = "Deine Veranstaltungen"
+
+block content
+  include modal
+  include removeModal
+  .card
+    .card-body
+      h2.text-center Deine Veranstaltungen, #{user.profile.firstName} #{user.profile.lastName} 
+    .row
+        .col-sm-3
+          .card
+            .card-body
+              h5.card-title Deine Veranstaltungen
+              .list-group
+              if events.length == 0
+                .list-group-item.list-group-item-action(href='#') Noch keine Veranstaltungen
+              else
+                - events.forEach(function(entry,i){
+                .list-group-item.list-group-item-action.event(onclick="selectedItem('" + i + "');")= entry.title
+                - });
+              button.btn.btn-primary.btn-block(type='button', data-toggle='modal', data-target='#newEventModal') Neue Veranstaltung
+        .col-sm-9
+          .card(id="detailView")
+            .card-body
+              h5.card-title(id="detailTitle")
+              form
+                .form-group
+                    label(for='exeventTitle') Titel der Veranstaltung
+                    input#exeventTitle.form-control(type='text', placeholder='Name der Veranstaltung')
+                .form-group
+                    label(for='exeventLocation') Ort der Veranstaltung
+                    input#exeventLocation.form-control(type='text', placeholder='Ort der Veranstaltung')
+                .form-group
+                    label(for='exeventStartDate') Start der Veranstaltung
+                    #exeventStartDate.input-group.date(placeholder='Start der Veranstaltung')
+                    input.form-control(type='text' name="startDate" id="exeventStartDateInput")
+                    span.input-group-addon
+                        span.glyphicon.glyphicon-calendar
+                .form-group
+                    label(for='exeventEndDate') Ende der Veranstaltung
+                    #exeventEndDate.input-group.date(placeholder='Ende der Veranstaltung')
+                    input.form-control(type='text' name="endDate" id="exeventEndDateInput")
+                    span.input-group-addon
+                        span.glyphicon.glyphicon-calendar
+                .form-group
+                    .row
+                        .col-sm-6
+                            button.btn.btn-danger.btn-block(type='button' onclick="showRemoval();") Löschen
+                        .col-sm-6
+                            button.btn.btn-info.btn-block(type='button' onclick="saveEvent();") Speichern
+  script(type='text/javascript') var events =!{JSON.stringify(events)}
+  script(src='js/events.js')

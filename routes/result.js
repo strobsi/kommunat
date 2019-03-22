@@ -5,20 +5,19 @@ const router = express.Router();
 const redis = require("redis")
 const request = require('request');
 const fetch = require('node-fetch');
+var db = require("../db/db_accessor")
 
 // Post result
 router.post('/',jsonParser, (req, res) => {
     // Store Results
-    client = redis.createClient({
-        host:"localhost",
-        port:6379
-    });
+      pushResultPromise = db.rpushResult(req.body);
+      pushResultPromise.then(function updateData(index) {
+        console.log("Pushed results")
+      })
       // No candidate, get matches
-      client.rpush("results",JSON.stringify(req.body))
-      console.log("Pushed results")
-      client.lrange("candidate_results",0,-1, function (err, cdts) {
+      candidatesPromise = db.getCandidates();
+      candidatesPromise.then(function cb(cdts) {
         var matches = [];
-        console.log(Date.now())
         cdts.forEach(function (reply, i) {
             if (isCValid(reply)) {
               var r = JSON.parse(reply)
@@ -27,7 +26,7 @@ router.post('/',jsonParser, (req, res) => {
               var totalDistance = dVal+iVal;
               var res = {
                 distance: totalDistance/144*100,
-                uuid: r.metadata.uuid,
+                uuid: req.userinfo.sub,
                 name: r.candidate.name,
                 birthdate: r.candidate.birthdate,
                 list: r.candidate.list,
@@ -37,7 +36,6 @@ router.post('/',jsonParser, (req, res) => {
               matches.push(res);
           }
         }); 
-        client.quit()
         res.send(JSON.stringify(matches));
     });
   })

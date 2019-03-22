@@ -22,9 +22,6 @@ var decisionCounter = 0;
 // used to track the time the user took to complete
 var startedTimeStamp = 0;
 
-// User mail to identify result
-var uuid = "";
-
 // These are the values we judge on currently, can be outsourced in long term 
 var arr = [
     [
@@ -130,8 +127,7 @@ function sort(fixed) {
 }
 
 // onClick event of the buttons
-function selected(index, id) {
-    uuid = id;
+function selected(index) {
     if (decisionCounter == 0) {
         startedTimeStamp = parseInt(Date.now() / 1000)
     }
@@ -240,7 +236,6 @@ function sendResult(a) {
         started: startedTimeStamp,
         finished: parseInt(Date.now() / 1000),
         decisions: decisionCounter,
-        uuid: uuid
     }
     // Append the values 
     res.contents = a

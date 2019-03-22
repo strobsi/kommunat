@@ -3,15 +3,13 @@ const redis = require("redis")
 const router = express.Router();
 const bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
+var db = require("../db/db_accessor")
 
 // Display the dashboard page
 router.get("/", (req, res) => {
-  getIndex("");
-  client = redis.createClient({
-    host:"localhost",
-    port:6379
-  });
-  client.lrange("candidate_results",0,-1, function (err, cdts) {
+  
+  candidatesPromise = db.getCandidates();
+  candidatesPromise.then(function cb(cdts) {
     var isAlreadyInserted = false;
     var vList = []
    cdts.forEach(function (reply, i) {
@@ -30,7 +28,7 @@ router.get("/", (req, res) => {
         }  
       }
     }
-});
+  });
    if (!isAlreadyInserted) {
       res.render("komunat", {userID: req.userinfo.sub, valueList: []  });
    }
@@ -43,16 +41,10 @@ router.get("/", (req, res) => {
 // Post result
 router.post('/result',jsonParser, (req, res) => {
   // Store Results
-  client = redis.createClient({
-      host:"localhost",
-      port:6379
-  });
-  client.on("error", function (err) {
-      console.log("Error " + err);
-  });
   var cList = []
+  candidatesPromise = db.getCandidates();
   // Candidate, insert into database if not already there.
-    client.lrange("candidate_results",0,-1, function (err, cdts) {
+  candidatesPromise.then(function cb(cdts) {
       console.log(cdts.length + " candidates:");
       var isAlreadyInserted = false;
       var cIndex = 0;
@@ -90,7 +82,7 @@ router.post('/result',jsonParser, (req, res) => {
                 'Content-Type': 'application/json',
                 'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
               };
-              const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+req.body.metadata.uuid;
+              const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+req.userinfo.sub;
               const response = await fetch(userGet, { headers: headers });
               const json = await response.json();
               var cInfo = {
@@ -103,16 +95,24 @@ router.post('/result',jsonParser, (req, res) => {
               req.body.candidate = cInfo;
               req.body.contents = cList;
               if (cList.length > 0) {
-              index = getIndex(req.userinfo.sub);
-              console.log("Setting existing")
-              client.lset("candidate_results",index,JSON.stringify(req.body))
+                console.log("Setting existin")
+                indexPromise = db.getIndex(req.userinfo.sub);
+                indexPromise.then(function updateData(index) {
+                    console.log("Finished promise")
+                    setPromise = db.setCandidate(req.body,index)
+                    setPromise.then(function cb(cdts) {
+                      res.send();
+                    });
+                })
               }
               else {
-              console.log("Pushing new")
-              client.rpush("candidate_results",JSON.stringify(req.body))
+                console.log("Pushing new")
+                req.body.metadata.uuid = req.userinfo.sub
+                rpushPromise = db.rpushCandidate(req.body)
+                rpushPromise.then(function cb(cdts) {
+                      res.send();
+                });
               }
-              client.quit()
-              res.send();
         }
         retreiveDetails();
       } else {
@@ -124,28 +124,5 @@ router.post('/result',jsonParser, (req, res) => {
       res.send();
   });
 })
-
-
-function getIndex(uuid) {
-  client = redis.createClient({
-    host:"localhost",
-    port:6379
-  });
-  client.lrange("candidate_results",0,-1, function (err, cdts) {
-    var cIndex = 0;
-    cdts.forEach(function (reply, i) {
-      j = {}
-          try {
-              j = JSON.parse(reply);
-          } catch(e) {
-              console.log(e); // error in the above string (in this case, yes)!
-              return;
-          }
-          if(j.metadata.uuid === uuid) {
-            return i;
-          }
-    }); 
-  });
-}
 
 module.exports = router;

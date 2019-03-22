@@ -1,0 +1,15 @@
+#removeModal.modal.fade
+  .modal-dialog
+    .modal-content
+      // Modal Header
+      .modal-header
+        h4.modal-title Veranstaltung löschen?
+        button.close(type='button', data-dismiss='modal') x
+      .modal-body
+        form
+          .form-group
+            p Veranstaltung wirklich löschen?
+      // Modal footer
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') Abbrechen
+        button.btn.btn-danger(type='submit' onclick="removeEvent();") Löschen

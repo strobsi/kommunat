@@ -8,20 +8,27 @@ block content
     .card-body
       h2.text-center Willkommen, #{user.profile.firstName} #{user.profile.lastName} 
       .row
-        .col-sm-6
+        .col-sm-4
           .card
             .card-body
               h5.card-title Meine Werte
               p.card-text
                 | Für welche Werte stehst du? Finde es heraus und repräsentiere deine Werte
               a.btn.btn-dark.btn-block(href='/komunat', role='button') Meine Werte
-        .col-sm-6
+        .col-sm-4
           .card
             .card-body
               h5.card-title Meine Inhalte
               p.card-text
                 | Für welche Inhalte stehst du? Finde es heraus und repräsentiere deine Inhalte
               a.btn.btn-dark.btn-block(href='/contents', role='button') Meine Inhalte
+        .col-sm-4
+          .card
+            .card-body
+              h5.card-title Meine Veranstaltungen
+              p.card-text
+                | Wo trittst du auf? Lass die Wähler wissen, wo sie dich finden können
+              a.btn.btn-dark.btn-block(href='/events', role='button') Meine Veranstaltungen
       .row
         .col-sm-12
           .card

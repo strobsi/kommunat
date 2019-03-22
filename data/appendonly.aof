@@ -691,3 +691,240 @@ $7
 results
 $1607
 {"metadata":{"isCandidate":false,"valueStarted":1552759612,"valueFinished":1552759622,"contentStarted":1552759624,"contentFinished":1552759635,"valueDecisions":25,"contentDecisions":28},"values":[{"id":3,"name":"Gerechtigkeit","rating":11},{"id":8,"name":"Wohlstand","rating":10},{"id":5,"name":"Meinungsfreiheit","rating":9},{"id":10,"name":"Tradition","rating":8},{"id":9,"name":"Selbstbestimmung","rating":7},{"id":6,"name":"Pressefreiheit","rating":6},{"id":7,"name":"Nachhaltigkeit","rating":5},{"id":11,"name":"Rechtsstaatlichkeit","rating":4},{"id":4,"name":"Toleranz","rating":3},{"id":0,"name":"Sicherheit","rating":2},{"id":1,"name":"Solidarität","rating":1},{"id":2,"name":"Menschenwürde","rating":0}],"contents":[{"id":2,"name":"Alternativen zum Auto fördern","rating":12},{"id":11,"name":"Eine klimaneutrale Stadt gestalten","rating":11},{"id":1,"name":"Preise für Bus und Bahn senken","rating":10},{"id":7,"name":"Schulen sanieren","rating":9},{"id":4,"name":"Keine neuen Schulden für die Stadt machen","rating":8},{"id":3,"name":"Die Kinderbetreuung ausbauen","rating":7},{"id":5,"name":"Für mehr Sicherheit im öffentlichen Raum sorgen","rating":6},{"id":12,"name":"Kommunalpolitik transparenter machen","rating":5},{"id":6,"name":"Langfristige Integration und das Zusammenleben in der Stadt fördern","rating":4},{"id":0,"name":"Bezahlbaren Wohnraum schaffen","rating":3},{"id":9,"name":"Soziale und kulturelle Teilhabe trotz kleinem Geldbeutel ermöglichen","rating":2},{"id":10,"name":"Die regionale Wirtschaft fördern","rating":1},{"id":8,"name":"Subkultur fördern","rating":0}]}
+*2
+$6
+SELECT
+$1
+0
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$15
+[object Object]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$0
+
+*2
+$3
+DEL
+$22
+e_00ujg0oq19HkhvpW40h7
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$129
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"asd","location":"asdasd","startDate":"21/03/19 12:00 AM","endDate":"21/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$262
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"asd","location":"asdasd","startDate":"21/03/19 12:00 AM","endDate":"21/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asd 2","location":"asodfhasd","startDate":"21/03/19 12:00 AM","endDate":"21/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$253
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"","location":"","startDate":"21/03/19 12:00 AM","endDate":"21/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asd 2","location":"asodfhasd","startDate":"21/03/19 12:00 AM","endDate":"21/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$239
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"","location":"","startDate":"21/03/19 12:00 AM","endDate":"21/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"","location":"","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$261
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Veranstaltung 1","location":"Foo bar","startDate":"21/03/19 12:00 AM","endDate":"21/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"","location":"","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$269
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Veranstaltung 1","location":"Veranstaltung 1","startDate":"21/03/19 12:00 AM","endDate":"21/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"","location":"","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$229
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Veranstaltung 1","location":"Ort 1","startDate":"20/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"","location":"","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$229
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Veranstaltung 1","location":"Ort 1","startDate":"04/02/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"","location":"","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*2
+$3
+DEL
+$22
+e_00ujg0oq19HkhvpW40h7
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$145
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Veranstaltung 1","location":"Location 1","startDate":"04/04/19 08:00 AM","endDate":"04/04/19 02:00 PM"}]
+*2
+$3
+DEL
+$22
+e_00ujg0oq19HkhvpW40h7
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$131
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"saiduh","location":"asodh","startDate":"22/03/19 12:00 AM","endDate":"29/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$264
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"saiduh","location":"asodh","startDate":"22/03/19 12:00 AM","endDate":"29/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"sadfiouh","location":"asdiuh","startDate":"03/04/19 12:00 AM","endDate":"03/04/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$397
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"saiduh","location":"asodh","startDate":"22/03/19 12:00 AM","endDate":"29/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"sadfiouh","location":"asdiuh","startDate":"03/04/19 12:00 AM","endDate":"03/04/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"foo bar","location":"foo bar","startDate":"17/04/19 07:00 PM","endDate":"17/04/19 08:00 PM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$403
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Echter Titel","location":"asodh","startDate":"22/03/19 12:00 AM","endDate":"29/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"sadfiouh","location":"asdiuh","startDate":"03/04/19 12:00 AM","endDate":"03/04/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"foo bar","location":"foo bar","startDate":"17/04/19 07:00 PM","endDate":"17/04/19 08:00 PM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$531
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Echter Titel","location":"asodh","startDate":"22/03/19 12:00 AM","endDate":"29/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"sadfiouh","location":"asdiuh","startDate":"03/04/19 12:00 AM","endDate":"03/04/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"foo bar","location":"foo bar","startDate":"17/04/19 07:00 PM","endDate":"17/04/19 08:00 PM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asdasd","location":"asd","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$531
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Echter Titel","location":"asodh","startDate":"22/03/19 12:00 AM","endDate":"29/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"sadfiouh","location":"asdiuh","startDate":"03/04/19 12:00 AM","endDate":"03/04/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"foo bar","location":"foo bar","startDate":"17/04/19 07:00 PM","endDate":"17/04/19 08:00 PM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asdasd","location":"asd","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$533
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Echter Titel 2","location":"asodh","startDate":"22/03/19 12:00 AM","endDate":"29/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"sadfiouh","location":"asdiuh","startDate":"03/04/19 12:00 AM","endDate":"03/04/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"foo bar","location":"foo bar","startDate":"17/04/19 07:00 PM","endDate":"17/04/19 08:00 PM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asdasd","location":"asd","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$533
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Echter Titel 2","location":"asodh","startDate":"22/03/19 12:00 AM","endDate":"29/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"sadfiouh","location":"asdiuh","startDate":"03/04/19 12:00 AM","endDate":"03/04/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"foo bar","location":"foo bar","startDate":"17/04/19 07:00 PM","endDate":"17/04/19 08:00 PM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asdasd","location":"asd","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$395
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"sadfiouh","location":"asdiuh","startDate":"03/04/19 12:00 AM","endDate":"03/04/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"foo bar","location":"foo bar","startDate":"17/04/19 07:00 PM","endDate":"17/04/19 08:00 PM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asdasd","location":"asd","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$262
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"sadfiouh","location":"asdiuh","startDate":"03/04/19 12:00 AM","endDate":"03/04/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asdasd","location":"asd","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$134
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"sadfiouh","location":"asdiuh","startDate":"03/04/19 12:00 AM","endDate":"03/04/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$2
+[]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$135
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Foo bar ","location":"Foo bar","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$260
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Foo bar ","location":"Foo bar","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asd","location":"asd","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$135
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Foo bar ","location":"Foo bar","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$260
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Foo bar ","location":"Foo bar","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asd","location":"asd","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$260
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Foo bar ","location":"Foo bar","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asd","location":"asd","startDate":"23/03/19 12:00 AM","endDate":"23/03/19 12:00 AM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$260
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"Foo bar ","location":"Foo bar","startDate":"22/03/19 12:00 AM","endDate":"22/03/19 12:00 AM"},{"uuid":"00ujg0oq19HkhvpW40h7","title":"asd","location":"asd","startDate":"23/03/19 12:00 AM","endDate":"23/03/19 09:00 PM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$126
+[{"uuid":"00ujg0oq19HkhvpW40h7","title":"asd","location":"asd","startDate":"23/03/19 12:00 AM","endDate":"23/03/19 09:00 PM"}]
+*3
+$3
+set
+$22
+e_00ujg0oq19HkhvpW40h7
+$2
+[]

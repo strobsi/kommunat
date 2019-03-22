@@ -1,0 +1,32 @@
+#newEventModal.modal.fade
+  .modal-dialog
+    .modal-content
+      // Modal Header
+      .modal-header
+        h4.modal-title Neue Veranstaltung
+        button.close(type='button', data-dismiss='modal') ×
+      // Modal body
+      .modal-body
+        form
+          .form-group
+            label(for='eventTitle') Titel der Veranstaltung
+            input#eventTitle.form-control(type='text', placeholder='Name der Veranstaltung')
+          .form-group
+            label(for='eventLocation') Ort der Veranstaltung
+            input#eventLocation.form-control(type='text', placeholder='Ort der Veranstaltung')
+          .form-group
+            label(for='eventStartDate') Start der Veranstaltung
+            #eventStartDate.input-group.date(placeholder='Start der Veranstaltung')
+              input.form-control(type='text' name="startDate" id="startDate")
+              span.input-group-addon
+                span.glyphicon.glyphicon-calendar
+          .form-group
+            label(for='eventEndDate') Ende der Veranstaltung
+            #eventEndDate.input-group.date(placeholder='Ende der Veranstaltung')
+              input.form-control(type='text' name="endDate" id="endDate")
+              span.input-group-addon
+                span.glyphicon.glyphicon-calendar
+      // Modal footer
+      .modal-footer
+        button.btn.btn-danger(type='button', data-dismiss='modal') Abbrechen
+        button.btn.btn-primary(type='submit' onclick="newEvent();") Speichern
