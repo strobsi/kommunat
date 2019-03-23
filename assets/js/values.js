@@ -76,6 +76,14 @@ var arr = [
     ]
 ]
 
+
+$(function() {
+    if(showModal) {
+        $('#firstModal').modal('toggle');
+        $("#attributeType").text(attr+" ");
+    }
+});
+
 newRound()
 
 
@@ -243,10 +251,15 @@ function sendResult(a) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Successfully stored values, continue with animation
-
+            $("#successModalValues").modal("toggle");
         }
     };
     var data = JSON.stringify(res);
     console.log(data)
     xhr.send(data);
+}
+
+function reloadValues() {
+    $("#successModalValues").modal("toggle");
+    location.reload(true);
 }

@@ -4,6 +4,8 @@ block variables
   - var title = "Deine Aufgaben"
 
 block content
+  include firstModal
+  include successModalContents
   .card
     .card-body
       h2.text-center Deine Aufgaben, #{user.profile.firstName} #{user.profile.lastName} 
@@ -18,6 +20,5 @@ block content
         a.btn.btn-info.btn-block(onclick='selected(0)' role='button' id='#opt0') Option 1
         a.btn.btn-info.btn-block(onclick='selected(1)' role='button' id='#opt1') Option 2
 
-
-  script       
-        include ../js/contents.js
+  script(type='text/javascript') var showModal =!{JSON.stringify(showModal)}; var attr =!{JSON.stringify(attr)}
+  script(src='js/contents.js')

@@ -20,7 +20,31 @@ module.exports = {
         })
     },
     getCandidate: function (id) {
-        console.log("Get candidate")
+        client = redis.createClient({
+            host:"localhost",
+            port:6379
+          });
+        client.on("error", function (err) {
+            console.log("Error occured: "+err)
+        });
+        return new Promise(function (resolve, reject) {
+            client.lrange("candidate_results",0,-1, function (err, cdts) {
+                var cIndex = 0;
+                cdts.forEach(function (reply, i) {
+                  j = {}
+                      try {
+                          j = JSON.parse(reply);
+                      } catch(e) {
+                          console.log(e); // error in the above string (in this case, yes)!
+                          return;
+                      }
+                      if(j.metadata.uuid === id) {
+                        resolve(j)
+                      }
+                });
+                reject("Something went terribly wrong");
+              });
+          })
     },
     getIndex: function(uuid) {
         client = redis.createClient({
@@ -59,7 +83,7 @@ module.exports = {
                 console.log("Error occured: "+err)
             });
             client.lset("candidate_results",index,JSON.stringify(val), function(err,reply) {
-                resolve(JSON.parse(reply));
+                resolve(j);
             });
         })
     }, 
@@ -73,7 +97,14 @@ module.exports = {
                 console.log("Error occured: "+err)
             });
             client.rpush("candidate_results",JSON.stringify(val), function(err,reply) {
-                resolve(JSON.parse(reply));
+                j = {}
+                      try {
+                          j = JSON.parse(reply);
+                      } catch(e) {
+                          console.log(e); // error in the above string (in this case, yes)!
+                          return;
+                }
+                resolve(j);
             });
         })
     },
@@ -87,7 +118,14 @@ module.exports = {
                 console.log("Error occured: "+err)
             });
             client.rpush("results",JSON.stringify(val), function(err,reply) {
-                resolve(JSON.parse(reply));
+                j = {}
+                      try {
+                          j = JSON.parse(reply);
+                      } catch(e) {
+                          console.log(e); // error in the above string (in this case, yes)!
+                          return;
+                }
+                resolve(j);
             });
         })
     }

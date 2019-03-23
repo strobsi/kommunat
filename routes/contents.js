@@ -24,16 +24,18 @@ router.get("/", (req, res) => {
           if (j.contents !== undefined) {
             if (j.contents.length > 0) {
                 isAlreadyInserted = true;
+                console.log("Already inserted")
                 cList = j.contents;  
             }  
           }
         }
    });
+
    if (!isAlreadyInserted) {
-    res.render("contents", {contentsList: []  });
+    res.render("contents", {contentsList: [], showModal: true, attr: "Aufgaben"});
    }
    else {
-     res.render("contents", {contentsList: cList  });
+     res.render("contents", {contentsList: cList, showModal: false, attr: "Aufgaben" });
     }
   });
 });
@@ -94,11 +96,11 @@ router.post('/result',jsonParser, (req, res) => {
               }
               req.body.candidate = cInfo;
               req.body.values = vList;
+              req.body.metadata.uuid = req.userinfo.sub;
               
               if (vList.length > 0) {
                   indexPromise = db.getIndex(req.userinfo.sub);
                   indexPromise.then(function updateData(index) {
-                      console.log("Finished promise")
                       setPromise = db.setCandidate(req.body,index)
                       setPromise.then(function cb(cdts) {
                         res.send();
@@ -107,7 +109,6 @@ router.post('/result',jsonParser, (req, res) => {
               }
               else {
                   console.log("Pushing new")
-                  req.body.metadata.uuid = req.userinfo.sub
                   rpushPromise = db.rpushCandidate(req.body)
                   rpushPromise.then(function cb(cdts) {
                         res.send();

@@ -55,3 +55,7 @@ input[type=file] {
   top:10px;
   right: 20px;
 }
+
+.sidenote {
+  font-size: 12px;
+}

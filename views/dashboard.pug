@@ -6,7 +6,19 @@ block variables
 block content
   .card
     .card-body
-      h2.text-center Willkommen, #{user.profile.firstName} #{user.profile.lastName} 
+      h2.text-center Willkommen, #{user.profile.firstName} #{user.profile.lastName}
+      if valuesInserted == false
+        .alert.alert-info.alert-dismissable
+            a.panel-close.close(data-dismiss='alert') ×
+            | Dein Profil ist noch nicht für Wähler sichtbar, da du deine 
+            strong Werte 
+            | noch nicht ermittelt hast.
+      if contentsInserted == false
+        .alert.alert-info.alert-dismissable
+            a.panel-close.close(data-dismiss='alert') ×
+            | Dein Profil ist noch nicht für Wähler sichtbar, da du deine 
+            strong Inhalte 
+            | noch nicht ermittelt hast.
       .row
         .col-sm-4
           .card

@@ -30,10 +30,10 @@ router.get("/", (req, res) => {
     }
   });
    if (!isAlreadyInserted) {
-      res.render("komunat", {userID: req.userinfo.sub, valueList: []  });
+      res.render("komunat", {valueList: [], showModal: true, attr: "Werte" });
    }
    else {
-      res.render("komunat", {userID: req.userinfo.sub, valueList: vList  });
+      res.render("komunat", {valueList: vList, showModal: false, attr: "Werte"  });
    }
   });
 });
@@ -94,11 +94,12 @@ router.post('/result',jsonParser, (req, res) => {
               }
               req.body.candidate = cInfo;
               req.body.contents = cList;
+              req.body.metadata.uuid = req.userinfo.sub;
+
               if (cList.length > 0) {
-                console.log("Setting existin")
+                console.log("Setting existing")
                 indexPromise = db.getIndex(req.userinfo.sub);
                 indexPromise.then(function updateData(index) {
-                    console.log("Finished promise")
                     setPromise = db.setCandidate(req.body,index)
                     setPromise.then(function cb(cdts) {
                       res.send();
