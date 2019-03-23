@@ -26,52 +26,52 @@ var startedTimeStamp = 0;
 var arr = [
     [
         {
-            "id": 0,
-            "name": "Menschenrechte",
+            "id":0,
+            "name":"Sicherheit",
         },
         {
-            "id": 1,
-            "name": "Meinungsfreiheit",
+            "id":1,
+            "name":"Solidarität",
         },
         {
-            "id": 2,
-            "name": "Religionsfreiheit",
+            "id":2,
+            "name":"Menschenwürde",
         },
         {
-            "id": 3,
-            "name": "Soidarität",
+            "id":3,
+            "name":"Gerechtigkeit",
         },
         {
-            "id": 4,
-            "name": "Gerechtigkeit",
+             "id":4,
+             "name":"Toleranz",
         },
         {
-            "id": 5,
-            "name": "Frieden",
+              "id":5,
+              "name":"Meinungsfreiheit",
         },
         {
-            "id": 6,
-            "name": "Pressefreiheit",
+              "id":6,
+              "name":"Pressefreiheit",
         },
         {
-            "id": 7,
-            "name": "Gleichberechtigung",
+             "id":7,
+             "name":"Nachhaltigkeit",
         },
         {
-            "id": 8,
-            "name": "Chancengleichheit",
+             "id":8,
+             "name":"Wohlstand",    
         },
         {
-            "id": 9,
-            "name": "Patriotismus",
+            "id":9,
+             "name":"Selbstbestimmung",
         },
         {
-            "id": 10,
-            "name": "Tradition",
+            "id":10,
+            "name":"Tradition",
         },
         {
-            "id": 11,
-            "name": "Toleranz",
+            "id":11,
+            "name":"Rechtsstaatlichkeit",
         }
     ]
 ]
