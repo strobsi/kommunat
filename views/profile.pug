@@ -42,15 +42,21 @@ block content
                         .form-group
                         label.col-lg-12.control-label(for="email") Email: <span class="sidenote">(Für Wähler <b>nicht</b> sichtbar)</span>
                         .col-lg-8
-                            input.form-control(name="email" type='text', value=user.profile.email)
+                            input.form-control(name="email" type='text', value=user.profile.email, data-validation="email")
+                        .form-group
+                        label.col-lg-12.control-label(for="phone") Telefon: <span class="sidenote">(Für Wähler <b>nicht</b> sichtbar)</span>
+                        .col-lg-8
+                            input.form-control(name="phone" type='tel', value=user.profile.phone, data-validation="number")
                         .form-group
                         label.col-lg-12.control-label(for="birthdate") Geburtsdatum: <span class="sidenote">(Für Wähler sichtbar)</span>
                         .col-lg-8
-                            input.form-control(name="birthdate" type='text', value=user.profile.birthdate)
+                            input.form-control(name="birthdate" type='text', value=user.profile.birthdate, data-validation="birthdate", data-validation-format="dd.mm.yyyy")
                         .form-group
                         label.col-lg-12.control-label(for="list") Liste: <span class="sidenote">(Für Wähler sichtbar)</span>
                         .col-lg-8
-                            input.form-control(name="list" type='text', value=user.profile.list)
+                            select#sel1.form-control(name="list" value=user.profile.list)
+                                option(value="null") -Liste auswählen-
+                                option(value="1") FDP
                         .form-group
                         label.col-lg-12.control-label(for="list_number") Listenplatz: <span class="sidenote">(Für Wähler sichtbar)</span>
                         .col-lg-8
@@ -58,7 +64,9 @@ block content
                         .form-group
                         label.col-lg-12.control-label(for="district") Stadtbezirk: <span class="sidenote">(Für Wähler sichtbar)</span>
                         .col-lg-8
-                            input.form-control(name="district" type='text', value=user.profile.district)
+                            select#sel1.form-control(name="district" value=user.profile.district)
+                                option(value="null") -Stadtbezirk auswählen-
+                                option(value="1") Untertürkheim
                         .form-group
                         label.col-md-12.control-label(for="password") Passwort:
                         .col-md-8

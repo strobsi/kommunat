@@ -6,6 +6,7 @@ const redis = require("redis")
 const request = require('request');
 const fetch = require('node-fetch');
 var db = require("../db/db_accessor")
+const expressSanitizer = require('express-sanitizer');
 
 // Post result
 router.post('/',jsonParser, (req, res) => {

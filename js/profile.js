@@ -7,6 +7,12 @@ var vanilla = new Croppie(el, {
     enableOrientation: true
 });
 
+$(function() {
+    $.validate({
+        lang : 'de',
+        modules : 'location, date, security, file'
+      });
+})
 
 function bindImage(img) {
     vanilla.bind({

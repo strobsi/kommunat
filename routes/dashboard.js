@@ -1,5 +1,6 @@
 const express = require("express");
 var db = require("../db/db_accessor")
+const expressSanitizer = require('express-sanitizer');
 
 const router = express.Router();
 

@@ -4,6 +4,7 @@ const router = express.Router();
 const bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 var formidable = require('formidable')
+const expressSanitizer = require('express-sanitizer');
 
 // Display the dashboard page
 router.get("/", (req, res) => {
@@ -15,7 +16,6 @@ router.get("/", (req, res) => {
 
 router.post("/",jsonParser,(req, res) => {
 
-  console.log("Update profile to: " +req.body.lastName)
   var user = req.user;
   var headers = {
       'Accept': 'application/json',
@@ -26,10 +26,11 @@ router.post("/",jsonParser,(req, res) => {
   var dataString = { profile: 
     { 
       firstName: req.body.firstName, 
-      lastName: req.body.lastName, 
+      lastName: req.body.lastName,
       email: req.body.email,
       birthdate: req.body.birthdate,
       list:req.body.list,
+      phone: req.body.phone,
       list_number: req.body.list_number,
       district: req.body.district,
     } 

@@ -4,6 +4,7 @@ const router = express.Router();
 const bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 var db = require("../db/db_accessor")
+const expressSanitizer = require('express-sanitizer');
 
 // Display the dashboard page
 router.get("/", (req, res) => {
