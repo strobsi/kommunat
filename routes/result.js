@@ -7,9 +7,17 @@ const request = require('request');
 const fetch = require('node-fetch');
 var db = require("../db/db_accessor")
 const expressSanitizer = require('express-sanitizer');
+const rateLimit = require("express-rate-limit");
+
+const apiLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 1 hour window
+  max: 10, // start blocking after 5 requests
+  message:
+    "Too many requests from this IP, please try again later"
+});
 
 // Post result
-router.post('/',jsonParser, (req, res) => {
+router.post('/',jsonParser,apiLimiter, (req, res) => {
 
      const s = req.sanitize(req.userinfo.sub);
 

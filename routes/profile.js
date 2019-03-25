@@ -5,6 +5,14 @@ const bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 var formidable = require('formidable')
 const expressSanitizer = require('express-sanitizer');
+const rateLimit = require("express-rate-limit");
+
+const apiLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 1 hour window
+  max: 10, // start blocking after 5 requests
+  message:
+    "Too many requests from this IP, please try again later"
+});
 
 // Display the dashboard page
 router.get("/", (req, res) => {
@@ -16,7 +24,7 @@ router.get("/", (req, res) => {
   res.render("profile",{ userImg:userImg });
 });
 
-router.post("/",jsonParser,(req, res) => {
+router.post("/",jsonParser,apiLimiter,(req, res) => {
 
   var user = req.user;
   var headers = {
@@ -56,7 +64,7 @@ router.post("/",jsonParser,(req, res) => {
   request(options, callback);
 })  
 
-router.post("/image",jsonParser,(req, res) => {
+router.post("/image",jsonParser,apiLimiter,(req, res) => {
   const s = req.sanitize(req.userinfo.sub);
 
   var form = new formidable.IncomingForm();

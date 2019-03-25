@@ -5,6 +5,14 @@ const bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 var evDB = require("../db/event_accessor")
 const expressSanitizer = require('express-sanitizer');
+const rateLimit = require("express-rate-limit");
+
+const apiLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 1 hour window
+    max: 10, // start blocking after 5 requests
+    message:
+      "Too many requests from this IP, please try again later"
+  });
 
 // Display the dashboard page
 router.get("/", (req, res) => {
@@ -29,7 +37,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.put("/", (req, res) => {  
+router.put("/", apiLimiter, (req, res) => {  
     const s = req.sanitize(req.userinfo.sub);
 
     req.body.title = req.sanitize(req.body.title);
@@ -44,7 +52,7 @@ router.put("/", (req, res) => {
 });
 
 
-router.post("/event", (req, res) => { 
+router.post("/event", apiLimiter, (req, res) => { 
     const s = req.sanitize(req.userinfo.sub);
 
     req.body.title = req.sanitize(req.body.title);
@@ -70,7 +78,7 @@ router.post("/event", (req, res) => {
 });
 
 
-router.delete("/:i", (req, res) => {  
+router.delete("/:i", apiLimiter, (req, res) => {  
     const s = req.sanitize(req.userinfo.sub);
     var x = req.params.i;
     var eventPromise = evDB.getEvents(s);
