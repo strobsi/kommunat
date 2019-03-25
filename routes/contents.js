@@ -6,9 +6,9 @@ var jsonParser = bodyParser.json()
 var db = require("../db/db_accessor")
 const expressSanitizer = require('express-sanitizer');
 
-// Display the dashboard page
 router.get("/", (req, res) => {
-
+  const s = req.sanitize(req.userinfo.sub);
+  
   candidatesPromise = db.getCandidates();
   candidatesPromise.then(function cb(cdts) {
     var isAlreadyInserted = false;
@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
             console.log(e); // error in the above string (in this case, yes)!
             return;
         }
-        if(j.metadata.uuid === req.userinfo.sub) {
+        if(j.metadata.uuid === s) {
           if (j.contents !== undefined) {
             if (j.contents.length > 0) {
                 isAlreadyInserted = true;
@@ -45,6 +45,7 @@ router.get("/", (req, res) => {
 router.post('/result',jsonParser, (req, res) => {
     // Store Results
     var vList = []
+    const s = req.sanitize(req.userinfo.sub);
 
     candidatesPromise = db.getCandidates();
     candidatesPromise.then(function cb(cdts) {
@@ -61,7 +62,7 @@ router.post('/result',jsonParser, (req, res) => {
               console.log(e); // error in the above string (in this case, yes)!
               return;
           }
-          if(j.metadata.uuid === req.userinfo.sub) {
+          if(j.metadata.uuid === s) {
                   cIndex = i;
                   if (j.contents !== undefined) {
                     if (j.contents.length > 0) {
@@ -85,7 +86,7 @@ router.post('/result',jsonParser, (req, res) => {
                 'Content-Type': 'application/json',
                 'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
               };
-              const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+req.userinfo.sub;
+              const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+s;
               const response = await fetch(userGet, { headers: headers });
               const json = await response.json();
               var cInfo = {
@@ -95,12 +96,13 @@ router.post('/result',jsonParser, (req, res) => {
                 list_number: json.profile.list_number,
                 district: json.profile.district
               }
+
               req.body.candidate = cInfo;
               req.body.values = vList;
-              req.body.metadata.uuid = req.userinfo.sub;
-              
+              req.body.metadata.uuid = s;
+                
               if (vList.length > 0) {
-                  indexPromise = db.getIndex(req.userinfo.sub);
+                  indexPromise = db.getIndex(s);
                   indexPromise.then(function updateData(index) {
                       setPromise = db.setCandidate(req.body,index)
                       setPromise.then(function cb(cdts) {

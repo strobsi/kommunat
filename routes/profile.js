@@ -8,7 +8,9 @@ const expressSanitizer = require('express-sanitizer');
 
 // Display the dashboard page
 router.get("/", (req, res) => {
-  var userID = String(req.userinfo.sub);
+  const s = req.sanitize(req.userinfo.sub);
+
+  var userID = String(s);
   var userImg = "http://localhost:3000/uploads/"+userID+".png"
   console.log(userImg)
   res.render("profile",{ userImg:userImg });
@@ -25,14 +27,13 @@ router.post("/",jsonParser,(req, res) => {
 
   var dataString = { profile: 
     { 
-      firstName: req.body.firstName, 
-      lastName: req.body.lastName,
-      email: req.body.email,
-      birthdate: req.body.birthdate,
-      list:req.body.list,
-      phone: req.body.phone,
-      list_number: req.body.list_number,
-      district: req.body.district,
+      firstName: req.sanitize(req.body.firstName), 
+      lastName: req.sanitize(req.body.lastName),
+      email: req.sanitize(req.body.email),
+      birthdate: req.sanitize(req.body.birthdate),
+      list: req.sanitize(req.body.list),
+      list_number: req.sanitize(req.body.list_number),
+      district: req.sanitize(req.body.district),
     } 
   };
 
@@ -48,7 +49,7 @@ router.post("/",jsonParser,(req, res) => {
           res.render("profile");
       }
       else {
-        console.log("Error: ")
+        console.log("Error: " + error)
         console.log(error)
       }
   }
@@ -56,13 +57,15 @@ router.post("/",jsonParser,(req, res) => {
 })  
 
 router.post("/image",jsonParser,(req, res) => {
+  const s = req.sanitize(req.userinfo.sub);
+
   var form = new formidable.IncomingForm();
   form.parse(req);
   form.on('fileBegin', function (name, file){
-      file.path = __dirname + '/../assets/uploads/' + req.userinfo.sub+".png";
+      file.path = __dirname + '/../assets/uploads/' + s+".png";
   });
   form.on('file', function (name, file){
-      console.log('Uploaded ' + req.userinfo.sub+".png");
+      console.log('Uploaded ' + s+".png");
       res.render("profile");
   });
 });

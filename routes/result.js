@@ -10,6 +10,9 @@ const expressSanitizer = require('express-sanitizer');
 
 // Post result
 router.post('/',jsonParser, (req, res) => {
+
+     const s = req.sanitize(req.userinfo.sub);
+
     // Store Results
       pushResultPromise = db.rpushResult(req.body);
       pushResultPromise.then(function updateData(index) {
@@ -21,13 +24,19 @@ router.post('/',jsonParser, (req, res) => {
         var matches = [];
         cdts.forEach(function (reply, i) {
             if (isCValid(reply)) {
-              var r = JSON.parse(reply)
+              var r = {}
+              try {
+                  r = JSON.parse(reply);
+              } catch(e) {
+                  console.log(e); // error in the above string (in this case, yes)!
+                  return;
+              }
               var dVal = getDistance(req.body.values,r.values)
               var iVal = getDistance(req.body.contents,r.contents)
               var totalDistance = dVal+iVal;
               var res = {
                 distance: totalDistance/144*100,
-                uuid: req.userinfo.sub,
+                uuid: s,
                 name: r.candidate.name,
                 birthdate: r.candidate.birthdate,
                 list: r.candidate.list,

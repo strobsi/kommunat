@@ -7,7 +7,8 @@ const router = express.Router();
 // Display the dashboard page
 router.get("/", (req, res) => {
 
-  candidatesPromise = db.getCandidate(req.userinfo.sub);
+  var s = req.sanitize(req.userinfo.sub);
+  candidatesPromise = db.getCandidate(s);
   candidatesPromise.then(function cb(c) {
       var valuesInserted, contentsInserted = true;
       if(c.values.length == 0) {
