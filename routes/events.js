@@ -6,6 +6,8 @@ var jsonParser = bodyParser.json()
 var evDB = require("../db/event_accessor")
 const expressSanitizer = require('express-sanitizer');
 const rateLimit = require("express-rate-limit");
+var Validator = require('jsonschema').Validator;
+var schemata = require("../utils/const");
 
 const apiLimiter = rateLimit({
     windowMs: 10 * 60 * 1000, // 1 hour window
@@ -16,6 +18,7 @@ const apiLimiter = rateLimit({
 
 // Display the dashboard page
 router.get("/", (req, res) => {
+
     var ev = []
     const s = req.sanitize(req.userinfo.sub);
 
@@ -38,45 +41,59 @@ router.get("/", (req, res) => {
 });
 
 router.put("/", apiLimiter, (req, res) => {  
-    const s = req.sanitize(req.userinfo.sub);
 
-    req.body.title = req.sanitize(req.body.title);
-    req.body.location = req.sanitize(req.body.location);
-    req.body.startDate = req.sanitize(req.body.startDate);
-    req.body.endDate = req.sanitize(req.body.endDate);
-
-    var setEventP = evDB.setEvent(JSON.stringify(req.body),s);
-    setEventP.then(function cb(evts) {
+    var v = new Validator();
+    if(v.validate(req.body, schemata.eventSchema()).valid) {
+        const s = req.sanitize(req.userinfo.sub);   
+        console.log(req.body);
+        for (var i = 0; i < req.body.length; i++) {
+            req.body[i].title = req.sanitize(req.body[i].title);
+            req.body[i].location = req.sanitize(req.body[i].location);
+            req.body[i].startDate = req.sanitize(req.body[i].startDate);
+            req.body[i].endDate = req.sanitize(req.body[i].endDate);
+        }
+        var setEventP = evDB.setEvent(JSON.stringify(req.body),s);
+        setEventP.then(function cb(evts) {
+            res.send();
+        });
+    }
+    else {
+        res.status(400);
         res.send();
-    });
+    }
 });
 
 
 router.post("/event", apiLimiter, (req, res) => { 
-    const s = req.sanitize(req.userinfo.sub);
 
-    req.body.title = req.sanitize(req.body.title);
-    req.body.location = req.sanitize(req.body.location);
-    req.body.startDate = req.sanitize(req.body.startDate);
-    req.body.endDate = req.sanitize(req.body.endDate);
-
-    var eventPromise = evDB.getEvents(s);
-    eventPromise.then(function cb(evts) {
-        var js = {}
-        try {
-            js = JSON.parse(evts);
-        } catch(e) {
-            console.log(e); // error in the above string (in this case, yes)!
-            return;
-        }
-       js.push(req.body);
-       var setEventP = evDB.setEvent(JSON.stringify(js),s);
-       setEventP.then(function cb(evts) {
-            res.send();
-       });
-    });
+    var v = new Validator();
+    if(v.validate(req.body, schemata.eventSchemaNew()).valid) {
+        const s = req.sanitize(req.userinfo.sub);
+        req.body.title = req.sanitize(req.body.title);
+        req.body.location = req.sanitize(req.body.location);
+        req.body.startDate = req.sanitize(req.body.startDate);
+        req.body.endDate = req.sanitize(req.body.endDate);
+        var eventPromise = evDB.getEvents(s);
+        eventPromise.then(function cb(evts) {
+            var js = {}
+            try {
+                js = JSON.parse(evts);
+            } catch(e) {
+                console.log(e); // error in the above string (in this case, yes)!
+                return;
+            }
+        js.push(req.body);
+        var setEventP = evDB.setEvent(JSON.stringify(js),s);
+        setEventP.then(function cb(evts) {
+                res.send();
+        });
+        });
+    }
+    else {
+        res.status(400);
+        res.send();
+    }
 });
-
 
 router.delete("/:i", apiLimiter, (req, res) => {  
     const s = req.sanitize(req.userinfo.sub);
@@ -101,7 +118,5 @@ router.delete("/:i", apiLimiter, (req, res) => {
        });
     });
 });
-
-
 
 module.exports = router;

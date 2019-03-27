@@ -6,6 +6,8 @@ var jsonParser = bodyParser.json()
 var db = require("../db/db_accessor")
 const expressSanitizer = require('express-sanitizer');
 const rateLimit = require("express-rate-limit");
+var Validator = require('jsonschema').Validator;
+var schemata = require('../utils/const');
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 1 hour window
@@ -52,6 +54,7 @@ router.get("/", (req, res) => {
 // Post result
 router.post('/result',jsonParser, apiLimiter, (req, res) => {
     // Store Results
+
     var vList = []
     const s = req.sanitize(req.userinfo.sub);
 
@@ -87,6 +90,7 @@ router.post('/result',jsonParser, apiLimiter, (req, res) => {
                 }
       });
       if (!isAlreadyInserted) {
+
         const retreiveDetails = async () => {
             // Get details based on match uuid.
               var headers = {
@@ -104,12 +108,32 @@ router.post('/result',jsonParser, apiLimiter, (req, res) => {
                 list_number: json.profile.list_number,
                 district: json.profile.district
               }
-
               req.body.candidate = cInfo;
               req.body.values = vList;
               req.body.metadata.uuid = s;
                 
               if (vList.length > 0) {
+
+                  var v = new Validator();
+                  if(!v.validate(req.body, schemata.contentSchemaExisting()).valid) {
+                      res.status(400);
+                      res.send();
+                  }
+                  else {
+                    console.log("Setting existing")
+                    console.log(req.body)
+                  for (var i = 0; i < req.body.contents.length; i++) {
+                     req.body.contents[i].name = req.sanitize(req.body.contents[i].name);
+                  }
+                  for (var i = 0; i < req.body.values.length; i++) {
+                    req.body.values[i].name = req.sanitize(req.body.values[i].name);
+                  }
+                  req.body.candidate.name = req.sanitize(req.body.candidate.name);
+                  req.body.candidate.birthdate = req.sanitize(req.body.candidate.birthdate);
+                  req.body.candidate.list = req.sanitize(req.body.candidate.list);
+                  req.body.candidate.list_number = req.sanitize(req.body.candidate.list_number);
+                  req.body.candidate.district = req.sanitize(req.body.candidate.district);
+
                   indexPromise = db.getIndex(s);
                   indexPromise.then(function updateData(index) {
                       setPromise = db.setCandidate(req.body,index)
@@ -117,13 +141,30 @@ router.post('/result',jsonParser, apiLimiter, (req, res) => {
                         res.send();
                       });
                   })
+                  }
               }
               else {
+                  var v = new Validator();
+                  if(!v.validate(req.body, schemata.contentSchema()).valid) {
+                      res.status(400);
+                      res.send();
+                  }
+                  else {
+                  for (var i = 0; i < req.body.contents.length; i++) {
+                      req.body.contents[i].name = req.sanitize(req.body.contents[i].name);
+                  }
+                  req.body.candidate.name = req.sanitize(req.body.candidate.name);
+                  req.body.candidate.birthdate = req.sanitize(req.body.candidate.birthdate);
+                  req.body.candidate.list = req.sanitize(req.body.candidate.list);
+                  req.body.candidate.list_number = req.sanitize(req.body.candidate.list_number);
+                  req.body.candidate.district = req.sanitize(req.body.candidate.district);
                   console.log("Pushing new")
+                  console.log(req.body)
                   rpushPromise = db.rpushCandidate(req.body)
                   rpushPromise.then(function cb(cdts) {
                         res.send();
                       });
+                  }
               }
         }
         retreiveDetails();

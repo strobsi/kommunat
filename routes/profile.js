@@ -6,6 +6,8 @@ var jsonParser = bodyParser.json()
 var formidable = require('formidable')
 const expressSanitizer = require('express-sanitizer');
 const rateLimit = require("express-rate-limit");
+var Validator = require('jsonschema').Validator;
+var schemata = require('../utils/const');
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 1 hour window
@@ -33,35 +35,26 @@ router.post("/",jsonParser,apiLimiter,(req, res) => {
       'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
   };
 
-  var dataString = { profile: 
-    { 
-      firstName: req.sanitize(req.body.firstName), 
-      lastName: req.sanitize(req.body.lastName),
-      email: req.sanitize(req.body.email),
-      birthdate: req.sanitize(req.body.birthdate),
-      list: req.sanitize(req.body.list),
-      list_number: req.sanitize(req.body.list_number),
-      district: req.sanitize(req.body.district),
-    } 
-  };
+  console.log(req.body);
 
-  var options = {
-      url: 'https://dev-664243.oktapreview.com/api/v1/users/'+user.id,
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(dataString),
-  };
-
-  function callback(error, response, body) {
-      if (!error && response.statusCode == 200) {
-          res.render("profile");
-      }
-      else {
-        console.log("Error: " + error)
-        console.log(error)
-      }
+  var v = new Validator();
+    if(!v.validate(req.body, schemata.profileSchema()).valid) {
+        res.status(400);
+        res.send();
+    }
+    else {
+    var dataString = { profile: 
+      { 
+        birthdate: req.sanitize(req.body.birthdate),
+        list: req.sanitize(req.body.list),
+        list_number: req.sanitize(req.body.list_number),
+        district: req.sanitize(req.body.district),
+        phone: req.sanitize(req.body.phone)
+      } 
+    };
+    // TODO: insert into our db
   }
-  request(options, callback);
+
 })  
 
 router.post("/image",jsonParser,apiLimiter,(req, res) => {

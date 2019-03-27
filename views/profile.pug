@@ -32,18 +32,6 @@ block content
                     h3 Deine Daten
                     form.form-horizontal(role='form' method='POST' action='/profile')
                         .form-group
-                        label.col-lg-12.control-label(for="firstName") Vorname: <span class="sidenote">(Für Wähler sichtbar)</span>
-                        .col-lg-8
-                            input.form-control(name="firstName" type='text', value=user.profile.firstName )
-                        .form-group
-                        label.col-lg-12.control-label(for="lastName") Nachname: <span class="sidenote">(Für Wähler sichtbar)</span>
-                        .col-lg-8
-                            input.form-control(name="lastName" type='text', value=user.profile.lastName)
-                        .form-group
-                        label.col-lg-12.control-label(for="email") Email: <span class="sidenote">(Für Wähler <b>nicht</b> sichtbar)</span>
-                        .col-lg-8
-                            input.form-control(name="email" type='text', value=user.profile.email, data-validation="email")
-                        .form-group
                         label.col-lg-12.control-label(for="phone") Telefon: <span class="sidenote">(Für Wähler <b>nicht</b> sichtbar)</span>
                         .col-lg-8
                             input.form-control(name="phone" type='tel', value=user.profile.phone, data-validation="number")
@@ -67,14 +55,6 @@ block content
                             select#sel1.form-control(name="district" value=user.profile.district)
                                 option(value="null") -Stadtbezirk auswählen-
                                 option(value="1") Untertürkheim
-                        .form-group
-                        label.col-md-12.control-label(for="password") Passwort:
-                        .col-md-8
-                            input.form-control(name="password" type='password', value='11111122333')
-                        .form-group
-                        label.col-md-12.control-label(for="password_confirm") Passwort bestätigen:
-                        .col-md-8
-                            input.form-control(name="password" type='password', value='11111122333')
                         .form-group
                         label.col-md-12.control-label
                         .col-md-8

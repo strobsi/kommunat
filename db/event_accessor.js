@@ -1,6 +1,9 @@
 // eventdatabase.js
 // ========
 const redis = require("redis")
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotalySecretKey');
+ 
 
 module.exports = {
     getEvents: function (uuid) {
@@ -16,7 +19,8 @@ module.exports = {
             var eID = "e_"+uuid;
             client.get(eID, function(err, reply) {
                 if (reply !== null && reply !== undefined) {
-                    resolve(reply)
+                    const decryptedString = cryptr.decrypt(reply);
+                    resolve(decryptedString)
                 }
                 else {
                     var empty = []
@@ -27,6 +31,7 @@ module.exports = {
         });
     },
     setEvent: function(ev,uuid) {
+        console.log(uuid);
         return new Promise(function(resolve, reject){
             client = redis.createClient({
                 host:"localhost",
@@ -36,8 +41,10 @@ module.exports = {
                 console.log("Error occured: "+err)
             });
 
+            encryptedString = cryptr.encrypt((ev));
+
             var eID = "e_"+uuid;
-            client.set(eID,ev, function(err, reply) {
+            client.set(eID,encryptedString, function(err, reply) {
                     resolve(reply)
             });
         });
