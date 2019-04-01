@@ -7,6 +7,7 @@ block content
   .card
     .card-body
       h2.text-center Willkommen, #{user.profile.firstName} #{user.profile.lastName}
+      h5.text-center Hier kannst du dir dein persönliches Profil im Komunat anlegen.
       if valuesInserted == false
         .alert.alert-info.alert-dismissable
             a.panel-close.close(data-dismiss='alert') ×
@@ -25,21 +26,21 @@ block content
             .card-body
               h5.card-title Meine Werte
               p.card-text
-                | Für welche Werte stehst du? Finde es heraus und repräsentiere deine Werte
+                | Für welche Werte stehst du? Klicke immer den Wert an, der dir persönlich wichtiger ist. Damit wird dein persönliches Ranking erstellt.
               a.btn.btn-dark.btn-block(href='/komunat', role='button') Meine Werte
         .col-sm-4
           .card
             .card-body
-              h5.card-title Meine Inhalte
+              h5.card-title Meine Aufgaben
               p.card-text
-                | Für welche Inhalte stehst du? Finde es heraus und repräsentiere deine Inhalte
+                | Für welche kommunalpolitischen Inhalte stehst du? Klicke immer die Aufgabe an, die dir persönlich wichtiger ist. Damit wird dein persönliches Ranking erstellt.
               a.btn.btn-dark.btn-block(href='/contents', role='button') Meine Inhalte
         .col-sm-4
           .card
             .card-body
               h5.card-title Meine Veranstaltungen
               p.card-text
-                | Wo trittst du auf? Lass die Wähler wissen, wo sie dich finden können
+                | Wo trittst du auf? Lass die Wähler wissen, wo sie dich finden können.
               a.btn.btn-dark.btn-block(href='/events', role='button') Meine Veranstaltungen
       .row
         .col-sm-12
@@ -47,5 +48,5 @@ block content
             .card-body
               h5.card-title Mein Profil
               p.card-text
-                | Deine Wähler wollen wissen, wer du bist und wo du antrittst. Bearbeite hier dein Profil
+                | Die WählerInnen wollen wissen, wer du bist! Erstelle hier Dein persönliches Profil mit Bild, Zitat und den Veranstaltungen, auf denen man dich vor der Wahl antreffen kann. Diesen Bereich kannst du jederzeit bis zur Wahl bearbeiten.
               a.btn.btn-dark.btn-block(href='/profile', role='button') Profil bearbeiten

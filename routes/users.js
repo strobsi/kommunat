@@ -6,6 +6,7 @@ const router = express.Router();
 // Log a user out
 router.get("/logout", (req, res) => {
   req.logout();
+  req.session.destroy();
   res.redirect("/");
 });
 

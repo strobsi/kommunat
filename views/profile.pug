@@ -10,7 +10,7 @@ block content
                 // left column
                 .col-md-12.text-center
                     h2 Dein Profil
-                    hr
+                    
             .row
                 .col-md-3
                     .row
@@ -29,37 +29,48 @@ block content
                     hr
                     // edit form column
                 .col-md-9.personal-info
-                    h3 Deine Daten
+                    h3 Deine Daten:
                     form.form-horizontal(role='form' method='POST' action='/profile')
                         .form-group
-                        label.col-lg-12.control-label(for="phone") Telefon: <span class="sidenote">(Für Wähler <b>nicht</b> sichtbar)</span>
+                        label.col-lg-12.control-label(for="phone") Telefon:
                         .col-lg-8
-                            input.form-control(name="phone" type='tel', value=user.profile.phone, data-validation="number")
+                            input.form-control(name="phone" type='tel', value=u.phone, data-validation="number")
+                            <span class="sidenote"> Wird <b>NICHT</b> öffentlich angezeigt</span>
                         .form-group
-                        label.col-lg-12.control-label(for="birthdate") Geburtsdatum: <span class="sidenote">(Für Wähler sichtbar)</span>
+                        label.col-lg-12.control-label(for="birthdate") Geburtsdatum:
                         .col-lg-8
-                            input.form-control(name="birthdate" type='text', value=user.profile.birthdate, data-validation="birthdate", data-validation-format="dd.mm.yyyy")
+                            input.form-control(name="birthdate" type='text', placeholder="dd.mm.yyyy" value=u.birthdate, data-validation="birthdate", data-validation-format="dd.mm.yyyy")
+                            <span class="sidenote"> Wird als Alter (z.B 35) öffentlich angezeigt</span>
                         .form-group
-                        label.col-lg-12.control-label(for="list") Liste: <span class="sidenote">(Für Wähler sichtbar)</span>
+                        label.col-lg-12.control-label(for="list") Liste:
                         .col-lg-8
-                            select#sel1.form-control(name="list" value=user.profile.list)
+                            select#sel1.form-control(name="list", value=u.list)
                                 option(value="null") -Liste auswählen-
-                                option(value="1") FDP
+                                option(value="1" selected= u.list == 1) FDP
+                            <span class="sidenote"> Wird öffentlich angezeigt</span>
                         .form-group
-                        label.col-lg-12.control-label(for="list_number") Listenplatz: <span class="sidenote">(Für Wähler sichtbar)</span>
+                        label.col-lg-12.control-label(for="list_number") Listenplatz:
                         .col-lg-8
-                            input.form-control(name="list_number" type='text', value=user.profile.list_number)
+                            input.form-control(name="list_number" type='text', value=u.list_number, data-validation="number", data-validation-allowing="range[1;60]")
+                            <span class="sidenote"> Wird öffentlich angezeigt</span>
                         .form-group
-                        label.col-lg-12.control-label(for="district") Stadtbezirk: <span class="sidenote">(Für Wähler sichtbar)</span>
+                        label.col-lg-12.control-label(for="district") Stadtbezirk:
                         .col-lg-8
-                            select#sel1.form-control(name="district" value=user.profile.district)
+                            select#sel1.form-control(name="district", value=u.district)
                                 option(value="null") -Stadtbezirk auswählen-
-                                option(value="1") Untertürkheim
+                                option(value="1" selected= u.district == 1) Untertürkheim
+                            <span class="sidenote"> Wird öffentlich angezeigt</span>
                         .form-group
-                        label.col-md-12.control-label
-                        .col-md-8
-                            input.btn.btn-primary(type='submit', value='Speichern')
-            hr
-
+                        label.col-lg-12.control-label(for="motto") Dein Motto (ein kurzer Satz, der mich beschreibt/beschreibt für was ich stehe):
+                        .col-lg-8
+                            textarea.form-control(name="motto" type='text', data-validation="length" data-validation-length="max150") #{u.motto}
+                            <span class="sidenote"> Wird öffentlich angezeigt</span>
+                        .form-group
+                        .row
+                            .col-md-6
+                                input.btn.btn-primary(type='submit', value='Speichern')
+                            .col-md-6
+                                a.btn.btn-primary(href='https://dev-664243.oktapreview.com/enduser/settings', role='button', aria-disabled='true') Persönliche Daten bearbeiten
+                        
         script       
             include ../js/profile.js

@@ -25,13 +25,14 @@ html(lang="en")
         span.navbar-toggler-icon
       if user == undefined
           li.nav-item
-            a.navbar-brand(href='/') Komunat - Kandidatenportal
+            a.navbar-brand(href='/') Komunat - KandidatInnen-Portal
       else
-          a.navbar-brand(href='/dashboard') Komunat - Kandidatenportal
+          a.navbar-brand(href='/dashboard') Komunat - KandidatInnen-Portal
+          a.nav-item.dashboardLink(href='/dashboard') Dashboard
       #navbar.collapse.navbar-collapse.justify-content-between
       #navbarSupportedContent.collapse.navbar-collapse.justify-content-between
         .navbar-nav
-          a.nav-item.nav-link(href='#') 
+          a.nav-item.nav-link(href='#')
         .navbar-nav
           if user == undefined
             a.nav-item.nav-link(href='/users/login') Login / Registrieren
@@ -40,4 +41,11 @@ html(lang="en")
 
     block content
 
-          
+    footer.footer
+        .row
+          .col-md-2.text-center
+            a(href='/dsgvo') DSGVO
+          .col-md-8.text-center
+            p.footerTxt Made with <3 in Stuttgart
+          .col-md-2.text-center
+            a(href='/impressum') Impressum

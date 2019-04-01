@@ -65,6 +65,7 @@ router.post('/result',jsonParser, apiLimiter, (req, res) => {
       console.log(cdts.length + " candidates:");
       var isAlreadyInserted = false;
       var cIndex = 0;
+      var exIst = {};
       var cdtsLength = cdts.length;
       cdts.forEach(function (reply, i) {
           j = {}
@@ -75,6 +76,7 @@ router.post('/result',jsonParser, apiLimiter, (req, res) => {
               return;
           }
           if(j.metadata.uuid === s) {
+                  exIst = j;
                   cIndex = i;
                   if (j.values !== undefined) {
                     if (j.values.length > 0) {
@@ -102,14 +104,9 @@ router.post('/result',jsonParser, apiLimiter, (req, res) => {
               const userGet = 'https://dev-664243.oktapreview.com/api/v1/users/'+s;
               const response = await fetch(userGet, { headers: headers });
               const json = await response.json();
-              var cInfo = {
-                name: json.profile.firstName + " " + json.profile.lastName,
-                birthdate: json.profile.birthdate,
-                list: json.profile.list,
-                list_number: json.profile.list_number,
-                district: json.profile.district
-              }
-              req.body.candidate = cInfo;
+
+              exIst.candidate.name = json.profile.firstName + " " + json.profile.lastName;
+              req.body.candidate = exIst.candidate;
               req.body.contents = cList;
               req.body.metadata.uuid = s;
 

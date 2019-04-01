@@ -15,6 +15,8 @@ const komunatRouter = require("./routes/komunat");
 const contentRouter = require("./routes/contents");
 const eventRouter = require("./routes/events");
 const resultRouter = require("./routes/result");
+const dsgvoRouter = require("./routes/dsgvo");
+const impressumRouter = require("./routes/impressum");
 
 // App initialization
 const app = express();
@@ -53,8 +55,10 @@ app.use("/profile",middleware.loginRequired, profileRouter);
 app.use("/komunat",middleware.loginRequired, komunatRouter);
 app.use("/contents",middleware.loginRequired, contentRouter);
 app.use("/events",middleware.loginRequired, eventRouter);
-app.use("/result",resultRouter);
-app.use("/users",usersRouter);
+app.use("/result", resultRouter);
+app.use("/users", usersRouter);
+app.use("/impressum", impressumRouter);
+app.use("/dsgvo", dsgvoRouter);
 
 // Error handlers
 app.use(function(req, res, next) {

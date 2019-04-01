@@ -16,9 +16,10 @@ block content
           li.list-group-item= entry.name
         - });
       else 
-        p Entscheide, was wichtiger für dich ist: 
-        a.btn.btn-info.btn-block(onclick='selected(0)' role='button' id='#opt0') Option 1
-        a.btn.btn-info.btn-block(onclick='selected(1)' role='button' id='#opt1') Option 2
+        .container.decisionCenter
+          p Entscheide, was wichtiger für dich ist: 
+          .btn.btn-dark.btn-block.decisionBtn(onclick='selected(0)' role='button' id='#opt0') Option 1
+          .btn.btn-dark.btn-block.decisionBtn(onclick='selected(1)' role='button' id='#opt1') Option 2
 
   script(type='text/javascript') var showModal =!{JSON.stringify(showModal)}; var attr =!{JSON.stringify(attr)}
   script(src='js/values.js')

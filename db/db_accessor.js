@@ -146,5 +146,20 @@ module.exports = {
                 resolve(reply);
             });
         })
+    },
+    setProfile: function(val) {
+        return new Promise(function(resolve, reject){
+            client = redis.createClient({
+                host:"localhost",
+                port:6379
+            });
+            client.on("error", function (err) {
+                console.log("Error occured: "+err)
+            });
+            const encryptedString = cryptr.encrypt((JSON.stringify(val)));
+            client.lset("candidate_results",index,encryptedString, function(err,reply) {
+                resolve(j);
+            });
+        })
     }
   };

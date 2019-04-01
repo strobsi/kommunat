@@ -8,34 +8,44 @@ const expressSanitizer = require('express-sanitizer');
 const rateLimit = require("express-rate-limit");
 var Validator = require('jsonschema').Validator;
 var schemata = require('../utils/const');
+var db = require("../db/db_accessor")
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 1 hour window
-  max: 10, // start blocking after 5 requests
+  max: 20, // start blocking after 5 requests
   message:
     "Too many requests from this IP, please try again later"
 });
 
-// Display the dashboard page
+// Display the profile page
 router.get("/", (req, res) => {
   const s = req.sanitize(req.userinfo.sub);
 
   var userID = String(s);
   var userImg = "http://localhost:3000/uploads/"+userID+".png"
   console.log(userImg)
-  res.render("profile",{ userImg:userImg });
+
+  var c = db.getCandidate(s);
+  c.then(function cb(r) {
+    res.render("profile",{ userImg:userImg, u:r.candidate });
+  }, function(err) {
+     console.log("No candidate found")
+     var un = {
+       birthdate: "",
+       list:"",
+       list_number:"",
+       district:"",
+       phone:"",
+       motto:""
+     }
+     res.render("profile",{ userImg:userImg, u:un });
+  });
 });
 
 router.post("/",jsonParser,apiLimiter,(req, res) => {
-
-  var user = req.user;
-  var headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'SSWS 00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK'
-  };
-
-  console.log(req.body);
+  const s = req.sanitize(req.userinfo.sub);   
+  var userID = String(s);
+  var userImg = "http://localhost:3000/uploads/"+userID+".png"
 
   var v = new Validator();
     if(!v.validate(req.body, schemata.profileSchema()).valid) {
@@ -43,22 +53,61 @@ router.post("/",jsonParser,apiLimiter,(req, res) => {
         res.send();
     }
     else {
-    var dataString = { profile: 
-      { 
+    var dataString = {
         birthdate: req.sanitize(req.body.birthdate),
         list: req.sanitize(req.body.list),
         list_number: req.sanitize(req.body.list_number),
         district: req.sanitize(req.body.district),
-        phone: req.sanitize(req.body.phone)
-      } 
+        phone: req.sanitize(req.body.phone),
+        motto: req.sanitize(req.body.motto)
     };
-    // TODO: insert into our db
-  }
+    console.log("This is our data:")
+    console.log(dataString)
 
+    var c = db.getCandidate(s);
+    c.then(function cb(r) {
+         var index = db.getIndex(s);
+         index.then(function cb(i) {
+            r.candidate.birthdate = dataString.birthdate;
+            r.candidate.list = dataString.list;
+            r.candidate.list_number = dataString.list_number;
+            r.candidate.district = dataString.district;
+            r.candidate.phone = dataString.phone;
+            r.candidate.motto = dataString.motto;
+
+            var set = db.setCandidate(r,i)
+            set.then(function cb(i) {
+              res.render("profile",{ userImg:userImg, u:r.candidate });
+            })
+         });
+    },function(err) {
+        var c = {
+          metadata: {
+            uuid: s
+          },
+          candidate: {
+            birthdate: dataString.birthdate,
+            list: dataString.list,
+            list_number: dataString.list_number,
+            district: dataString.district,
+            phone: dataString.phone,
+            motto: dataString.motto
+          },
+          values:[],
+          contents:[]
+        }
+        rpushPromise = db.rpushCandidate(c)
+        rpushPromise.then(function cb(cdts) {
+          res.render("profile",{ userImg:userImg, u:c });
+        });
+    });
+  }
 })  
 
 router.post("/image",jsonParser,apiLimiter,(req, res) => {
   const s = req.sanitize(req.userinfo.sub);
+  var userID = String(s);
+  var userImg = "http://localhost:3000/uploads/"+userID+".png"
 
   var form = new formidable.IncomingForm();
   form.parse(req);
@@ -67,7 +116,21 @@ router.post("/image",jsonParser,apiLimiter,(req, res) => {
   });
   form.on('file', function (name, file){
       console.log('Uploaded ' + s+".png");
-      res.render("profile");
+      var c = db.getCandidate(s);
+      c.then(function cb(r) {
+        res.render("profile",{ userImg:userImg, u:c });
+    }, function(err) {
+      console.log("No candidate found")
+      var un = {
+        birthdate: "",
+        list:"",
+        list_number:"",
+        district:"",
+        phone:"",
+        motto:""
+      }
+      res.render("profile",{ userImg:userImg, u:un });
+   });
   });
 });
 

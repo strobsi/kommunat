@@ -749,6 +749,9 @@ module.exports = {
             },
             "district": {
             "type": "string"
+            },
+            "motto":{
+              "type":"string"
             }
         },
         "required": [
@@ -756,7 +759,8 @@ module.exports = {
             "birthdate",
             "list",
             "list_number",
-            "district"
+            "district",
+            "motto"
         ]
         }
     }

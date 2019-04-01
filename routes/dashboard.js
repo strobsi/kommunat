@@ -3,15 +3,8 @@ var db = require("../db/db_accessor")
 const rateLimit = require("express-rate-limit");
 const router = express.Router();
 
-const apiLimiter = rateLimit({
-  windowMs: 10 * 60 * 1000, // 1 hour window
-  max: 10, // start blocking after 5 requests
-  message:
-    "Too many requests from this IP, please try again later"
-});
-
 // Display the dashboard page
-router.get("/", apiLimiter, (req, res) => {
+router.get("/", (req, res) => {
 
   var s = req.sanitize(req.userinfo.sub);
   candidatesPromise = db.getCandidate(s);
