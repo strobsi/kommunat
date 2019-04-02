@@ -4,16 +4,16 @@ const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 
 // Define an Okta client so any user management tasks can be performed
 const oktaClient = new okta.Client({
-  orgUrl: "https://dev-664243.oktapreview.com",
-  token: "00BBR-JpQ-tVhtCjkCtyTg3FHpxDaR54EWGOyKNRUK",
+  orgUrl: process.env.ORG_URL,
+  token: process.env.OKTA_TOKEN,
 });
 
 // Define the OpenID Connect client
 const oidc = new ExpressOIDC({
-  issuer: 'https://dev-664243.oktapreview.com/oauth2/default',
-  client_id: "0oajfzo7cyPEboxi60h7",
-  client_secret: "OuxkkQqw0g8nBKPxSCBmfNaPgAzYqqG9I7kOmsrt",
-  redirect_uri: "http://localhost:3000/users/callback",
+  issuer: process.env.OKTA_ISSUER,
+  client_id: process.env.OKTA_CLIENT_ID,
+  client_secret: process.env.OKTA_CLIENT_SECRET,
+  redirect_uri: process.env.OKTA_REDIRECT_URL,
   scope: "openid profile",
   routes: {
     login: {

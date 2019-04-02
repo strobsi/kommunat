@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
   const s = req.sanitize(req.userinfo.sub);
 
   var userID = String(s);
-  var userImg = "http://localhost:3000/uploads/"+userID+".png"
+  var userImg = "https://komunat.de/uploads/"+userID+".png"
   console.log(userImg)
 
   var c = db.getCandidate(s);
@@ -45,7 +45,7 @@ router.get("/", (req, res) => {
 router.post("/",jsonParser,apiLimiter,(req, res) => {
   const s = req.sanitize(req.userinfo.sub);   
   var userID = String(s);
-  var userImg = "http://localhost:3000/uploads/"+userID+".png"
+  var userImg = "https://komunat.de/uploads/"+userID+".png"
 
   var v = new Validator();
     if(!v.validate(req.body, schemata.profileSchema()).valid) {
@@ -104,13 +104,18 @@ router.post("/",jsonParser,apiLimiter,(req, res) => {
   }
 })  
 
-router.post("/image",jsonParser,apiLimiter,(req, res) => {
+router.post("/image",apiLimiter,(req, res) => {
   const s = req.sanitize(req.userinfo.sub);
   var userID = String(s);
-  var userImg = "http://localhost:3000/uploads/"+userID+".png"
+  var userImg = "https://komunat.de/uploads/"+userID+".png"
 
   var form = new formidable.IncomingForm();
-  form.parse(req);
+
+  form.parse(req, function(err, fields, files) {
+    if (err) console.log(err)
+    
+    // parse fields
+  });
   form.on('fileBegin', function (name, file){
       file.path = __dirname + '/../assets/uploads/' + s+".png";
   });
@@ -118,7 +123,7 @@ router.post("/image",jsonParser,apiLimiter,(req, res) => {
       console.log('Uploaded ' + s+".png");
       var c = db.getCandidate(s);
       c.then(function cb(r) {
-        res.render("profile",{ userImg:userImg, u:c });
+        res.send();
     }, function(err) {
       console.log("No candidate found")
       var un = {
@@ -129,7 +134,7 @@ router.post("/image",jsonParser,apiLimiter,(req, res) => {
         phone:"",
         motto:""
       }
-      res.render("profile",{ userImg:userImg, u:un });
+      res.send();
    });
   });
 });

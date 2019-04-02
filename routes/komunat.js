@@ -105,7 +105,11 @@ router.post('/result',jsonParser, apiLimiter, (req, res) => {
               const response = await fetch(userGet, { headers: headers });
               const json = await response.json();
 
-              exIst.candidate.name = json.profile.firstName + " " + json.profile.lastName;
+              if (typeof exIst.candidate === 'undefined') {
+                exIst.candidate = {
+                 name: json.profile.firstName + " " + json.profile.lastName
+               }
+             }
               req.body.candidate = exIst.candidate;
               req.body.contents = cList;
               req.body.metadata.uuid = s;

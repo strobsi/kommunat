@@ -2,15 +2,15 @@
 // ========
 const redis = require("redis")
 const Cryptr = require('cryptr');
-const cryptr = new Cryptr('myTotalySecretKey');
+const cryptr = new Cryptr(process.env.DB);
  
 
 module.exports = {
     getEvents: function (uuid) {
         return new Promise(function(resolve, reject){
             client = redis.createClient({
-                host:"localhost",
-                port:6379
+                host:process.env.REDIS,
+                port:process.env.REDIS_PORT
             });
             client.on("error", function (err) {
                 console.log("Error occured: "+err)
@@ -34,8 +34,8 @@ module.exports = {
         console.log(uuid);
         return new Promise(function(resolve, reject){
             client = redis.createClient({
-                host:"localhost",
-                port:6379
+                host:process.env.REDIS,
+                port:process.env.REDIS_PORT
             });
             client.on("error", function (err) {
                 console.log("Error occured: "+err)

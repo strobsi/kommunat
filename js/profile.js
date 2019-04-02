@@ -2,9 +2,8 @@ var el = document.getElementById('cImage');
 
 var vanilla = new Croppie(el, {
     viewport: { width: 250, height: 150 },
-    boundary: { width: 300, height: 300 },
+    boundary: { width: 250, height: 150 },
     showZoomer: true,
-    enableOrientation: true
 });
 
 $(function() {
@@ -17,21 +16,27 @@ $(function() {
 function bindImage(img) {
     vanilla.bind({
         url: img,
-        orientation: 2
+        orientation:1
     });
 }
 
-//on button click
-function save() {
-    console.log("Saving image")
-    
-    vanilla.result('base64').then(function(dataImg) {
-        var data = [{ image: dataImg }];
-        vanilla.bind({
-            url: dataImg,
-        });
-      })
-}
+$( '#imgForm' ).submit(function ( e ) {
+    e.preventDefault();
+    vanilla.result({type: 'blob', size: 'original', quality: 1, circle: false }).then(function(blob) {
+        var data, xhr;
+        data = new FormData();
+        data.append( 'file',blob );
+        xhr = new XMLHttpRequest();
+        xhr.open( 'POST', 'https://komunat.de/profile/image', true );
+        xhr.onreadystatechange = function ( response ) {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Successfully stored values, continue with animation
+                alert("Profilbild erfolgreich geändert");
+            }
+        };
+        xhr.send( data );
+    });
+});
 
 function changeImg(input) {
     if (input.files && input.files[0]) {
@@ -40,7 +45,7 @@ function changeImg(input) {
             console.log("Loaded")
             vanilla.bind({
                 url: e.target.result,
-                orientation: 2
+                orientation: 1
             });
         };
         reader.readAsDataURL(input.files[0]);

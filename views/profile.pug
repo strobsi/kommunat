@@ -17,15 +17,15 @@ block content
                         .col-md-12
                             img.avatar.img-circle(alt='avatar' id="cImage" src=userImg)
                     
-                    form(action="/profile/image" enctype="multipart/form-data" method="post")
+                    form(enctype="multipart/form-data" id="imgForm")
                         .row
                             .col-md-12
                                 div.upload-btn-wrapper
-                                    input(type="file" name="myfile" id="imgSelector" onchange="changeImg(this);")
+                                    input(type="file" name="profilePic" id="imgSelector" onchange="changeImg(this);")
                                     input.btn.btn-primary.btn-block(value='Bild ändern')
                         .row
                             .col-md-12
-                                    input.btn.btn-primary.btn-block(type="submit" value='Speichern' onclick="save();")
+                                    input.btn.btn-primary.btn-block(type="submit" value='Speichern')
                     hr
                     // edit form column
                 .col-md-9.personal-info
@@ -46,7 +46,26 @@ block content
                         .col-lg-8
                             select#sel1.form-control(name="list", value=u.list)
                                 option(value="null") -Liste auswählen-
-                                option(value="1" selected= u.list == 1) FDP
+                                option(value="1" selected= u.list == 1) Christlich Demokratische Union Deutschlands (CDU)
+                                option(value="2" selected= u.list == 2) BÜNDNIS 90/DlE GRÜNEN (GRÜNE)
+                                option(value="3" selected= u.list == 3) Sozialdemokratische Partei Deutschlands (SPD)
+                                option(value="4" selected= u.list == 4) Freie Wähler Kreisverband Stuttgart e.V. (Freie Wähler)
+                                option(value="5" selected= u.list == 5) Freie Demokratische Partei (FDP)
+                                option(value="6" selected= u.list == 6) Stuttgart Ökologisch Sozial (SÖS)
+                                option(value="7" selected= u.list == 7) Alternative für Deutschland (AfD)
+                                option(value="8" selected= u.list == 8) DIE LINKE (DIE LINKE)
+                                option(value="9" selected= u.list == 9) Piratenpartei Deutschland (PIRATEN)
+                                option(value="10" selected= u.list == 10) Die Stadtisten (Stadtisten) 
+                                option(value="11" selected= u.list == 11) Junge Liste Stuttgart  
+                                option(value="12" selected= u.list == 12) Ökologisch-Demokratische Partei / Familie und Umwelt (ÖDP) 
+                                option(value="13" selected= u.list == 13) DEMOKRATIE IN BEWEGUNG (DiB) 
+                                option(value="14" selected= u.list == 14) PARTEI MENSCH UMWELT TIERSCHUTZ (Tierschutzpartei) 
+                                option(value="15" selected= u.list == 15) Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative (Die PARTEI) 
+                                option(value="16" selected= u.list == 16) Bündnis für Innovation und Gerechtigkeit (BIG) 
+                                option(value="17" selected= u.list == 17) Schertlens Unabhängige Bürger (SchUB) 
+                                option(value="18" selected= u.list == 18) Bündnis Zukunft Stuttgart 23 (BZS23) 
+                                option(value="19" selected= u.list == 19) Kein Fahrverbot in Stuttgart  
+                                option(value="20" selected= u.list == 20) Feministische Liste Stuttgart (FeLi) 
                             <span class="sidenote"> Wird öffentlich angezeigt</span>
                         .form-group
                         label.col-lg-12.control-label(for="list_number") Listenplatz:
@@ -58,7 +77,29 @@ block content
                         .col-lg-8
                             select#sel1.form-control(name="district", value=u.district)
                                 option(value="null") -Stadtbezirk auswählen-
-                                option(value="1" selected= u.district == 1) Untertürkheim
+                                option(value="1" selected= u.district == 1) Mitte
+                                option(value="2" selected= u.district == 2) Nord
+                                option(value="3" selected= u.district == 3) Ost
+                                option(value="4" selected= u.district == 4) Süd
+                                option(value="5" selected= u.district == 5) West
+                                option(value="6" selected= u.district == 6) Bad-Cannstatt
+                                option(value="7" selected= u.district == 7) Birkach
+                                option(value="8" selected= u.district == 8) Botnang
+                                option(value="9" selected= u.district == 9) Degerloch
+                                option(value="10" selected= u.district == 10) Feuerbach
+                                option(value="11" selected= u.district == 11) Hedelfingen
+                                option(value="12" selected= u.district == 12) Möhringen
+                                option(value="13" selected= u.district == 13) Mühlhausen
+                                option(value="14" selected= u.district == 14) Münster
+                                option(value="15" selected= u.district == 15) Obertürkheim
+                                option(value="16" selected= u.district == 16) Plieningen
+                                option(value="17" selected= u.district == 17) Sillenbuch
+                                option(value="18" selected= u.district == 18) Stammheim
+                                option(value="19" selected= u.district == 19) Untertürkheim
+                                option(value="20" selected= u.district == 20) Vaihingen
+                                option(value="21" selected= u.district == 21) Wangen
+                                option(value="22" selected= u.district == 22) Weilimdorf
+                                option(value="23" selected= u.district == 23) Zuffenhausen
                             <span class="sidenote"> Wird öffentlich angezeigt</span>
                         .form-group
                         label.col-lg-12.control-label(for="motto") Dein Motto (ein kurzer Satz, der mich beschreibt/beschreibt für was ich stehe):

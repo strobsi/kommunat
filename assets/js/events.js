@@ -39,7 +39,7 @@ $(function() {
     $("#exeventLocation").val(events[i].location);
     $("#exeventStartDateInput").val(events[i].startDate);
     $("#exeventEndDateInput").val(events[i].endDate);
-    console.log("Event Dates: " +events[i].endDate + "  " + events[i].startDate)
+    //console.log("Event Dates: " +events[i].endDate + "  " + events[i].startDate)
     currentEvent = i;
   }
 
@@ -49,7 +49,7 @@ $(function() {
 
   function removeEvent() {
     var xhr = new XMLHttpRequest();
-    var url = "http://localhost:3000/events/"+currentEvent;
+    var url = "https://komunat.de/events/"+currentEvent;
     xhr.open("DELETE", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
@@ -66,9 +66,9 @@ $(function() {
     events[currentEvent].location = $("#exeventLocation").val();
     events[currentEvent].startDate = $("#exeventStartDateInput").val();
     events[currentEvent].endDate = $("#exeventEndDateInput").val();
-    console.log(events[currentEvent]);
+    //console.log(events[currentEvent]);
     var xhr = new XMLHttpRequest();
-    var url = "http://localhost:3000/events";
+    var url = "https://komunat.de/events";
     xhr.open("PUT", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
@@ -90,7 +90,7 @@ $(function() {
     }
 
     var xhr = new XMLHttpRequest();
-    var url = "http://localhost:3000/events/event";
+    var url = "https://komunat.de/events/event";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
@@ -101,6 +101,6 @@ $(function() {
         }
     };
     var data = JSON.stringify(res);
-    console.log(data)
+    //console.log(data)
     xhr.send(data);
   }

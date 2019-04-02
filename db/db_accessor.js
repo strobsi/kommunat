@@ -2,14 +2,14 @@
 // ========
 const redis = require("redis")
 const Cryptr = require('cryptr');
-const cryptr = new Cryptr('myTotalySecretKey');
+const cryptr = new Cryptr(process.env.DB);
 
 module.exports = {
     getCandidates: function () {
         return new Promise(function(resolve, reject){
             client = redis.createClient({
-                host:"localhost",
-                port:6379
+                host:process.env.REDIS,
+                port:process.env.REDIS_PORT
             });
             client.on("error", function (err) {
                 console.log("Error occured: "+err)
@@ -32,8 +32,8 @@ module.exports = {
     },
     getCandidate: function (id) {
         client = redis.createClient({
-            host:"localhost",
-            port:6379
+            host:process.env.REDIS,
+            port:process.env.REDIS_PORT
           });
         client.on("error", function (err) {
             console.log("Error occured: "+err)
@@ -77,8 +77,8 @@ module.exports = {
     },
     getIndex: function(uuid) {
         client = redis.createClient({
-            host:"localhost",
-            port:6379
+            host:process.env.REDIS,
+            port:process.env.REDIS_PORT
           });
         client.on("error", function (err) {
             console.log("Error occured: "+err)
@@ -105,8 +105,8 @@ module.exports = {
     setCandidate: function(val,index) {
         return new Promise(function(resolve, reject){
             client = redis.createClient({
-                host:"localhost",
-                port:6379
+                host:process.env.REDIS,
+                port:process.env.REDIS_PORT
             });
             client.on("error", function (err) {
                 console.log("Error occured: "+err)
@@ -120,8 +120,8 @@ module.exports = {
     rpushCandidate: function(val) {
         return new Promise(function(resolve, reject){
             client = redis.createClient({
-                host:"localhost",
-                port:6379
+                host:process.env.REDIS,
+                port:process.env.REDIS_PORT
             });
             client.on("error", function (err) {
                 console.log("Error occured: "+err)
@@ -135,8 +135,8 @@ module.exports = {
     rpushResult: function(val) {
         return new Promise(function(resolve, reject){
             client = redis.createClient({
-                host:"localhost",
-                port:6379
+                host:process.env.REDIS,
+                port:process.env.REDIS_PORT
             });
             client.on("error", function (err) {
                 console.log("Error occured: "+err)
@@ -150,8 +150,8 @@ module.exports = {
     setProfile: function(val) {
         return new Promise(function(resolve, reject){
             client = redis.createClient({
-                host:"localhost",
-                port:6379
+                host:process.env.REDIS,
+                port:process.env.REDIS_PORT
             });
             client.on("error", function (err) {
                 console.log("Error occured: "+err)

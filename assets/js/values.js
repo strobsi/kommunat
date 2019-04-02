@@ -107,11 +107,12 @@ function newRound() {
         sort(v0[0])
     } else {
         // Finished overall sorting, since nothing has to be sorted anymore.
-        console.log("Finished sorting with " + decisionCounter + " decisions")
+        //console.log("Finished sorting with " + decisionCounter + " decisions")
         calculateValue()
-        wrapResult()
         opt0.textContent = ""
         opt1.textContent = ""
+        opt0.style.display = "none";
+        opt1.style.display = "none";
         sendResult(arr)
         decisionCounter = 0;
     }
@@ -181,13 +182,14 @@ function completeRound() {
 
 // Helper function to monitor the array
 function deepLog(arr, name) {
-
+    /*
     console.log("--------" + name + "-------------")
     console.log("--------" + arr.length + "-------------")
     for (var i = 0; i < arr.length; i++) {
         console.log(arr[i])
     }
     console.log("-------------------------------")
+    */
 }
 // Get random object out of itm as touple with index
 function getRandomIndex(itm) {
@@ -222,12 +224,7 @@ function calculateValue() {
         arr[i].rating = rank
         rank--
     }
-    console.log(arr)
-}
-
-// used to set the metadata of the results
-function wrapResult() {
-
+    //console.log(arr)
 }
 
 // Send the calculated result of the user to the backend
@@ -245,7 +242,7 @@ function sendResult(a) {
     res.values = a
 
     var xhr = new XMLHttpRequest();
-    var url = "http://localhost:3000/komunat/result";
+    var url = "https://komunat.de/komunat/result";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
@@ -255,7 +252,7 @@ function sendResult(a) {
         }
     };
     var data = JSON.stringify(res);
-    console.log(data)
+    //console.log(data)
     xhr.send(data);
 }
 

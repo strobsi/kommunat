@@ -1,0 +1,32 @@
+app:
+  build: ./
+  volumes:
+    - ./:/var/www/app
+    - ./assets/
+  ports:
+    - ${NODE_PORT}:${NODE_PORT}
+  restart: always
+  environment:
+    - NODE_ENV=production
+    - PORT=${NODE_PORT}
+    - REDIS=${REDIS}
+    - REDIS_PORT=${REDIS_PORT}
+    - DB=${DB}
+    - ORG_URL=${ORG_URL}
+    - OKTA_TOKEN=${OKTA_TOKEN}
+    - OKTA_ISSUER=${OKTA_ISSUER}
+    - OKTA_CLIENT_ID=${OKTA_CLIENT_ID}
+    - OKTA_CLIENT_SECRET=${OKTA_CLIENT_SECRET}
+    - OKTA_REDIRECT_URL=${OKTA_REDIRECT_URL}
+  command:
+    sh -c 'npm i && npm start'
+  links:
+    - redis
+redis:
+  image: redis:5.0.4-alpine
+  volumes:
+    - ./data:/data
+  restart: always
+  entrypoint: redis-server --appendonly yes
+  ports:
+    - ${REDIS_PORT}:${REDIS_PORT}
