@@ -1,29 +1,20 @@
-version: "3.1"
-
+version: '3'
 services:
   nginx:
-    image: nginx:alpine
-    ports:
-      - "80:80"
-      - "443:443"
+    image: nginx:1.15-alpine
+    restart: unless-stopped
     volumes:
       - ./data/nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-    depends_on:
-      - nodejs
+    ports:
+      - "80:80"
+      - "443:443"
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-  certbot:
-    image: certbot/certbot
-    restart: unless-stopped
+  app:
+    build: ./
     volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-  nodejs:
-    build: ./node/
-    volumes:
-      - ./node/:/var/www/app
+      - /home/istrobelapps:/var/www/app
     ports:
       - ${NODE_PORT}:${NODE_PORT}
     restart: always
@@ -46,6 +37,13 @@ services:
   redis:
     image: redis:5.0.4-alpine
     volumes:
-      - ./esabatad:/data
+      - /home/istrobelapps/data:/data
     restart: always
     entrypoint: redis-server --appendonly yes
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
