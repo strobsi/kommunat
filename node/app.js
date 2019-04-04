@@ -6,6 +6,7 @@ const session = require("express-session");
 const auth = require("./auth");
 const middleware = require("./middleware");
 const expressSanitizer = require('express-sanitizer');
+const helmet = require('helmet')
 
 const dashboardRouter = require("./routes/dashboard");
 const publicRouter = require("./routes/public");
@@ -25,6 +26,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
 // Middleware
+app.use(helmet())
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,21 +34,13 @@ app.use(express.static(path.join(__dirname, "assets")));
 app.use(expressSanitizer());
 
 app.use(session({
-  secret: "blablublub",
+  secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: false
 }));
 
-// Cross origin requests
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
 app.use(auth.oidc.router);
 app.use(middleware.addUser);
-
 
 // Routes
 app.use("/", publicRouter);
