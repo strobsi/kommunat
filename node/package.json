@@ -25,6 +25,7 @@
     "express-sanitizer": "^1.0.5",
     "express-session": "^1.15.6",
     "formidable": "^1.2.1",
+    "helmet": "^3.16.0",
     "http-errors": "~1.6.2",
     "jsonschema": "^1.2.4",
     "morgan": "^1.9.1",
