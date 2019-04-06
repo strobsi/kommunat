@@ -33,7 +33,7 @@ $( '#imgForm' ).submit(function ( e ) {
                 // Successfully stored values, continue with animation
                 alert("Profilbild erfolgreich geändert");
             }
-            else if (xhr.readyState === 4 && xhr.status === 413) {
+            else if (xhr.status === 413) {
                 alert("Dein Profilbild ist zu groß. Lade ein kleineres Bild hoch");
             }
             else {
