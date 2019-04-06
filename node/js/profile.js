@@ -1,5 +1,3 @@
-import { createHash } from "crypto";
-
 var el = document.getElementById('cImage');
 
 var vanilla = new Croppie(el, {
@@ -22,7 +20,6 @@ function bindImage(img) {
     });
 }
 
-
 $( '#imgForm' ).submit(function ( e ) {
     e.preventDefault();
     vanilla.result({type: 'blob', size: 'original', quality: 1, circle: false }).then(function(blob) {
@@ -36,11 +33,11 @@ $( '#imgForm' ).submit(function ( e ) {
                 // Successfully stored values, continue with animation
                 alert("Profilbild erfolgreich geändert");
             }
-            else if (xhr.readyState === 4 && xhr.status == 413) {
-                alert("Dein Bild is zu groß. ")
+            else if (xhr.readyState === 4 && xhr.status === 413) {
+                alert("Dein Profilbild ist zu groß. Lade ein kleineres Bild hoch");
             }
             else {
-                alert("Leider konnte dein Bild nicht hochgeladen werden.")
+                alert("Leider konnte dein Bild nicht hochgeladen werden.");
             }
         };
         xhr.send( data );
