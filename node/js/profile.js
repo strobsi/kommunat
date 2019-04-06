@@ -36,9 +36,6 @@ $( '#imgForm' ).submit(function ( e ) {
             else if (xhr.status === 413) {
                 alert("Dein Profilbild ist zu groß. Lade ein kleineres Bild hoch");
             }
-            else {
-                alert("Leider konnte dein Bild nicht hochgeladen werden.");
-            }
         };
         xhr.send( data );
     });
