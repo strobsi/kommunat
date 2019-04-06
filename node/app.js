@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "assets")));
 app.use(expressSanitizer());
-app.use(favicon(__dirname + '/assets/favicon.png'));
+app.use(favicon(_path.join(__dirname, "assets/favicon.png")));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,

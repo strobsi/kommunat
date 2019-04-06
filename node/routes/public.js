@@ -6,8 +6,7 @@ const router = express.Router();
 
 // Home page
 router.get("/", (req, res) => {
-  res.render("dashboard");
+  res.writeHead(301, { "Location": "https://komunat.de/dashboard' });
 });
-
 
 module.exports = router;
