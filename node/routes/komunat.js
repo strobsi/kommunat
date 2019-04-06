@@ -16,7 +16,6 @@ const apiLimiter = rateLimit({
     "Too many requests from this IP, please try again later"
 });
 
-
 // Display the dashboard page
 router.get("/", (req, res) => {
   const s = req.sanitize(req.userinfo.sub);
@@ -115,8 +114,12 @@ router.post('/result',jsonParser, apiLimiter, (req, res) => {
               req.body.metadata.uuid = s;
 
               if (cList.length > 0) {
+                console.log("Content list there")
+                console.log(req.body)
                 var v = new Validator();
                 if(!v.validate(req.body, schemata.valueSchemaExisting()).valid) {
+                      console.log("No schemas")
+
                       res.status(400);
                       res.send();
                 }
