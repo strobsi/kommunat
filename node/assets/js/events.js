@@ -2,10 +2,19 @@ var currentEvent = 0;
 
 $(function() {
     $("#detailView").hide();
+    var today = new Date(); 
+    var dd = today.getDate(); 
+    var mm = today.getMonth()+1; //January is 0! 
+    var yy = today.getFullYear().toString().substr(-2);
+    if(dd<10){ dd='0'+dd } 
+    if(mm<10){ mm='0'+mm } 
+    var today = dd+'/'+mm+'/'+yy; 
     $('input[name="startDate"]').daterangepicker({
         singleDatePicker: true,
         timePicker: true,
         timePicker24Hour: true,
+        timePickerIncrement: 5,
+        minDate: today,
         locale: {
             "cancelLabel": 'Abbrechen',
             "format": 'DD/MM/YY hh:mm A',
@@ -17,6 +26,8 @@ $(function() {
         singleDatePicker: true,
         timePicker: true,
         timePicker24Hour: true,
+        timePickerIncrement: 5,
+        minDate: today,
         locale: {
             "cancelLabel": 'Abbrechen',
             "format": 'DD/MM/YY hh:mm A',

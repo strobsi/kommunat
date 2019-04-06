@@ -18,6 +18,7 @@ const eventRouter = require("./routes/events");
 const resultRouter = require("./routes/result");
 const dsgvoRouter = require("./routes/dsgvo");
 const impressumRouter = require("./routes/impressum");
+const favicon = require('express-favicon');
 
 // App initialization
 const app = express();
@@ -32,6 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "assets")));
 app.use(expressSanitizer());
+app.use(favicon(__dirname + '/assets/favicon.png'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -43,8 +45,7 @@ app.use(auth.oidc.router);
 app.use(middleware.addUser);
 
 // Routes
-app.use("/", publicRouter);
-app.use("/dashboard", middleware.loginRequired, dashboardRouter);
+app.use("/portal", middleware.loginRequired, dashboardRouter);
 app.use("/profile",middleware.loginRequired, profileRouter);
 app.use("/komunat",middleware.loginRequired, komunatRouter);
 app.use("/contents",middleware.loginRequired, contentRouter);
