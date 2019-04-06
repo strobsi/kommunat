@@ -38,6 +38,10 @@ $( '#imgForm' ).submit(function ( e ) {
     });
 });
 
+function loadHelp() {
+$('#imageHelpModal').modal('toggle');
+}
+
 function changeImg(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

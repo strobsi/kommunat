@@ -4,6 +4,7 @@ block variables
   - var title = "Dein Profil"
 
 block content
+    include imageHelpModal
         hr
         .profileContainer
             .row
@@ -23,6 +24,8 @@ block content
                                 div.upload-btn-wrapper
                                     input(type="file" name="profilePic" id="imgSelector" onchange="changeImg(this);")
                                     input.btn.btn-primary.btn-block(value='Bild ändern')
+                                    input.btn.btn-dark.btn-block(value='Infos zur Auflösung/Format' onclick="loadHelp()")
+                                    p Dein Bild wird später im ähnlichen Format wie angezeigt, dargestellt. Aufgrund von unterschiedlichen Smartphone Displayauflösungen, kann dein Bild oben und unten ein wenig abeschnitten werden. Daher stelle sicher, dass oben und unten ein wenig Platz zu deinem Prodil besteht.
                         .row
                             .col-md-12
                                     input.btn.btn-primary.btn-block(type="submit" value='Speichern')
