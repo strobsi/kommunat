@@ -117,6 +117,7 @@ router.post('/result',jsonParser, apiLimiter, (req, res) => {
                 console.log("Content list there")
                 console.log(req.body)
                 var v = new Validator();
+                /*
                 if(!v.validate(req.body, schemata.valueSchemaExisting()).valid) {
                       console.log("No schemas")
 
@@ -124,6 +125,7 @@ router.post('/result',jsonParser, apiLimiter, (req, res) => {
                       res.send();
                 }
                 else {
+                */
                 console.log("Setting existing")
                 console.log(req.body)
 
@@ -146,7 +148,7 @@ router.post('/result',jsonParser, apiLimiter, (req, res) => {
                       res.send();
                     });
                 })
-                }
+              //  }
               }
               else {
                 var v = new Validator();
