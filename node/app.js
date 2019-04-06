@@ -45,7 +45,8 @@ app.use(auth.oidc.router);
 app.use(middleware.addUser);
 
 // Routes
-app.use("/portal", middleware.loginRequired, dashboardRouter);
+app.use("/",publicRouter);
+app.use("/dashboard", middleware.loginRequired, dashboardRouter);
 app.use("/profile",middleware.loginRequired, profileRouter);
 app.use("/komunat",middleware.loginRequired, komunatRouter);
 app.use("/contents",middleware.loginRequired, contentRouter);
