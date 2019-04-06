@@ -39,7 +39,7 @@ $( '#imgForm' ).submit(function ( e ) {
 });
 
 function loadHelp() {
-$('#imageHelpModal').modal('toggle');
+    $('#imageHelpModal').modal('toggle');
 }
 
 function changeImg(input) {
