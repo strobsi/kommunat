@@ -7,8 +7,6 @@ var vanilla = new Croppie(el, {
 });
 
 $(function() {
-    var loadSpinner = document.getElementById("loadSpinner");
-    loadSpinner.style.display = "hidden";
     $.validate({
         lang : 'de',
         modules : 'location, date, security, file'
