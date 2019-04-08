@@ -29,6 +29,7 @@ $( '#imgForm' ).submit(function ( e ) {
         xhr = new XMLHttpRequest();
         xhr.open( 'POST', 'https://komunat.de/profile/image', true );
         xhr.onreadystatechange = function ( response ) {
+            console.log(xhr.status)
             if (xhr.readyState === 4 && xhr.status === 200) {
                 // Successfully stored values, continue with animation
                 alert("Profilbild erfolgreich geändert");

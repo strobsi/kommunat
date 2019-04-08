@@ -9,6 +9,37 @@ const rateLimit = require("express-rate-limit");
 var Validator = require('jsonschema').Validator;
 var schemata = require('../utils/const');
 var db = require("../db/db_accessor")
+var multer = require("multer")
+
+const storage = multer.diskStorage({
+  destination: function(req,file,cb) {
+    cb(null,"uploads/");
+  },
+  filename: function(req,file,cb) {
+    const s = req.sanitize(req.userinfo.sub);
+    cb(null,s + path.extname(file.originalname))
+  }
+});
+
+const fileFilter = function(req, file, cb) { 
+    if(file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+      cb(null, true)
+    } else {
+      cb(new Error("Falsches Datei Format. Bild muss entweder jpeg oder png sein."), false)
+    }
+};
+
+var upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter,
+  onError : function(err, next) {
+    console.log('error', err);
+    res.send(400);
+  }
+}).single('profilePic')
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 1 hour window
@@ -105,38 +136,16 @@ router.post("/",jsonParser,apiLimiter,(req, res) => {
 })  
 
 router.post("/image",apiLimiter,(req, res) => {
-  const s = req.sanitize(req.userinfo.sub);
-  var userID = String(s);
-  var userImg = "https://komunat.de/uploads/"+userID+".png"
-
-  var form = new formidable.IncomingForm();
-
-  form.parse(req, function(err, fields, files) {
-    if (err) console.log(err)
-    
-    // parse fields
-  });
-  form.on('fileBegin', function (name, file){
-      file.path = __dirname + '/../assets/uploads/' + s+".png";
-  });
-  form.on('file', function (name, file){
-      console.log('Uploaded ' + s+".png");
-      var c = db.getCandidate(s);
-      c.then(function cb(r) {
-        res.send();
-    }, function(err) {
-      console.log("No candidate found")
-      var un = {
-        birthdate: "",
-        list:"",
-        list_number:"",
-        district:"",
-        phone:"",
-        motto:""
-      }
-      res.send();
-   });
-  });
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      // A Multer error occurred when uploading.
+      console.log("Error:" + err);
+    } else if (err) {
+      // An unknown error occurred when uploading.
+    }
+    // Everything went fine.
+    res.send();
+  })
 });
 
 module.exports = router;
