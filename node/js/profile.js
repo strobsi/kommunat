@@ -14,8 +14,14 @@ $(function() {
             range: "Bitte eine Zahl zwischen 1 und 60 eingeben",
             number: "Bitte eine Zahl zwischen 1 und 60 eingeben",
             list_number: "Bitte eine Zahl zwischen 1 und 60 eingeben",
-        }
-      });
+        },
+        onValidate : function($form) {
+            return {
+              element : $('#list_number'),
+              message : 'Bitte Zahl zwischen 1 und 60 eingeben'
+            }
+        },
+      })
 })
 
 function bindImage(img) {
