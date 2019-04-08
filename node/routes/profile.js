@@ -147,7 +147,7 @@ router.post("/",jsonParser,apiLimiter,(req, res) => {
 var imgUpload = multer({
   storage: storage,
   limits: {
-    fileSize: 1024 * 1024 * 5
+    fileSize: 1024 * 1024 * 8
   },
   fileFilter: fileFilter
 });

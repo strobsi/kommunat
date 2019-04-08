@@ -24,6 +24,8 @@ block content
                                 div.upload-btn-wrapper
                                     input(type="file" name="profilePic" id="imgSelector" onchange="changeImg(this);")
                                     input.btn.btn-primary.btn-block(value='Bild ändern')
+                                    .spinner-grow(role='status' id="loadSpinner")
+                                        span.sr-only Loading...
                         .row
                             .col-md-12
                                     input.btn.btn-primary.btn-block(type="submit" value='Speichern')

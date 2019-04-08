@@ -7,6 +7,8 @@ var vanilla = new Croppie(el, {
 });
 
 $(function() {
+    var loadSpinner = document.getElementById("#loadSpinner");
+    loadSpinner.style.display = "hidden";
     $.validate({
         lang : 'de',
         modules : 'location, date, security, file'
@@ -27,18 +29,24 @@ $( '#imgForm' ).submit(function ( e ) {
 
     var data = new FormData();
     data.append("profilePic", blob);
-
-
-     var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.addEventListener("readystatechange", function () {
     if (this.readyState === 4) {
-        console.log(this.responseText);
+        var loadSpinner = document.getElementById("#loadSpinner");
+        loadSpinner.style.display = "hidden";
+        if (xhr.status == 200) {
+            console.log(this.responseText);
+            alert("Bild erfolgreich hochgeladen")
+        } else {
+            alert("leider konnte dein Bild nicht hochgeladen werden")
+        }
     }
     });
     xhr.open("POST", "https://komunat.de/profile/image");
-    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.setRequestHeader("cache-control", "no-cache");    
     xhr.send(data);
-
+    var loadSpinner = document.getElementById("#loadSpinner");
+    loadSpinner.style.display = "visible";
     });
 });
 
