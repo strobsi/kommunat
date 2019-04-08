@@ -7,7 +7,7 @@ var vanilla = new Croppie(el, {
 });
 
 $(function() {
-    var loadSpinner = document.getElementById("#loadSpinner");
+    var loadSpinner = document.getElementById("loadSpinner");
     loadSpinner.style.display = "hidden";
     $.validate({
         lang : 'de',
@@ -32,7 +32,7 @@ $( '#imgForm' ).submit(function ( e ) {
     var xhr = new XMLHttpRequest();
     xhr.addEventListener("readystatechange", function () {
     if (this.readyState === 4) {
-        var loadSpinner = document.getElementById("#loadSpinner");
+        var loadSpinner = document.getElementById("loadSpinner");
         loadSpinner.style.display = "hidden";
         if (xhr.status == 200) {
             console.log(this.responseText);
