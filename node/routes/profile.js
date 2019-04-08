@@ -30,17 +30,6 @@ const fileFilter = function(req, file, cb) {
     }
 };
 
-var upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5
-  },
-  fileFilter: fileFilter,
-  onError : function(err, next) {
-    console.log('error', err);
-    res.send(400);
-  }
-})
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 1 hour window
@@ -136,17 +125,29 @@ router.post("/",jsonParser,apiLimiter,(req, res) => {
   }
 })  
 
+var imgUpload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter,
+  onError : function(err, next) {
+    console.log('error', err);
+    res.send(400);
+  }
+}).single("profilePic");
+
 router.post("/image",apiLimiter,(req, res) => {
-  upload(req, res, function (err) {
+  imgUpload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading.
-      console.log("Error:" + err);
+      console.log("Err: "+err)
     } else if (err) {
-      console.log("Error:" + err);
+      console.log("Err unknown: "+err)
       // An unknown error occurred when uploading.
     }
-    // Everything went fine.
     res.send();
+    // Everything went fine.
   })
 });
 
