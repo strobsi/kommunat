@@ -73,7 +73,7 @@ block content
                         .form-group
                         label.col-lg-12.control-label(for="list_number") Listenplatz:
                         .col-lg-8
-                            input.form-control(id="list_number" name="list_number" type='text', value=u.list_number, data-validation="number", data-validation-allowing="range[1;60]")
+                            input.form-control(id="list_number" name="list_number" type='text', value=u.list_number, data-validation="number", data-validation-allowing="range[1;60]" data-validation-error-msg="Ungültiger Listenplatz. Bitte Zahl zwischen 1 und 60 eingeben.")
                             <span class="sidenote"> Wird öffentlich angezeigt</span>
                         .form-group
                         label.col-lg-12.control-label(for="district") Stadtbezirk:
