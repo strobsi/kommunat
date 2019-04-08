@@ -19,10 +19,8 @@ const storage = multer.diskStorage({
   },
   filename: function(req,file,cb) {
     const s = req.sanitize(req.userinfo.sub);
-    var extname = path.extname(file.filename)
-    console.log(extname);
     if(file.mimetype === "image/jpeg") {
-      cb(null,s + ".jpeg");
+      cb(null,s + ".jpg");
     }else if (file.mimetype === "image/jpg") {
       cb(null,s + ".jpg");
     }else if (file.mimetype === "image/png") {
