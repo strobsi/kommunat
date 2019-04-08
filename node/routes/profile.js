@@ -130,25 +130,11 @@ var imgUpload = multer({
   limits: {
     fileSize: 1024 * 1024 * 5
   },
-  fileFilter: fileFilter,
-  onError : function(err, next) {
-    console.log('error', err);
-    res.send(400);
-  }
+  fileFilter: fileFilter
 }).single("profilePic");
 
-router.post("/image",apiLimiter,(req, res) => {
-  imgUpload(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      // A Multer error occurred when uploading.
-      console.log("Err: "+err)
-    } else if (err) {
-      console.log("Err unknown: "+err)
-      // An unknown error occurred when uploading.
-    }
-    res.send();
-    // Everything went fine.
-  })
+router.post("/image",apiLimiter,imgUpload.single("profilePic"),(req, res) => {
+  
 });
 
 module.exports = router;
