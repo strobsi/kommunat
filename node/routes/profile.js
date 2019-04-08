@@ -142,11 +142,12 @@ router.post("/image",apiLimiter,(req, res) => {
       // A Multer error occurred when uploading.
       console.log("Error:" + err);
     } else if (err) {
+      console.log("Error:" + err);
       // An unknown error occurred when uploading.
     }
     // Everything went fine.
     res.send();
-  }).single()
+  })
 });
 
 module.exports = router;
