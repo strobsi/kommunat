@@ -11,6 +11,7 @@ $(function() {
         lang : 'de',
         modules : 'location, date, security, file'
       });
+    
 })
 
 function bindImage(img) {
@@ -27,7 +28,8 @@ $( '#imgForm' ).submit(function ( e ) {
     var data = new FormData();
     data.append("profilePic", blob);
 
-    var xhr = new XMLHttpRequest();
+
+     var xhr = new XMLHttpRequest();
     xhr.addEventListener("readystatechange", function () {
     if (this.readyState === 4) {
         console.log(this.responseText);

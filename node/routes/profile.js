@@ -11,14 +11,19 @@ var schemata = require('../utils/const');
 var db = require("../db/db_accessor")
 var multer = require("multer")
 const path = require('path');
+const fs = require('fs')
 
 const storage = multer.diskStorage({
   destination: function(req,file,cb) {
     cb(null,path.join(__dirname,"../assets/uploads/"));
   },
   filename: function(req,file,cb) {
+    if(file.mimetype === "image/jpeg") {
+      cb(null,s + ".jpeg");
+    }else if (file.mimetype === "image/png") {
+      cb(null,s + ".png");
+    }
     const s = req.sanitize(req.userinfo.sub);
-    cb(null,s + path.extname(file.originalname))
   }
 });
 
@@ -43,9 +48,29 @@ router.get("/", (req, res) => {
   const s = req.sanitize(req.userinfo.sub);
 
   var userID = String(s);
-  var userImg = "https://komunat.de/uploads/"+userID+".png"
-  console.log(userImg)
-
+  var userImg = "";
+  try {
+    if (fs.existsSync(path.join(__dirname,"../assets/uploads/"+s+".png"))) {
+      userImg = "https://komunat.de/uploads/"+userID+".png"
+    }
+  } catch(err) {
+    console.error(err)
+    try {
+      if (fs.existsSync(path.join(__dirname,"../assets/uploads/"+s+".jpg"))) {
+        userImg = "https://komunat.de/uploads/"+userID+".jpg"
+      }
+    } catch(err) {
+      console.error(err)
+      try {
+        if (fs.existsSync(path.join(__dirname,"../assets/uploads/"+s+".jpeg"))) {
+          userImg = "https://komunat.de/uploads/"+userID+".jpeg"
+        }
+      } catch(err) {
+        userImg = "https://komunat.de/avatar.png"
+      }
+    }
+  }
+  
   var c = db.getCandidate(s);
   c.then(function cb(r) {
     res.render("profile",{ userImg:userImg, u:r.candidate });
