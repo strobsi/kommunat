@@ -10,10 +10,11 @@ var Validator = require('jsonschema').Validator;
 var schemata = require('../utils/const');
 var db = require("../db/db_accessor")
 var multer = require("multer")
+const path = require('path');
 
 const storage = multer.diskStorage({
   destination: function(req,file,cb) {
-    cb(null,"uploads/");
+    cb(null,path.join(__dirname,"../assets/uploads/"));
   },
   filename: function(req,file,cb) {
     const s = req.sanitize(req.userinfo.sub);
@@ -39,7 +40,7 @@ var upload = multer({
     console.log('error', err);
     res.send(400);
   }
-}).single('profilePic')
+})
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 1 hour window
@@ -145,7 +146,7 @@ router.post("/image",apiLimiter,(req, res) => {
     }
     // Everything went fine.
     res.send();
-  })
+  }).single()
 });
 
 module.exports = router;

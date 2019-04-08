@@ -23,22 +23,20 @@ function bindImage(img) {
 $( '#imgForm' ).submit(function ( e ) {
     e.preventDefault();
     vanilla.result({type: 'blob', size: 'original', quality: 1, circle: false }).then(function(blob) {
-        var data, xhr;
-        data = new FormData();
-        data.append( 'file',blob );
-        xhr = new XMLHttpRequest();
-        xhr.open( 'POST', 'https://komunat.de/profile/image', true );
-        xhr.onreadystatechange = function ( response ) {
-            console.log(xhr.status)
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Successfully stored values, continue with animation
-                alert("Profilbild erfolgreich geändert");
-            }
-            else if (xhr.status === 413) {
-                alert("Dein Profilbild ist zu groß. Lade ein kleineres Bild hoch");
-            }
-        };
-        xhr.send( data );
+
+    var data = new FormData();
+    data.append("profilePic", blob);
+
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("readystatechange", function () {
+    if (this.readyState === 4) {
+        console.log(this.responseText);
+    }
+    });
+    xhr.open("POST", "https://komunat.de/profile/image");
+    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.send(data);
+
     });
 });
 
