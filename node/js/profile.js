@@ -11,7 +11,9 @@ $(function() {
         lang : 'de',
         modules : 'location, date, security, file',
         messages: {
-            range: "Bitte eine Zahl zwischen 1 und 60 eingeben"
+            range: "Bitte eine Zahl zwischen 1 und 60 eingeben",
+            number: "Bitte eine Zahl zwischen 1 und 60 eingeben",
+            list_number: "Bitte eine Zahl zwischen 1 und 60 eingeben",
         }
       });
 })
