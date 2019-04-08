@@ -17,7 +17,7 @@ $(function() {
         },
         onValidate : function($form) {
             return {
-              element : $('#list_number'),
+              element : document.getElementById("list_number"),
               message : 'Bitte Zahl zwischen 1 und 60 eingeben'
             }
         },
