@@ -131,10 +131,11 @@ var imgUpload = multer({
     fileSize: 1024 * 1024 * 5
   },
   fileFilter: fileFilter
-}).single("profilePic");
+});
 
 router.post("/image",apiLimiter,imgUpload.single("profilePic"),(req, res) => {
-  
+console.log(req.file);
+res.send();
 });
 
 module.exports = router;
