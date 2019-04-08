@@ -32,8 +32,7 @@ $( '#imgForm' ).submit(function ( e ) {
     var xhr = new XMLHttpRequest();
     xhr.addEventListener("readystatechange", function () {
     if (this.readyState === 4) {
-        var loadSpinner = document.getElementById("loadSpinner");
-        loadSpinner.style.display = "hidden";
+        $('#uploadModal').modal('toggle');
         if (xhr.status == 200) {
             console.log(this.responseText);
             alert("Bild erfolgreich hochgeladen")
@@ -45,8 +44,7 @@ $( '#imgForm' ).submit(function ( e ) {
     xhr.open("POST", "https://komunat.de/profile/image");
     xhr.setRequestHeader("cache-control", "no-cache");    
     xhr.send(data);
-    var loadSpinner = document.getElementById("#loadSpinner");
-    loadSpinner.style.display = "visible";
+    $('#uploadModal').modal('toggle');
     });
 });
 
