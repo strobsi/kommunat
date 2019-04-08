@@ -37,7 +37,7 @@ $( '#imgForm' ).submit(function ( e ) {
             console.log(this.responseText);
             alert("Bild erfolgreich hochgeladen")
         } else {
-            alert("leider konnte dein Bild nicht hochgeladen werden")
+            alert("Wir sind untröstlich, aber leider konnte dein Bild nicht hochgeladen werden. Bitte wende dich an an uns, wir werden uns so schnell wie möglich darum kümmern.")
         }
     }
     });
