@@ -15,9 +15,11 @@ const fs = require('fs')
 
 const storage = multer.diskStorage({
   destination: function(req,file,cb) {
+    console.log(req.file);
     cb(null,path.join(__dirname,"../assets/uploads/"));
   },
   filename: function(req,file,cb) {
+    console.log(req.file);
     const s = req.sanitize(req.userinfo.sub);
     if(file.mimetype === "image/jpeg") {
       cb(null,s + ".jpg");
@@ -30,7 +32,9 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = function(req, file, cb) { 
-    if(file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+  console.log(req.file);
+
+    if(file.mimetype === "image/jpeg" || file.mimetype === "image/png" ) {
       cb(null, true)
     } else {
       cb(new Error("Falsches Datei Format. Bild muss entweder jpeg oder png sein."), false)
