@@ -15,11 +15,11 @@ const fs = require('fs')
 
 const storage = multer.diskStorage({
   destination: function(req,file,cb) {
-    console.log(req.file);
+    console.log(file);
     cb(null,path.join(__dirname,"../assets/uploads/"));
   },
   filename: function(req,file,cb) {
-    console.log(req.file);
+    console.log(file);
     const s = req.sanitize(req.userinfo.sub);
     if(file.mimetype === "image/jpeg") {
       cb(null,s + ".jpg");
@@ -32,7 +32,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = function(req, file, cb) { 
-  console.log(req.file);
+  console.log(file);
 
     if(file.mimetype === "image/jpeg" || file.mimetype === "image/png" ) {
       cb(null, true)
@@ -153,13 +153,25 @@ router.post("/",jsonParser,apiLimiter,(req, res) => {
 var imgUpload = multer({
   storage: storage,
   limits: {
-    fileSize: 1024 * 1024 * 8
+    fileSize: 1024 * 1024 * 8,
+    fieldNameSize: 1024,
   },
   fileFilter: fileFilter
 });
 
-router.post("/image",apiLimiter,imgUpload.single("profilePic"),(req, res) => {
+router.post("/image",apiLimiter,(req, res) => {
 console.log(req.file);
+imgUpload(req, res, function (err) {
+  if (err instanceof multer.MulterError) {
+    // A Multer error occurred when uploading.
+    console.log("Error; "+ err)
+  } else if (err) {
+    console.log("Error unknown "+ err)
+    // An unknown error occurred when uploading.
+  }
+
+  // Everything went fine.
+}).single("profilePic")
 res.send();
 });
 
