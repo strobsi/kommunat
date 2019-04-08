@@ -9,9 +9,11 @@ var vanilla = new Croppie(el, {
 $(function() {
     $.validate({
         lang : 'de',
-        modules : 'location, date, security, file'
+        modules : 'location, date, security, file',
+        messages: {
+            range: "Bitte eine Zahl zwischen 1 und 60 eingeben"
+        }
       });
-    
 })
 
 function bindImage(img) {
