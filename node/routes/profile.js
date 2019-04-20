@@ -51,6 +51,7 @@ const apiLimiter = rateLimit({
 
 // Display the profile page
 router.get("/", (req, res) => {
+  console.log("Requeted")
   const s = req.sanitize(req.userinfo.sub);
 
   var userID = String(s);

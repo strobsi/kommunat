@@ -1,16 +1,13 @@
 // eventdatabase.js
 // ========
 const redis = require("redis")
-const Cryptr = require('cryptr');
-const cryptr = new Cryptr(process.env.DB);
  
-
 module.exports = {
     getEvents: function (uuid) {
         return new Promise(function(resolve, reject){
             client = redis.createClient({
-                host:process.env.REDIS,
-                port:process.env.REDIS_PORT
+                host:"localhost",
+                port:6379
             });
             client.on("error", function (err) {
                 console.log("Error occured: "+err)
