@@ -1,5 +1,4 @@
 version: "2"
-
 services:
   nginx:
     restart: always
@@ -45,6 +44,40 @@ services:
       sh -c 'npm i && npm start'
     links:
       - redis
+  pwa-backend:
+    build: ./pwa-backend/kommunat/node/
+    volumes:
+      - ./pwa-backend/kommunat/node/:/var/www/app
+    ports:
+      - 3333:3333
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=${NODE_PORT}
+      - REDIS=${REDIS}
+      - REDIS_PORT=${REDIS_PORT}
+      - DB=${DB}
+      - ORG_URL=${ORG_URL}
+      - OKTA_TOKEN=${OKTA_TOKEN}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - OKTA_ISSUER=${OKTA_ISSUER}
+      - OKTA_CLIENT_ID=${OKTA_CLIENT_ID}
+      - OKTA_CLIENT_SECRET=${OKTA_CLIENT_SECRET}
+      - OKTA_REDIRECT_URL=${OKTA_REDIRECT_URL}
+    command:
+      sh -c 'npm i && npm start'
+    links:
+      - redis
+  pwa:
+    image: httpd:2.4
+    volumes:
+      - ./pwa/komunat-pwa/komunat/www/:/usr/local/apache2/htdocs/
+    ports:
+      - 81:80
+    restart: always
+    links:
+      - pwa-backend
+  
   redis:
     image: redis:5.0.4-alpine
     volumes:
