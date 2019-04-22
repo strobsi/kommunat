@@ -250,7 +250,6 @@ function getAge(dateString) {
   }
   return age;
 }
-console.log('age: ' + getAge("27.12.1993"));
 
 function isCValid(r) {
   j = {}
