@@ -12,6 +12,10 @@ const rateLimit = require("express-rate-limit");
 var nodemailer = require('nodemailer');
 var ageCalculator = require('age-calculator');
 let {AgeFromDateString, AgeFromDate} = require('age-calculator');
+const PDFDocument = require('pdfkit');
+var fs = require('fs');
+const path = require('path');
+
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 1 hour window
@@ -21,23 +25,23 @@ const apiLimiter = rateLimit({
 });
 
 var transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host:"mx00.kundenserver.de",
+  port:25,
   auth: {
-    user: 'appwiese@gmail.com',
-    pass: 'hcfxd3957#'
+    user: 'Komunat@unserezukunft.org',
+    pass: 'Kanzler2017'
   }
 });
-
 
 // Post result
 router.post('/',jsonParser,apiLimiter, (req, res) => {
 
     // Store Results
 
-      //pushResultPromise = db.rpushResult(req.body);
-      //pushResultPromise.then(function updateData(index) {
-      //  console.log("Pushed results")
-      //})
+      pushResultPromise = db.rpushResult(req.body);
+      pushResultPromise.then(function updateData(index) {
+        console.log("Pushed results")
+      })
       // No candidate, get matches
       candidatesPromise = static.getCandidates();
       candidatesPromise.then(function cb(cdts) {
@@ -51,7 +55,8 @@ router.post('/',jsonParser,apiLimiter, (req, res) => {
               var totalDistance = dVal+iVal;
   
               var res = {
-                distance: Math.round(totalDistance/144*100),
+                distance: totalDistance/144*100,
+                show_distance: Math.round(totalDistance/144*100),
                 uuid: r.metadata.uuid,
                 name: r.candidate.name,
                 birthdate: getAge(r.candidate.birthdate),
@@ -66,22 +71,116 @@ router.post('/',jsonParser,apiLimiter, (req, res) => {
             }
         
         });
-        var first20 = matches.slice(0,20);
-        first20 = sortByDistance(first20);
-        console.log("Sending data") 
-        console.log(first20.length)
 
-        res.send(JSON.stringify(first20));
+        matches.sort(function (a, b) {
+          a.distance = a.distance
+          b.distance = b.distance
+          if (a.distance < b.distance) {
+            return 1;
+          }
+          if (a.distance > b.distance) {
+            return -1;
+          }
+          return 0;
+        });
+
+        var splicer = req.body.page * 30;
+        var page = matches.slice(splicer-30,splicer);
+        console.log("Page: " + req.body.page);
+        page = sortByDistance(page);
+        console.log("Sending data") 
+        console.log(page.length)
+        res.send(JSON.stringify(page));
       });
       
   }),
 
 router.post("/share",jsonParser,apiLimiter, (req, res) => {
 
-  var receiver = req.sanitize(req.body.title);
+  var receiver = req.body.receiver;
+  var team =  req.body.team;
+  var result =  req.body.result;
+
+  team.sort(function (a, b) {
+    a.distance = a.distance
+    b.distance = b.distance
+    if (a.distance < b.distance) {
+      return 1;
+    }
+    if (a.distance > b.distance) {
+      return -1;
+    }
+    return 0;
+  });
+
+  const doc = new PDFDocument;
+  var v = path.join(__dirname, "/file.pdf");
+
+  var logo = path.join(__dirname,"../assets/logo.png");
+
+  doc.pipe(fs.createWriteStream(v));
+
+  doc.addPage()
+    doc.image(logo, {
+      fit: [250, 50],
+      align: 'center',
+      valign: 'center'
+   });
+   doc.fontSize(14).text("Glückwunsch, dein Team ist hier detailliert aufgelistet. Deine eigenen Werte und Aufgaben jedoch vorab:", 75, 150);
+
+   doc.fontSize(25).text("Werte:", 75, 200);
+   for(var i = 1; i < result.values.length-1; i++) {
+    doc.fontSize(12).text("Platz: " +i+ "  " + result.values[i].name, 75, 220+i*20);  
+   }
+
+   doc.addPage()
+    doc.image(logo, {
+      fit: [250, 50],
+      align: 'center',
+      valign: 'center'
+   });
+   doc.fontSize(25).text("Aufgaben:", 75, 150);
+
+   for(var i = 1; i < result.contents.length-1; i++) {
+    doc.fontSize(12).text("Platz: " +i+ "  " + result.contents[i].name, 75, 180+i*20);  
+   }
+
+
+  for(var i = 0; i < team.length; i++) {
+    doc.addPage()
+    doc.image(logo, {
+      fit: [250, 50],
+      align: 'center',
+      valign: 'center'
+   });
+    doc.fontSize(25).text(team[i].name, 75, 150);
+    doc.fontSize(12).text("Matching: " + team[i].distance, 75, 180);
+    doc.fontSize(12).text("Liste: " + team[i].list, 75, 200);
+    doc.fontSize(12).text("Listenplatz: " + team[i].list_number, 75, 220);
+    doc.fontSize(12).text("Wahlbezirk: " + team[i].district, 75, 240);  
+
+    doc.fontSize(25).text("Werte:", 75, 280);
+
+    for (var x = 1; x < team[i].values.length-1; x++) {
+      doc.fontSize(12).text("Platz: " +x+ "  " + team[i].values[x].name, 75, 290+x*20);  
+    }
+    doc.addPage()
+    doc.image(logo, {
+      fit: [250, 50],
+      align: 'center',
+      valign: 'center'
+   });
+    doc.fontSize(25).text("Aufgaben:", 75, 150);
+
+    for (var y = 1; y < team[i].contents.length-1; y++) {
+      doc.fontSize(12).text("Platz: " +y+ "  " + team[i].contents[y].name, 75, 160+y*20);  
+    }
+  }
+  doc.end();
+ /*
   console.log("Sending email")
   var mailOptions = {
-    from: 'simon.strobel@web.de',
+    from: 'Komunat@unserezukunft.org',
     to: receiver,
     subject: 'Sending Email using Node.js',
     text: 'That was easy!'
@@ -95,6 +194,7 @@ router.post("/share",jsonParser,apiLimiter, (req, res) => {
       console.log('Email sent: ' + info.response);
     }
   })
+  */
 })
 
 function getDistance(x,y) {

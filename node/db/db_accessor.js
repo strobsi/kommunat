@@ -142,8 +142,7 @@ module.exports = {
             client.on("error", function (err) {
                 console.log("Error occured: "+err)
             });
-            const encryptedString = cryptr.encrypt((JSON.stringify(val)));
-            client.rpush("results",encryptedString, function(err,reply) {
+            client.rpush("results",JSON.stringify(val), function(err,reply) {
                 resolve(reply);
             });
         })
