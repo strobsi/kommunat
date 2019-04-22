@@ -2,12 +2,13 @@
 // ========
 const redis = require("redis")
 const Cryptr = require('cryptr');
+const cryptr = new Cryptr('oiOFtl7s8iTg0IQyutaRbRFNeZFP48bU1qkgbXlceJegWtlMCQ0EJvlC0/oQcpt7JJ311rZUN/Yks0AybMcMyg==');
 
 module.exports = {
     getCandidates: function () {
         return new Promise(function(resolve, reject){
             client = redis.createClient({
-                host:"redis",
+                host:"localhost",
                 port:6379
             });
             client.on("error", function (err) {
@@ -15,7 +16,6 @@ module.exports = {
             });
             client.lrange("candidate_results",0,-1, function(err,reply) {
                 console.log("[DB Accessor]: Got candidates: ")
-                
                 if(reply.length > 0) {
                     reply.forEach(function (r, i) {
                         reply[i] = JSON.parse(cryptr.decrypt(r));
