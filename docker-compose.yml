@@ -45,7 +45,7 @@ services:
     links:
       - redis
   pwa:
-    build: ./pwa/komunat-pwa/
+    build: ./pwa/komunat-pwa/komunat/
     ports:
       - 8000:8000
     restart: always
