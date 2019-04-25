@@ -47,7 +47,7 @@ services:
   pwa:
     build: ./pwa/komunat-pwa/
     ports:
-      - 8000:80
+      - 8000:8000
     restart: always
     links:
       - nodejs
