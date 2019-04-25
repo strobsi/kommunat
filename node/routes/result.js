@@ -53,8 +53,8 @@ router.post('/',jsonParser,apiLimiter, (req, res) => {
               var totalDistance = dVal+iVal;
   
               var res = {
-                distance: totalDistance/144*100,
-                show_distance: Math.round(totalDistance/144*100),
+                distance: totalDistance,
+                show_distance: Math.round(totalDistance),
                 uuid: r.metadata.uuid,
                 name: r.candidate.name,
                 birthdate: getAge(r.candidate.birthdate),
