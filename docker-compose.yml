@@ -45,15 +45,13 @@ services:
     links:
       - redis
   pwa:
-    image: httpd:2.4
-    volumes:
-      - ./pwa/komunat-pwa/komunat/www/:/usr/local/apache2/htdocs/
+    build: ./pwa/komunat-pwa/
     ports:
-      - 81:80
+      - 8000:80
     restart: always
     links:
       - nodejs
-
+    entrypoint: "ionic cordova run browser"
   redis:
     image: redis:5.0.4-alpine
     volumes:
