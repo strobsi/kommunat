@@ -22,10 +22,10 @@ const apiLimiter = rateLimit({
 
 
 // Post result
-router.post('/',jsonParser,apiLimiter, (req, res) => {
+router.post('/',jsonParser, (req, res) => {
 
     // Store Results
-
+      console.log("Received result")
       pushResultPromise = db.rpushResult(req.body);
       pushResultPromise.then(function updateData(index) {
         console.log("Pushed results")
