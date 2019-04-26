@@ -15,17 +15,16 @@ const path = require('path');
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 1 hour window
-  max: 10, // start blocking after 5 requests
+  max: 20, // start blocking after 5 requests
   message:
     "Too many requests from this IP, please try again later"
 });
 
 
 // Post result
-router.post('/', (req, res) => {
+router.post('/',apiLimiter, (req, res) => {
 
-    // Store Results
-      console.log("Received result")
+    // Store Results      
       pushResultPromise = db.rpushResult(req.body);
       pushResultPromise.then(function updateData(index) {
         console.log("Pushed results")
