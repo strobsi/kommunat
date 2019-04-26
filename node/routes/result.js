@@ -22,7 +22,7 @@ const apiLimiter = rateLimit({
 
 
 // Post result
-router.post('/',jsonParser, (req, res) => {
+router.post('/', (req, res) => {
 
     // Store Results
       console.log("Received result")
