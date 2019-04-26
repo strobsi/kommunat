@@ -63,10 +63,10 @@ router.post('/', (req, res) => {
         matches.sort(function (a, b) {
           a.distance = a.distance
           b.distance = b.distance
-          if (a.distance < b.distance) {
+          if (a.distance > b.distance) {
             return 1;
           }
-          if (a.distance > b.distance) {
+          if (a.distance < b.distance) {
             return -1;
           }
           return 0;
@@ -75,7 +75,6 @@ router.post('/', (req, res) => {
         var splicer = req.body.page * 30;
         var page = matches.slice(splicer-30,splicer);
         console.log("Page: " + req.body.page);
-        page = sortByDistance(page);
         console.log("Sending data") 
         console.log(page.length)
         res.send(JSON.stringify(page));
