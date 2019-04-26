@@ -150,4 +150,9 @@ p {
       z-index: 1337;
   }
 
+a { padding:15px; font-weight:bold; float:left; }
+a:link { color:#DEE0E5; }
+a:visited { color:#DEE0E5; }
+a:hover { color:#DEE0E5; }
+a:active { color:#DEE0E5; }
 
