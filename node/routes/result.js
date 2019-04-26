@@ -9,8 +9,6 @@ var db = require("../db/db_accessor");
 var static = require("../db/static");
 const expressSanitizer = require('express-sanitizer');
 const rateLimit = require("express-rate-limit");
-var nodemailer = require('nodemailer');
-const PDFDocument = require('pdfkit');
 var fs = require('fs');
 const path = require('path');
 
@@ -22,14 +20,6 @@ const apiLimiter = rateLimit({
     "Too many requests from this IP, please try again later"
 });
 
-var transporter = nodemailer.createTransport({
-  host:"mx00.kundenserver.de",
-  port:25,
-  auth: {
-    user: 'Komunat@unserezukunft.org',
-    pass: 'Kanzler2017'
-  }
-});
 
 // Post result
 router.post('/',jsonParser,apiLimiter, (req, res) => {
@@ -93,6 +83,7 @@ router.post('/',jsonParser,apiLimiter, (req, res) => {
       
   }),
 
+  /*
 router.post("/share",jsonParser,apiLimiter, (req, res) => {
 
   var receiver = req.body.receiver;
@@ -192,8 +183,9 @@ router.post("/share",jsonParser,apiLimiter, (req, res) => {
       console.log('Email sent: ' + info.response);
     }
   })
-  */
+  
 })
+*/
 
 function getDistance(x,y) {
     // To get the distance, we have to sort the array by the id's
