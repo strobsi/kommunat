@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", (req, res) => {
     var ua = req.header('user-agent');
     // Check the user-agent string to identyfy the device. 
-        res.redirect('https://komunat.de/dashboard');
+    res.render("index");
 });
 
 module.exports = router;

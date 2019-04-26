@@ -1,10 +1,32 @@
-block variables
-  - var title = "Home"
-
-block content
-  h2.text-center Willkommen zum Komunat
-
-  .row
-    .offset-sm-2.col-sm-8
-      .jumbotron.text-center.
-        Erfahre eine neue Seite von Politik!
+doctype html
+html
+  head
+    title Komunat
+    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js')
+    link(href='https://fonts.googleapis.com/css?family=Source+Sans+Pro', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/style.css')
+    script(src='/js/main.js', type='text/javascript')
+  body
+    #bg
+    div
+      img#iphoneX.center-bg(src='/iphonexBg.png')
+      img#iphoneX.center(src='/iphonex.png')
+      iframe.center-frame(frameborder='0', webkitallowfullscreen='', mozallowfullscreen='', allowfullscreen='', src='https://komunat.de/app/')
+      | >
+    .topBar
+      .row
+        .col.col-md-2
+          p.opacity-half
+            | KANDIDATENPORTAL
+    .footer
+      .row
+        .text-center.col.col-md-1
+          p.opacity-half DSGVO
+        .text-center.col.col-md-10
+          p
+            | Made with 
+            span(style='color: #e25555;')  ♥ 
+            |  in Stuttgart
+        .text-center.col.col-md-1
+          p.opacity-half IMPRESSUM

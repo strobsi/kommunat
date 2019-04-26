@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:800|Poppins:500');
+
+html, body {margin: 0; height: 100%; overflow: hidden}
+
+#bg { 
+  /* The image used */
+  height: 100%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  -webkit-filter: brightness(50%);
+  background-image: url("img/001.jpg");
+  -webkit-transition: background 3s ease-in-out;
+  -moz-transition: background 3s ease-in-out;;
+  -o-transition: background 3s ease-in-out;;
+  -ms-transition: background 3s ease-in-out;;
+  transition: background 3s ease-in-out;;
+}
+
+.intro {
+    z-index: 1;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    background-size: cover;
+    display: table;
+    top: 0;
+}
+
+.topBar {
+  position: absolute;
+  top:0;
+  left:1vw;
+  width:100%;
+  height:5vh;
+  line-height: 5vh;
+}
+
+.footer {
+  position: absolute;
+  left:1vw;
+  bottom: 0;
+  width: 98vw;
+  right:1vw;
+  height:5vh;
+  line-height: 5vh;
+}
+
+.row {
+  margin:0;
+  padding:0;
+}
+
+.col {
+  margin:0;
+  padding:0;
+}
+
+span {
+  margin:0;
+  padding:0;
+}
+
+p {
+  font-family: 'Source Sans Pro';
+  font-weight:  black;
+  font-size: 1em;
+  color: #DEE0E5;
+  margin:0;
+  padding:0;
+  
+}
+
+.opacity-half {
+  opacity: 0.5;
+  transition: opacity .5s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
+  cursor: pointer;
+}
+
+.opacity-half:hover {
+  opacity: 1.0;
+}
+
+.content {
+    max-width: 500px;
+    margin:auto;
+}
+
+.center {
+    z-index: 3;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height:70%;
+  }
+
+.center-frame {
+    z-index: 2;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    height:60%;
+  }
+
+  .center-bg {
+    z-index: 1;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height:70%;
+  }
+
+
+@keyframes cf3FadeInOut {
+    0% {
+    opacity:1;
+  }
+  45% {
+  opacity:1;
+  }
+  55% {
+  opacity:0;
+  }
+  100% {
+  opacity:0;
+  }
+  }
+
+
+
+
