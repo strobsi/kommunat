@@ -54,9 +54,9 @@ router.post('/',apiLimiter, (req, res) => {
                 contents: r.contents
               }
               if(r.candidate.birthdate == undefined) {
-                res.birthdate = 0;
+                res.birthdate = "";
               } else {
-                res.birthdate = getAge(r.candidate.birthdate);
+                res.birthdate = ", " + getAge(r.candidate.birthdate);
               }
               if (r.candidate.motto == undefined) {
                 res.motto = " - Nicht verfügbar - ";
