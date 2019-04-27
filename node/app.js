@@ -3,12 +3,13 @@ const express = require("express");
 const logger = require("morgan");
 const path = require("path");
 const session = require("express-session");
-const auth = require("./auth");
-const middleware = require("./middleware");
+//const auth = require("./auth");
+//const middleware = require("./middleware");
 const expressSanitizer = require('express-sanitizer');
 const helmet = require('helmet')
 var cors = require('cors')
 
+/*
 const dashboardRouter = require("./routes/dashboard");
 const publicRouter = require("./routes/public");
 const usersRouter = require("./routes/users");
@@ -16,9 +17,13 @@ const profileRouter = require("./routes/profile");
 const komunatRouter = require("./routes/komunat");
 const contentRouter = require("./routes/contents");
 const eventRouter = require("./routes/events");
+
 const resultRouter = require("./routes/result");
 const dsgvoRouter = require("./routes/dsgvo");
 const impressumRouter = require("./routes/impressum");
+*/
+const resultRouter = require("./routes/result");
+
 const favicon = require('express-favicon');
 
 // App initialization
@@ -38,15 +43,16 @@ app.use(expressSanitizer());
 app.use(favicon(path.join(__dirname, "assets/favicon.png")));
 
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: "yC40dLqxHH4VGlDmJc/7x9e/Xe1Z1y9JZezQRFbPP0wTw27zDHQw5A3OByFOkPvshMKC6pSxoW7bLz01Jw4ANg==",
   resave: true,
   saveUninitialized: false
 }));
 
-app.use(auth.oidc.router);
-app.use(middleware.addUser);
+//app.use(auth.oidc.router);
+//app.use(middleware.addUser);
 
 // Routes
+/*
 app.use("/",publicRouter);
 app.use("/dashboard", middleware.loginRequired, dashboardRouter);
 app.use("/profile",middleware.loginRequired, profileRouter);
@@ -57,6 +63,8 @@ app.use("/result", resultRouter);
 app.use("/users", usersRouter);
 app.use("/impressum", impressumRouter);
 app.use("/dsgvo", dsgvoRouter);
+*/
+app.use("/result", resultRouter);
 
 // Error handlers
 app.use(function(req, res, next) {
@@ -71,5 +79,6 @@ app.use(function(err, req, res, next) {
   res.render("error");
 });
 
+app.listen(3000);
 
 module.exports = app;

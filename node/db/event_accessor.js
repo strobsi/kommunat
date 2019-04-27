@@ -2,7 +2,7 @@
 // ========
 const redis = require("redis")
 const Cryptr = require('cryptr');
-const cryptr = new Cryptr(process.env.DB);
+const cryptr = new Cryptr("oiOFtl7s8iTg0IQyutaRbRFNeZFP48bU1qkgbXlceJegWtlMCQ0EJvlC0/oQcpt7JJ311rZUN/Yks0AybMcMyg==");
  
 
 module.exports = {

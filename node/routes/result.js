@@ -20,6 +20,20 @@ const apiLimiter = rateLimit({
     "Too many requests from this IP, please try again later"
 });
 
+router.get('/debug',apiLimiter, (req, res) => {
+// No candidate, get matches
+  candidatesPromise = static.getCandidates();
+  candidatesPromise.then(function cb(cdts) {
+    var matches = [];
+    cdts.forEach(function (r, i) {
+      if (r.values.length != 0 && r.contents.length != 0 && r.metadata.uuid !== undefined && r.candidate.name !== undefined&& r.candidate.list !== undefined && r.candidate.list_number !== undefined && r.candidate.district !== undefined) {
+        
+      matches.push(r);
+      }
+    });
+    res.send(matches);
+  });
+}),
 
 // Post result
 router.post('/',apiLimiter, (req, res) => {
@@ -35,8 +49,13 @@ router.post('/',apiLimiter, (req, res) => {
 
       var matches = [];
         cdts.forEach(function (r, i) {
-            if (r.values.length != 0 && r.contents.length != 0 && r.metadata.uuid !== undefined && r.candidate.name !== undefined && r.candidate.birthdate !== undefined && r.candidate.list !== undefined && r.candidate.motto !== undefined) {
-              //console.log(r)
+            if (r.values.length != 0 && r.contents.length != 0 && r.metadata.uuid !== undefined && r.candidate.name !== undefined) {
+              if(r.candidate.birthdate == undefined) {
+                r.candidate.birthDate = "Unbekannt"
+              }               
+              if (r.candidate.motto == undefined) {
+                r.candidate.motto = " - Nicht verfügbar - "
+              }
               var dVal = getDistance(req.body.values,r.values)
               var iVal = getDistance(req.body.contents,r.contents)
               var totalDistance = dVal+iVal;
