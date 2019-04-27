@@ -54,7 +54,7 @@ router.post('/',apiLimiter, (req, res) => {
                 contents: r.contents
               }
               if(r.candidate.birthdate == undefined) {
-                res.birthdate = "Unbekannt";
+                res.birthdate = 0;
               } else {
                 res.birthdate = getAge(r.candidate.birthdate);
               }
