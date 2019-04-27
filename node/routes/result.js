@@ -35,8 +35,9 @@ router.post('/',apiLimiter, (req, res) => {
 
       var matches = [];
         cdts.forEach(function (r, i) {
-            if (r.values.length != 0 && r.contents.length != 0 && r.metadata.uuid !== undefined && r.candidate.name !== undefined && r.candidate.birthdate !== undefined && r.candidate.list !== undefined && r.candidate.motto !== undefined) {
               //console.log(r)
+              if (r.values.length != 0 && r.contents.length != 0 && r.metadata.uuid !== undefined && r.candidate.name !== undefined) {
+               
               var dVal = getDistance(req.body.values,r.values)
               var iVal = getDistance(req.body.contents,r.contents)
               var totalDistance = dVal+iVal;
@@ -46,17 +47,24 @@ router.post('/',apiLimiter, (req, res) => {
                 show_distance: Math.round(totalDistance),
                 uuid: r.metadata.uuid,
                 name: r.candidate.name,
-                birthdate: getAge(r.candidate.birthdate),
                 list: r.candidate.list,
                 list_number: r.candidate.list_number,
                 district: r.candidate.district,
-                motto: r.candidate.motto,
                 values: r.values,
                 contents: r.contents
               }
+              if(r.candidate.birthdate == undefined) {
+                res.birthdate = "Unbekannt";
+              } else {
+                res.birthdate = getAge(r.candidate.birthdate);
+              }
+              if (r.candidate.motto == undefined) {
+                res.motto = " - Nicht verfügbar - ";
+              } else {
+                res.motto = r.candidate.motto;
+              }
               matches.push(res);
             }
-        
         });
 
         matches.sort(function (a, b) {
