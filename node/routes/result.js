@@ -22,8 +22,9 @@ const apiLimiter = rateLimit({
 
 router.get('/debug',apiLimiter, (req, res) => {
 // No candidate, get matches
-  candidatesPromise = static.getCandidates();
+  candidatesPromise = db.getCandidates();
   candidatesPromise.then(function cb(cdts) {
+    /*
     var matches = [];
     cdts.forEach(function (r, i) {
       if (r.values.length != 0 && r.contents.length != 0 && r.metadata.uuid !== undefined && r.candidate.name !== undefined&& r.candidate.list !== undefined && r.candidate.list_number !== undefined && r.candidate.district !== undefined) {
@@ -31,7 +32,8 @@ router.get('/debug',apiLimiter, (req, res) => {
       matches.push(r);
       }
     });
-    res.send(matches);
+    */
+    res.send(cdts);
   });
 }),
 
