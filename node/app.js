@@ -9,9 +9,10 @@ const expressSanitizer = require('express-sanitizer');
 const helmet = require('helmet')
 var cors = require('cors')
 
+const publicRouter = require("./routes/public");
+
 /*
 const dashboardRouter = require("./routes/dashboard");
-const publicRouter = require("./routes/public");
 const usersRouter = require("./routes/users");
 const profileRouter = require("./routes/profile");
 const komunatRouter = require("./routes/komunat");
@@ -52,8 +53,9 @@ app.use(session({
 //app.use(middleware.addUser);
 
 // Routes
-/*
+
 app.use("/",publicRouter);
+/*
 app.use("/dashboard", middleware.loginRequired, dashboardRouter);
 app.use("/profile",middleware.loginRequired, profileRouter);
 app.use("/komunat",middleware.loginRequired, komunatRouter);

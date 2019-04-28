@@ -9,11 +9,9 @@ html
     script(src='/js/main.js', type='text/javascript')
   body
     #bg
-    div
-      img#iphoneX.center-bg(src='/iphonexBg.png')
-      img#iphoneX.center(src='/iphonex.png')
-      iframe#app.center-frame(frameborder='0', webkitallowfullscreen='', mozallowfullscreen='', allowfullscreen='', src='https://komunat.de/app/')
-      | >
+    div.content
+      img(src='https://komunat.de/iphonex.png')
+      iframe.iframe(frameborder='0', webkitallowfullscreen='', mozallowfullscreen='', allowfullscreen='', src='https://komunat.de/app/')
     .topBar
       .row
         .col.col-md-2
