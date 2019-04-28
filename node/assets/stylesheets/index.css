@@ -98,8 +98,8 @@ p {
   width:20vw;
   height:70vh;
   min-height: 560px;
-  min-width: 280px;
-  max-width: 280px;
+  min-width: 300px;
+  max-width: 300px;
   max-height: 550px;
   text-align: center;
 }
