@@ -20,6 +20,31 @@ const apiLimiter = rateLimit({
     "Too many requests from this IP, please try again later"
 });
 
+const weakapiLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 1 hour window
+  max: 50, // start blocking after 5 requests
+  message:
+    "Too many requests from this IP, please try again later"
+});
+
+
+router.post("/event",weakapiLimiter, (req,res) => {
+  var c = req.sanitize(req.body.candidate);
+  var ev = []
+  var eventPromise = static.getEvents(c);
+  eventPromise.then(function cb(evts) {
+      for (var i = 0; i < evts.length; i++) {
+        if(evts[i].uuid == c) {
+          evts[i].events.sort(function(a, b) {
+            a = new Date(a.startDate);
+            b = new Date(b.startDate);
+            return a>b ? -1 : a<b ? 1 : 0;
+          });
+          res.send(evts[i].events);
+        } 
+      }  
+  });
+}),
 
 // Post result
 router.post('/',apiLimiter, (req, res) => {

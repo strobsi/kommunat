@@ -13,5 +13,13 @@ module.exports = {
                 resolve(JSON.parse(data));
             })
         })
+    },
+    getEvents: function (e) {
+        return new Promise(function(resolve, reject){
+            var v = path.join(__dirname, "/2019-04-29-events.json");
+            fs.readFile(v, function (err, data) {
+                resolve(JSON.parse(data));
+            })
+        })
     }
 };
