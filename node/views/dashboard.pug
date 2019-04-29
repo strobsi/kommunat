@@ -8,12 +8,12 @@ block content
     .card-body
       h2.text-center Willkommen, #{user.profile.firstName} #{user.profile.lastName}
       h5.text-center Hier kannst du dir dein persönliches Profil im Komunat anlegen.
-      if valuesInserted == false
-        .alert.alert-info.alert-dismissable
-            a.panel-close.close(data-dismiss='alert') ×
-            | Dein Profil ist noch nicht für Wähler sichtbar, da du deine 
-            strong Werte 
-            | noch nicht ermittelt hast.
+      .alert.alert-info.alert-dismissable
+          a.panel-close.close(data-dismiss='alert') ×
+          | Vielen vielen Dank, dass du bei unserem Experiment mitmachst. Wir sind überwältigt vom Feedback! Entschuldige bitte die Startschwierigkeiten und technischen Probleme. 
+          | Es kann sein, dass momentan nicht alle deine Veranstaltungen hier im Portal angezeigt werden. Keine Angst, sie sind alle gesichert und werden bereits den Wählern angezeigt.
+          | Du brauchst also nicht deine bereits eingetragenen Veranstaltungen noch einmal eingeben. Wenn du neue erstellst, werden sie innerhalb eines Tags dem Wähler zur Verfügung gestellt.
+          | Danke für dein Verständnis, wir lernen ständig dazu und geben unser Bestes! 
       if contentsInserted == false
         .alert.alert-info.alert-dismissable
             a.panel-close.close(data-dismiss='alert') ×
