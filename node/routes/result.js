@@ -6,12 +6,12 @@ const redis = require("redis")
 const request = require('request');
 const fetch = require('node-fetch');
 var db = require("../db/db_accessor");
+var evDB = require("../db/event_accessor");
 var static = require("../db/static");
 const expressSanitizer = require('express-sanitizer');
 const rateLimit = require("express-rate-limit");
 var fs = require('fs');
 const path = require('path');
-
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 1 hour window
@@ -33,6 +33,24 @@ router.get('/debug',apiLimiter, (req, res) => {
     });
     
     res.send(matches);
+  });
+}),
+
+router.post("/event", (req,res) => {
+  var c = req.sanitize(req.body.candidate);
+  var ev = []
+  var eventPromise = static.getEvents(c);
+  eventPromise.then(function cb(evts) {
+      for (var i = 0; i < evts.length; i++) {
+        if(evts[i].uuid == c) {
+          evts[i].events.sort(function(a, b) {
+            a = new Date(a.startDate);
+            b = new Date(b.startDate);
+            return a>b ? -1 : a<b ? 1 : 0;
+          });
+          res.send(evts[i].events);
+        } 
+      }  
   });
 }),
 
