@@ -100,7 +100,7 @@ p {
   min-height: 560px;
   min-width: 280px;
   max-width: 280px;
-  max-height: 550px;
+  max-height: 560px;
   text-align: center;
 }
 
@@ -116,6 +116,7 @@ p {
   left:8%;
   width: 84%;
   height: 84%;
+  
 }
 
 @keyframes cf3FadeInOut {
