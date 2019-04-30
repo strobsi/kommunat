@@ -49,11 +49,6 @@ router.post("/event",weakapiLimiter, (req,res) => {
 // Post result
 router.post('/',apiLimiter, (req, res) => {
 
-    // Store Results      
-      pushResultPromise = db.rpushResult(req.body);
-      pushResultPromise.then(function updateData(index) {
-        console.log("Pushed results")
-      })
       // No candidate, get matches
       candidatesPromise = static.getCandidates();
       candidatesPromise.then(function cb(cdts) {
@@ -106,6 +101,15 @@ router.post('/',apiLimiter, (req, res) => {
 
         var splicer = req.body.page * 30;
         var page = matches.slice(splicer-30,splicer);
+        var storObj = {
+          team: page,
+          matches: req.body
+        }
+        // Store Results      
+        pushResultPromise = db.rpushResult(storObj);
+        pushResultPromise.then(function updateData(index) {
+          console.log("Pushed results")
+        })
         console.log("Page: " + req.body.page);
         console.log("Sending data") 
         console.log(page.length)
