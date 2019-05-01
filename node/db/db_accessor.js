@@ -147,6 +147,25 @@ module.exports = {
             });
         })
     },
+    resultlength: function(val) {
+        return new Promise(function(resolve, reject){
+            client = redis.createClient({
+                host:process.env.REDIS,
+                port:process.env.REDIS_PORT
+            });
+            client.on("error", function (err) {
+                reject("Error occured: "+err);
+            });
+            client.llen('results', function(err, reply) {  
+                if (err) {
+                   console.log("Error occured")
+                }
+                var resultLength = parseInt(reply, 10);
+                resultLength = resultLength + 1500;
+                resolve(resultLength);
+            })
+        })
+    },
     setProfile: function(val) {
         return new Promise(function(resolve, reject){
             client = redis.createClient({

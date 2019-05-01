@@ -24,6 +24,7 @@ const dsgvoRouter = require("./routes/dsgvo");
 const impressumRouter = require("./routes/impressum");
 */
 const resultRouter = require("./routes/result");
+const apiRouter = require("./routes/api");
 
 const favicon = require('express-favicon');
 
@@ -67,6 +68,7 @@ app.use("/impressum", impressumRouter);
 app.use("/dsgvo", dsgvoRouter);
 */
 app.use("/result", resultRouter);
+app.use("/api", apiRouter);
 
 // Error handlers
 app.use(function(req, res, next) {
