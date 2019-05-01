@@ -19,6 +19,8 @@ const eventRouter = require("./routes/events");
 const resultRouter = require("./routes/result");
 const dsgvoRouter = require("./routes/dsgvo");
 const impressumRouter = require("./routes/impressum");
+const apiRouter = require("./routes/api");
+
 const favicon = require('express-favicon');
 
 // App initialization
@@ -49,14 +51,15 @@ app.use(middleware.addUser);
 // Routes
 app.use("/",publicRouter);
 app.use("/dashboard", middleware.loginRequired, dashboardRouter);
-app.use("/profile",middleware.loginRequired, profileRouter);
-app.use("/komunat",middleware.loginRequired, komunatRouter);
-app.use("/contents",middleware.loginRequired, contentRouter);
+//app.use("/profile",middleware.loginRequired, profileRouter);
+//app.use("/komunat",middleware.loginRequired, komunatRouter);
+//app.use("/contents",middleware.loginRequired, contentRouter);
 app.use("/events",middleware.loginRequired, eventRouter);
 app.use("/result", resultRouter);
 app.use("/users", usersRouter);
 app.use("/impressum", impressumRouter);
 app.use("/dsgvo", dsgvoRouter);
+app.use("/api", apiRouter);
 
 // Error handlers
 app.use(function(req, res, next) {
