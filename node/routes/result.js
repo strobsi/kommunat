@@ -39,18 +39,10 @@ router.get('/debug',apiLimiter, (req, res) => {
 router.post("/event", (req,res) => {
   var c = req.sanitize(req.body.candidate);
   var ev = []
-  var eventPromise = static.getEvents(c);
+  var eventPromise = evDB.getEvents(c);
   eventPromise.then(function cb(evts) {
-      for (var i = 0; i < evts.length; i++) {
-        if(evts[i].uuid == c) {
-          evts[i].events.sort(function(a, b) {
-            a = new Date(a.startDate);
-            b = new Date(b.startDate);
-            return a>b ? -1 : a<b ? 1 : 0;
-          });
-          res.send(evts[i].events);
-        } 
-      }  
+      evts = JSON.parse(evts);
+        res.send(evts);
   });
 }),
 

@@ -9,8 +9,8 @@ module.exports = {
     getEvents: function (uuid) {
         return new Promise(function(resolve, reject){
             client = redis.createClient({
-                host:process.env.REDIS,
-                port:process.env.REDIS_PORT
+                host:"localhost",
+                port:6379
             });
             client.on("error", function (err) {
                 console.log("Error occured: "+err)
@@ -19,13 +19,13 @@ module.exports = {
             var eID = "e_"+uuid;
             client.get(eID, function(err, reply) {
                 if (reply !== null && reply !== undefined) {
+                    console.log("found events");
                     const decryptedString = cryptr.decrypt(reply);
                     resolve(decryptedString)
                 }
                 else {
                     var empty = []
                     resolve(JSON.stringify(empty))
-                    console.log("No events yet");
                 }
             });
         });
