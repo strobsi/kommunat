@@ -40,7 +40,13 @@ router.post("/event",weakapiLimiter, (req,res) => {
             b = new Date(b.startDate);
             return a>b ? -1 : a<b ? 1 : 0;
           });
-          res.send(evts[i].events);
+          var upcomingEvents = [];
+          for (var i = 0; i < events.length; i++) {
+            if(isUpcoming(events[i].startDate)) {
+                upcomingEvents.push(events[i]);
+            }
+          }
+          res.send(upcomingEvents);
         } 
       }  
   });
@@ -117,6 +123,15 @@ router.post('/',apiLimiter, (req, res) => {
       });
       
   })
+
+
+function isUpcoming(event) {
+    console.log(event)
+    const inFuture = (date) => {
+        return event.setHours(0,0,0,0) > new Date().setHours(0,0,0,0)
+    };
+    return inFuture;
+}
 
 function getDistance(x,y) {
     // To get the distance, we have to sort the array by the id's
