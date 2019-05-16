@@ -102,6 +102,12 @@ p {
   max-width: 300px;
   max-height: 550px;
   text-align: center;
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+}
+
+.content::-webkit-scrollbar { 
+  display: none;
 }
 
 .content img {
