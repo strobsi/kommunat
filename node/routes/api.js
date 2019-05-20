@@ -38,8 +38,8 @@ router.post('/feedback',apiLimiter, (req, res) => {
   feedbackPromise.then(function cb() {
       res.send();
   });
-}),
-
+});
+/*
 router.get('/feedback',apiLimiter, (req, res) => {
   feedbackPromise = db.getFeedback();
   feedbackPromise.then(function cb(fb) {
@@ -49,5 +49,5 @@ router.get('/feedback',apiLimiter, (req, res) => {
     res.send(JSON.stringify(returnObj));
   });
 });
-
+*/
 module.exports = router;
