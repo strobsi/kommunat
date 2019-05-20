@@ -182,6 +182,31 @@ module.exports = {
             });
         })
     },
+    getFeedback: function() {
+        return new Promise(function(resolve, reject){
+            client = redis.createClient({
+                host:process.env.REDIS,
+                port:process.env.REDIS_PORT
+            });
+            client.on("error", function (err) {
+                reject("Error occured: "+err);
+            });
+            client.lrange("feedback",0,-1, function(err,reply) {
+                console.log("[DB Accessor]: Got candidates: ")
+                if(reply.length > 0) {
+                    reply.forEach(function (r, i) {
+                        reply[i] = cryptr.decrypt(r);
+                        client.quit()
+                    });
+                    resolve(reply);
+                }
+                else {
+                    client.quit()
+                    resolve(reply);
+                }
+            });
+        })
+    },
     setProfile: function(val) {
         return new Promise(function(resolve, reject){
             client = redis.createClient({
