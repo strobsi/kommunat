@@ -19,6 +19,25 @@ router.get('/results',apiLimiter, (req, res) => {
     }
     res.send(JSON.stringify(returnObj));
   });
+}),
+
+router.post('/feedback',apiLimiter, (req, res) => {
+
+  var age = req.sanitize(req.body.age);
+  var zip = req.sanitize(req.body.zip);
+  var gender = req.sanitize(req.body.gender);
+  var comment = req.sanitize(req.body.comment);
+
+  var dat = {
+    age: age,
+    zip: zip,
+    gender: gender,
+    comment: comment
+  }
+  feedbackPromise = db.pushFeedback(dat);
+  feedbackPromise.then(function cb() {
+      res.send();
+  });
 });
 
 module.exports = router;

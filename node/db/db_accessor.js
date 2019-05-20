@@ -167,6 +167,21 @@ module.exports = {
             })
         })
     },
+    pushFeedback: function(val) {
+        return new Promise(function(resolve, reject){
+            client = redis.createClient({
+                host:process.env.REDIS,
+                port:process.env.REDIS_PORT
+            });
+            client.on("error", function (err) {
+                reject("Error occured: "+err);
+            });
+            const encryptedString = cryptr.encrypt((JSON.stringify(val)));
+            client.rpush("feedback",encryptedString, function(err,reply) {
+                resolve(reply);
+            });
+        })
+    },
     setProfile: function(val) {
         return new Promise(function(resolve, reject){
             client = redis.createClient({
