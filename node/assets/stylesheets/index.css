@@ -95,12 +95,12 @@ p {
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  width:20vw;
-  height:70vh;
-  min-height: 560px;
-  min-width: 300px;
-  max-width: 300px;
-  max-height: 550px;
+  width:25vw;
+  height:90vh;
+  min-height: 700px;
+  min-width: 370px;
+  max-width: 370px;
+  max-height: 700px;
   text-align: center;
   -ms-overflow-style: none; 
   scrollbar-width: none;
