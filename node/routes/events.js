@@ -11,7 +11,7 @@ var schemata = require("../utils/const");
 
 const apiLimiter = rateLimit({
     windowMs: 10 * 60 * 1000, // 1 hour window
-    max: 10, // start blocking after 5 requests
+    max: 200, // start blocking after 5 requests
     message:
       "Too many requests from this IP, please try again later"
   });

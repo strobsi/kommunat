@@ -15,14 +15,14 @@ const path = require('path');
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 1 hour window
-  max: 20, // start blocking after 5 requests
+  max: 200, // start blocking after 5 requests
   message:
     "Too many requests from this IP, please try again later"
 });
 
 const weakapiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 1 hour window
-  max: 50, // start blocking after 5 requests
+  max: 500, // start blocking after 5 requests
   message:
     "Too many requests from this IP, please try again later"
 });
